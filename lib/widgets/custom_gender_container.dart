@@ -93,7 +93,7 @@ class CustomContainerGender extends StatelessWidget {
                 label,
                 style: TextStyle(
                   fontSize: width * 0.05,
-                  color: isSelected ? selectedColor : Colors.grey.shade600,
+                  color: isSelected ? Colors.white70 : Colors.grey.shade600,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),

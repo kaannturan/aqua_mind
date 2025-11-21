@@ -30,9 +30,9 @@ class AquaMind extends StatelessWidget {
       locale: DevicePreview.locale(context),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
         primaryColor: Colors.lightBlue,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Color(0xFF062549),
         textTheme: GoogleFonts.nunitoTextTheme(),
         useMaterial3: true,
       ),

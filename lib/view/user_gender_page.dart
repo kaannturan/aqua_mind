@@ -20,7 +20,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
     final height = size.height;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFF062549),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -30,7 +30,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
 
               // Üst step indicators
               Padding(
-                padding: const EdgeInsets.only(right: 20.0),
+                padding: const EdgeInsets.only(right: 26.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -45,11 +45,11 @@ class _UserGenderPageState extends State<UserGenderPage> {
                     ),
                     CircleAvatar(
                       radius: width * 0.02,
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Colors.white70,
                     ),
                     CircleAvatar(
                       radius: width * 0.02,
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Colors.white70,
                     ),
                   ],
                 ),
@@ -75,7 +75,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                   "Cinsiyetiniz",
                   style: TextStyle(
                     fontSize: width * 0.065,
-                    color: Colors.black87,
+                    color: Colors.white60,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -129,7 +129,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                         },
                         child: Icon(
                           Icons.arrow_back,
-                          color: Colors.white,
+                          color: Colors.white70,
                           size: width * 0.06,
                         ),
                       ),
@@ -175,7 +175,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                         "Devam Et",
                         style: TextStyle(
                           fontSize: width * 0.043,
-                          color: Colors.white,
+                          color: Colors.white70,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

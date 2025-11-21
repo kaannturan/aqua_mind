@@ -69,7 +69,7 @@ class _SizeChoiceState extends State<SizeChoice> {
                 style: TextStyle(
                   fontSize: width * 0.065,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: Colors.white70,
                 ),
               ),
 
@@ -91,13 +91,6 @@ class _SizeChoiceState extends State<SizeChoice> {
                             border: Border.all(
                               color: Colors.lightBlue,
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.blue.withOpacity(0.5),
-                                blurRadius: 30,
-                                spreadRadius: 10,
-                              ),
-                            ],
                           ),
                         ),
 
@@ -160,7 +153,7 @@ class _SizeChoiceState extends State<SizeChoice> {
                         },
                         child: Icon(
                           Icons.arrow_back,
-                          color: Colors.white,
+                          color: Colors.white70,
                           size: width * 0.06,
                         ),
                       ),
@@ -190,7 +183,7 @@ class _SizeChoiceState extends State<SizeChoice> {
                         "Devam Et",
                         style: TextStyle(
                           fontSize: width * 0.043,
-                          color: Colors.white,
+                          color: Colors.white70,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
