@@ -124,7 +124,9 @@ class _UserGenderPageState extends State<UserGenderPage> {
                         elevation: 10,
                         backgroundColor: Colors.lightBlue,
                         shape: const CircleBorder(),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         child: Icon(
                           Icons.arrow_back,
                           color: Colors.white,
