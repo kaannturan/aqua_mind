@@ -57,7 +57,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
 
               SizedBox(height: height * 0.03),
 
-              // Başlık animasyonu
+              // Başlık animasyonuu
               TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 800),
                 tween: Tween(begin: 0.0, end: 1.0),
