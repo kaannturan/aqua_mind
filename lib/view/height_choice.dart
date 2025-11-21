@@ -75,7 +75,6 @@ class _SizeChoiceState extends State<SizeChoice> {
 
               SizedBox(height: height * 0.02),
 
-              // Ana içerik - Expanded kullan
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
