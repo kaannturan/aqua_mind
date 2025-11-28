@@ -98,7 +98,7 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                                 // Animasyonlu icon (görsel yerine)
                                 SizedBox(
                                   width: constraints.maxWidth * 0.5,
-                                  height: constraints.maxHeight * 0.5,
+                                  height: constraints.maxHeight * 0.4,
                                   child: AnimatedContainer(
                                     duration:
                                         const Duration(milliseconds: 1000),
@@ -151,7 +151,7 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                                       child: Text(
                                         "$itemWeight kg",
                                         style: TextStyle(
-                                          fontSize: isSelected ? 30 : 24,
+                                          fontSize: isSelected ? 27 : 24,
                                           fontWeight: isSelected
                                               ? FontWeight.bold
                                               : FontWeight.normal,
