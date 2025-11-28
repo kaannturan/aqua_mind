@@ -1,4 +1,4 @@
-import 'package:aqua_mind/view/user_gender_page.dart';
+import 'package:aqua_mind/view/user_gender_view.dart';
 import 'package:flutter/material.dart';
 
 class HiPage extends StatelessWidget {
@@ -26,32 +26,54 @@ class HiPage extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        """Merhaba, 
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween(begin: 0, end: 1),
+                        duration: const Duration(milliseconds: 1600),
+                        builder: (context, value, child) => Opacity(
+                          opacity: value,
+                          child: Transform.translate(
+                            offset: Offset(0, (1 - value) * 20),
+                            child: child,
+                          ),
+                        ),
+                        child: Text(
+                          """Merhaba, 
 AquaMind'a Hoşgeldiniz! """,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: width * 0.070,
-                          color: Colors.white70,
-                          fontWeight: FontWeight.bold,
-                          height: 1.5,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: width * 0.070,
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
+                            height: 1.5,
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(height: height * 0.02),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        """
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween(begin: 0, end: 1),
+                        duration: const Duration(milliseconds: 1700),
+                        builder: (context, value, child) => Opacity(
+                          opacity: value,
+                          child: Transform.translate(
+                            offset: Offset(0, (1 - value) * 20),
+                            child: child,
+                          ),
+                        ),
+                        child: Text(
+                          """
 Sağlıklı alışkanlıklar edinmek,
 beden ve zihin sağlığınızı güçlendirmek için 
 doğru yerdesiniz.""",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: width * 0.040,
-                          color: Colors.white60,
-                          fontWeight: FontWeight.w100,
-                          height: 1.5,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: width * 0.042,
+                            color: Colors.white60,
+                            fontWeight: FontWeight.w100,
+                            height: 1.5,
+                          ),
                         ),
                       ),
                     ),
@@ -94,8 +116,8 @@ doğru yerdesiniz.""",
                       elevation: 10,
                       backgroundColor: Colors.lightBlue,
                       padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.08,
-                        vertical: height * 0.02,
+                        horizontal: width * 0.07,
+                        vertical: height * 0.01,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
@@ -105,7 +127,7 @@ doğru yerdesiniz.""",
                       "Devam Et",
                       style: TextStyle(
                         fontSize: width * 0.043,
-                        color: Colors.white70,
+                        color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -119,5 +141,3 @@ doğru yerdesiniz.""",
     );
   }
 }
-
-//\nSağlıklı alışkanlıklar edinmek ve zihinsel sağlığınızı güçlendirmek için doğru yerdesiniz.

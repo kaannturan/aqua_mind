@@ -1,7 +1,7 @@
 // ignore_for_file: unused_import
-import 'package:aqua_mind/view/height_choice.dart';
-import 'package:aqua_mind/view/hi.dart';
-import 'package:aqua_mind/view/user_gender_page.dart';
+import 'package:aqua_mind/view/height_choice_view.dart';
+import 'package:aqua_mind/view/hi_view.dart';
+import 'package:aqua_mind/view/user_gender_view.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

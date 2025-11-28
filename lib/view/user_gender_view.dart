@@ -1,4 +1,5 @@
-import 'package:aqua_mind/view/height_choice.dart';
+import 'package:aqua_mind/view/height_choice_view.dart';
+
 import 'package:aqua_mind/widgets/custom_gender_container.dart';
 import 'package:aqua_mind/widgets/step_item_gender.dart';
 import 'package:flutter/material.dart';
@@ -109,41 +110,41 @@ class _UserGenderPageState extends State<UserGenderPage> {
                 ),
               ),
 
-              // Alt butonlar
+              // Butonlar
               Padding(
-                padding: EdgeInsets.only(bottom: height * 0.03),
+                padding: EdgeInsets.symmetric(vertical: height * 0.02),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // Geri butonu
-                    SizedBox(
-                      width: width * 0.12,
-                      height: width * 0.12,
-                      child: FloatingActionButton(
-                        heroTag: "back_button",
-                        elevation: 10,
-                        backgroundColor: Colors.lightBlue,
-                        shape: const CircleBorder(),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white70,
-                          size: width * 0.06,
-                        ),
+                    RawMaterialButton(
+                      elevation: 10,
+                      fillColor: Colors.lightBlue,
+                      constraints: BoxConstraints.tightFor(
+                        width: width * 0.15,
+                        height: width * 0.15,
+                      ),
+                      shape: const CircleBorder(),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: width * 0.06,
                       ),
                     ),
 
-                    // Devam butonu
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
+                    // Hesapla butonu
+                    Flexible(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) =>
-                                      SizeChoice(),
+                                      const HeightChoiceView(),
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
                                 const begin = Offset(1.0, 0.0);
@@ -157,26 +158,29 @@ class _UserGenderPageState extends State<UserGenderPage> {
                                   child: child,
                                 );
                               },
-                              transitionDuration: Duration(milliseconds: 500)),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 10,
-                        backgroundColor: Colors.lightBlue,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: width * 0.06,
-                          vertical: height * 0.02,
+                              transitionDuration:
+                                  const Duration(milliseconds: 500),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 10,
+                          backgroundColor: Colors.lightBlue,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: width * 0.08,
+                            vertical: height * 0.018,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                      ),
-                      child: Text(
-                        "Devam Et",
-                        style: TextStyle(
-                          fontSize: width * 0.043,
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w600,
+                        child: Text(
+                          "Devam Et",
+                          style: TextStyle(
+                            fontSize: width * 0.043,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
