@@ -5,23 +5,17 @@ import 'package:aqua_mind/widgets/step_item_gender.dart';
 import 'package:flutter/material.dart';
 
 class HeightChoiceView extends StatefulWidget {
-  const HeightChoiceView({super.key});
+  final String gender;
+  const HeightChoiceView({super.key, required this.gender});
 
   @override
   State<HeightChoiceView> createState() => _HeightChoiceViewState();
 }
 
-// Class içinde helper metod ekleyin
 double _calculateImageHeight(int height, double maxHeight) {
-  // 100 cm = Minimum görsel yüksekliği (ekranın %40'ı)
-  // 250 cm = Maksimum görsel yüksekliği (ekranın %85'i)
   double minSize = maxHeight * 0.40;
   double maxSize = maxHeight * 0.85;
-
-  // Boy oranını hesapla (100-250 cm arasında)
   double ratio = (height - 100) / (250 - 100);
-
-  // Boyutu orantılı olarak hesapla
   return minSize + (ratio * (maxSize - minSize));
 }
 
@@ -44,6 +38,7 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController heightController = TextEditingController();
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -225,7 +220,7 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
                       ),
                     ),
 
-                    // Hesapla butonu
+                    // Devam Et butonu
                     Flexible(
                       child: ElevatedButton(
                         onPressed: () {
@@ -234,7 +229,10 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) =>
-                                      const WeightChoiceView(),
+                                      WeightChoiceView(
+                                height: selectedHeight,
+                                gender: widget.gender,
+                              ),
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
                                 const begin = Offset(1.0, 0.0);

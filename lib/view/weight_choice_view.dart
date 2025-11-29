@@ -1,10 +1,16 @@
 // ignore_for_file: unused_local_variable, deprecated_member_use
 
+import 'package:aqua_mind/models/user_model.dart';
+import 'package:aqua_mind/util/daily_calculate.dart';
+import 'package:aqua_mind/view/resultpage.dart';
 import 'package:aqua_mind/widgets/step_item_gender.dart';
 import 'package:flutter/material.dart';
 
 class WeightChoiceView extends StatefulWidget {
-  const WeightChoiceView({super.key});
+  final int height;
+  final String gender;
+  const WeightChoiceView(
+      {super.key, required this.height, required this.gender});
 
   @override
   State<WeightChoiceView> createState() => _WeightChoiceViewState();
@@ -29,6 +35,8 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController heightController =
+        TextEditingController(text: widget.height.toString());
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -208,12 +216,21 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                     Flexible(
                       child: ElevatedButton(
                         onPressed: () {
+                          double dailyWater =
+                              DailyCalculate.calculateDailyWater(UserModel(
+                                  gender: widget.gender,
+                                  height: widget.height,
+                                  weight: selectedWeight));
                           Navigator.push(
                             context,
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) =>
-                                      const WeightChoiceView(),
+                                      Result(
+                                height: widget.height,
+                                weight: selectedWeight,
+                                dailyWater: dailyWater,
+                              ),
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
                                 const begin = Offset(1.0, 0.0);

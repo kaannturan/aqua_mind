@@ -1,5 +1,4 @@
 import 'package:aqua_mind/view/height_choice_view.dart';
-
 import 'package:aqua_mind/widgets/custom_gender_container.dart';
 import 'package:aqua_mind/widgets/step_item_gender.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
+    final TextEditingController genderController = TextEditingController();
 
     return Scaffold(
       backgroundColor: Color(0xFF062549),
@@ -144,7 +144,9 @@ class _UserGenderPageState extends State<UserGenderPage> {
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) =>
-                                      const HeightChoiceView(),
+                                      HeightChoiceView(
+                                gender: selectedGender,
+                              ),
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
                                 const begin = Offset(1.0, 0.0);
