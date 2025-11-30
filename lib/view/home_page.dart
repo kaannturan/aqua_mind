@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
 
 import 'dart:math';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
@@ -12,28 +12,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  double waterLevel = 0.9; // Su seviyesi (0.0 - 1.0)
+  int currentWater = 500; // Mevcut su miktarı (ml)
+  int targetWater = 2400; // Hedef su miktarı (ml)
+
+  void addWater(int amount) {
+    setState(() {
+      currentWater = (currentWater + amount).clamp(0, targetWater);
+      waterLevel =
+          1.0 - (currentWater / targetWater * 0.85); // 0.15'ten 1.0'a kadar
+      waterLevel = waterLevel.clamp(0.15, 1.0);
+    });
+  }
+
+  void removeWater(int amount) {
+    setState(() {
+      currentWater = (currentWater - amount).clamp(0, targetWater);
+      waterLevel = 1.0 - (currentWater / targetWater * 0.85);
+      waterLevel = waterLevel.clamp(0.15, 1.0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size(width, height * 0.1),
-        child: ClipPath(
-          clipper: AppBarClipper(),
-          child: AppBar(
-            backgroundColor: Color(0xFF062549),
-            elevation: 0,
-            title: Text(
-              "AquaMind",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: width * 0.06,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+      backgroundColor: Colors.blue.shade50,
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.blue.shade900),
+        backgroundColor: Colors.blue.shade50,
+        elevation: 0,
+        title: Text(
+          "AquaMind",
+          style: TextStyle(
+            color: Colors.blue.shade900,
+            fontSize: width * 0.06,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -101,14 +117,14 @@ class _HomePageState extends State<HomePage> {
                     Icon(
                       FontAwesomeIcons.droplet,
                       color: Colors.blue.shade300,
-                      size: width * 0.05,
+                      size: width * 0.04,
                     ),
                     SizedBox(width: width * 0.02),
                     Text(
                       "İyi Günler",
                       style: TextStyle(
-                        fontSize: width * 0.05,
-                        color: Colors.black,
+                        fontSize: width * 0.04,
+                        color: Colors.blue.shade900,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -124,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                         child: SizedBox(
                           width: width,
                           height: height * 0.5,
-                          child: WaterWaveFill(),
+                          child: WaterWaveFill(waterLevel: waterLevel),
                         ),
                       ),
                       CustomPaint(
@@ -136,12 +152,12 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               SizedBox(height: height * 0.03),
-              Text("  500 / 2400 ml   "),
+              Text("  $currentWater / $targetWater ml   "),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Günlük Hedefiniz : 2.4 Litre",
+                    "Günlük Hedefiniz : ${targetWater / 1000} Litre",
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: Colors.black,
@@ -157,13 +173,11 @@ class _HomePageState extends State<HomePage> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () {
-                        // Tıklama olayı
-                      },
+                      onTap: () => addWater(200),
                       borderRadius: BorderRadius.circular(60),
                       child: Container(
-                        width: 80,
-                        height: 80,
+                        width: width * 0.15,
+                        height: height * 0.08,
                         decoration: BoxDecoration(
                           gradient: RadialGradient(
                             colors: [
@@ -175,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.blue.withOpacity(0.5),
-                              blurRadius: 20,
+                              blurRadius: 10,
                               offset: Offset(0, 8),
                             ),
                           ],
@@ -193,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                               "200 ml",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 13,
+                                fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 0.5,
                               ),
@@ -206,25 +220,23 @@ class _HomePageState extends State<HomePage> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () {
-                        // Tıklama olayı
-                      },
+                      onTap: () => addWater(500),
                       borderRadius: BorderRadius.circular(60),
                       child: Container(
-                        width: 80,
-                        height: 80,
+                        width: width * 0.15,
+                        height: height * 0.08,
                         decoration: BoxDecoration(
                           gradient: RadialGradient(
                             colors: [
                               Colors.blue.shade300,
-                              Colors.yellow,
+                              Colors.blue,
                             ],
                           ),
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.blue.withOpacity(0.5),
-                              blurRadius: 20,
+                              color: Colors.blue.withOpacity(0.8),
+                              blurRadius: 10,
                               offset: Offset(0, 8),
                             ),
                           ],
@@ -233,16 +245,16 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              FontAwesomeIcons.glassWater,
+                              FontAwesomeIcons.wineGlass,
                               color: Colors.white,
                               size: 20,
                             ),
                             SizedBox(height: 8),
                             Text(
-                              "200 ml",
+                              "500 ml",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 13,
+                                fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 0.5,
                               ),
@@ -252,31 +264,97 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.bottleDroplet,
-                        color: Colors.blue.shade300,
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () => addWater(1000),
+                      child: Container(
+                        width: width * 0.15,
+                        height: height * 0.08,
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              Colors.blue.shade300,
+                              Colors.blue,
+                            ],
+                          ),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blue.withOpacity(0.8),
+                              blurRadius: 10,
+                              offset: Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.bottleDroplet,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              "1000 ml",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(height: height * 0.005),
-                      Text(
-                        "00 ml",
-                        style: TextStyle(color: Colors.white70, fontSize: 13),
-                      )
-                    ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.downLong,
-                        color: Colors.blue.shade300,
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () => removeWater(100),
+                      child: Container(
+                        width: width * 0.15,
+                        height: height * 0.08,
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              Colors.red,
+                              Colors.red,
+                            ],
+                          ),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.red.withOpacity(0.8),
+                              blurRadius: 10,
+                              offset: Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.downLong,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              "100 ml",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(height: height * 0.005),
-                      Text(
-                        "100 ml",
-                        style: TextStyle(color: Colors.white70, fontSize: 13),
-                      )
-                    ],
+                    ),
                   ),
                 ],
               )
@@ -350,11 +428,10 @@ class WaterStack extends CustomPainter {
 
     path.close();
 
-    // Sadece çizgi çiz (içini doldurma)
     final cizgiStili = Paint()
-      ..color = Colors.blue.shade200 // renk
-      ..style = PaintingStyle.stroke // Sadece çizgi
-      ..strokeWidth = 6; // Kalınlık
+      ..color = Colors.blue.shade200
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6;
 
     canvas.drawPath(path, cizgiStili);
   }
@@ -365,38 +442,92 @@ class WaterStack extends CustomPainter {
 
 // Dalga animasyonu için widget
 class WaterWaveFill extends StatefulWidget {
-  const WaterWaveFill({super.key});
+  final double waterLevel;
+
+  const WaterWaveFill({super.key, required this.waterLevel});
 
   @override
   _WaterWaveFillState createState() => _WaterWaveFillState();
 }
 
 class _WaterWaveFillState extends State<WaterWaveFill>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+    with TickerProviderStateMixin {
+  late AnimationController _backController;
+  late AnimationController _frontController;
+  late AnimationController _levelController;
+  late Animation<double> _levelAnimation;
+
+  double _currentLevel = 0.9;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    _backController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 3),
     )..repeat();
+
+    _frontController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 4),
+    )..repeat();
+
+    _levelController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+    );
+
+    _levelAnimation = Tween<double>(
+      begin: _currentLevel,
+      end: widget.waterLevel,
+    ).animate(CurvedAnimation(
+      parent: _levelController,
+      curve: Curves.easeInOut,
+    ));
+  }
+
+  @override
+  void didUpdateWidget(WaterWaveFill oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.waterLevel != widget.waterLevel) {
+      double startlevel =
+          _levelController.isAnimating ? _levelAnimation.value : _currentLevel;
+
+      _levelAnimation = Tween<double>(
+        begin: startlevel,
+        end: widget.waterLevel,
+      ).animate(CurvedAnimation(
+        parent: _levelController,
+        curve: Curves.easeInOut,
+      ));
+
+      _levelController.reset();
+      _levelController.forward().then((_) {
+        _currentLevel = widget.waterLevel;
+      });
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _backController.dispose();
+    _frontController.dispose();
+    _levelController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
+      animation: Listenable.merge(
+          [_backController, _frontController, _levelAnimation]),
       builder: (context, child) {
         return CustomPaint(
-          painter: WavePainter(_controller.value),
+          painter: WavePainter(
+            _backController.value,
+            _frontController.value,
+            _levelAnimation.value,
+          ),
         );
       },
     );
@@ -404,58 +535,74 @@ class _WaterWaveFillState extends State<WaterWaveFill>
 }
 
 class WavePainter extends CustomPainter {
-  final double value;
-  WavePainter(this.value);
+  final double backValue;
+  final double frontValue;
+  final double waterLevel;
+
+  WavePainter(this.backValue, this.frontValue, this.waterLevel);
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.blue.shade500
+    final bgPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.white,
+          Colors.blue.shade200,
+        ],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    final shadowPaint = Paint()
+      ..color = Colors.blue.shade900.withOpacity(0.25)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 15);
+
+    final backWavePaint = Paint()
+      ..color = Colors.blue.shade400.withOpacity(0.6)
       ..style = PaintingStyle.fill;
 
-    final path = Path();
+    final frontWavePaint = Paint()
+      ..color = Colors.blue.shade600.withOpacity(0.8)
+      ..style = PaintingStyle.fill;
 
-    double waveHeight = 12; // dalga kıvrımı
-    double speed = value * 2 * 3.14;
+    double baseHeight = size.height * waterLevel;
 
-    path.moveTo(0, size.height * 0.55);
+    double backPhase = backValue * 2 * 3.14;
+    double frontPhase = frontValue * 2 * 3.14;
 
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), bgPaint);
+
+    final backWave = Path()..moveTo(0, baseHeight);
     for (double x = 0; x <= size.width; x++) {
-      double y = size.height * 0.55 +
-          sin((x / size.width * 2 * 3.14) + speed) * waveHeight;
-
-      path.lineTo(x, y);
+      double y = baseHeight + sin((x / size.width * 2 * 3.14) + backPhase) * 14;
+      backWave.lineTo(x, y);
     }
+    backWave.lineTo(size.width, size.height);
+    backWave.lineTo(0, size.height);
+    backWave.close();
 
-    // Alt kısmı doldur
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
+    canvas.drawPath(backWave, shadowPaint);
+    canvas.drawPath(backWave, backWavePaint);
 
-    canvas.drawPath(path, paint);
+    final frontWave = Path()..moveTo(0, baseHeight - 8);
+    for (double x = 0; x <= size.width; x++) {
+      double y =
+          (baseHeight - 8) + sin((x / size.width * 2 * 3.14) + frontPhase) * 14;
+      frontWave.lineTo(x, y);
+    }
+    frontWave.lineTo(size.width, size.height);
+    frontWave.lineTo(0, size.height);
+    frontWave.close();
+
+    final highlightPaint = Paint()
+      ..color = Colors.white.withOpacity(0.25)
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
+
+    canvas.drawPath(frontWave, frontWavePaint);
+    canvas.drawPath(frontWave, highlightPaint);
   }
 
   @override
-  bool shouldRepaint(WavePainter oldDelegate) => true;
-}
-
-// AppBar özel şekil
-class AppBarClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 20);
-    path.quadraticBezierTo(
-      size.width / 2,
-      size.height,
-      size.width,
-      size.height - 20,
-    );
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+  bool shouldRepaint(covariant WavePainter oldDelegate) => true;
 }

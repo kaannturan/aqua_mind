@@ -1,5 +1,4 @@
 // ignore_for_file: unused_local_variable, deprecated_member_use
-
 import 'package:aqua_mind/models/user_model.dart';
 import 'package:aqua_mind/util/daily_calculate.dart';
 import 'package:aqua_mind/view/resultpage.dart';
@@ -53,7 +52,7 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
 
               // Üst step indicators
               SizedBox(
-                height: height * 0.09,
+                height: height * 0.12,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

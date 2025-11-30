@@ -51,11 +51,11 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
           ),
           child: Column(
             children: [
-              SizedBox(height: height * 0.02),
+              SizedBox(height: height * 0.0),
 
               // Üst step indicators
               SizedBox(
-                height: height * 0.09,
+                height: height * 0.12,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

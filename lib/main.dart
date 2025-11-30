@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 import 'package:aqua_mind/view/height_choice_view.dart';
 import 'package:aqua_mind/view/hi_view.dart';
+import 'package:aqua_mind/view/home_page.dart';
 import 'package:aqua_mind/view/user_gender_view.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +33,13 @@ class AquaMind extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.lightBlue,
-        scaffoldBackgroundColor: Color(0xFF062549),
+        scaffoldBackgroundColor: Colors.blue.shade50,
         textTheme: GoogleFonts.nunitoTextTheme(),
         useMaterial3: true,
       ),
-      home: const HiPage(),
+      home: const HomePage(),
     );
   }
 }
+
+//Color(0xFF062549) lacivert arka plan

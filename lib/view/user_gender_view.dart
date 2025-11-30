@@ -21,7 +21,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
     final TextEditingController genderController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: Color(0xFF062549),
+      backgroundColor: Colors.blue.shade50,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -41,7 +41,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                           selectedGender == "Erkek" ? Icons.male : Icons.female,
                       text: selectedGender,
                       selectedColor: selectedGender == "Erkek"
-                          ? Colors.lightBlue
+                          ? Colors.blue.shade900
                           : Colors.pinkAccent,
                     ),
                     CircleAvatar(
@@ -76,7 +76,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                   "Cinsiyetiniz",
                   style: TextStyle(
                     fontSize: width * 0.065,
-                    color: Colors.white60,
+                    color: Colors.blue.shade900,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -84,14 +84,14 @@ class _UserGenderPageState extends State<UserGenderPage> {
 
               // Cinsiyet seçenekleri
               Expanded(
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomContainerGender(
                       image: "assets/images/male.png",
                       label: "Erkek",
                       isSelected: selectedGender == "Erkek",
-                      selectedColor: Colors.lightBlue,
+                      selectedColor: Colors.blue.shade900,
                       onTap: () => setState(() {
                         selectedGender = "Erkek";
                       }),
