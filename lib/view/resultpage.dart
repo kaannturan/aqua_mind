@@ -1,5 +1,5 @@
 // ignore_for_file: unused_import
-
+/*
 import 'package:aqua_mind/util/daily_calculate.dart';
 import 'package:aqua_mind/view/home_page.dart';
 import 'package:flutter/material.dart';
@@ -56,4 +56,4 @@ class Result extends StatelessWidget {
       ),
     );
   }
-}
+} */

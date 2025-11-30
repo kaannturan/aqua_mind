@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:aqua_mind/view/height_choice_view.dart';
 import 'package:aqua_mind/widgets/custom_gender_container.dart';
 import 'package:aqua_mind/widgets/step_item_gender.dart';
@@ -21,7 +23,6 @@ class _UserGenderPageState extends State<UserGenderPage> {
     final TextEditingController genderController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -41,16 +42,16 @@ class _UserGenderPageState extends State<UserGenderPage> {
                           selectedGender == "Erkek" ? Icons.male : Icons.female,
                       text: selectedGender,
                       selectedColor: selectedGender == "Erkek"
-                          ? Colors.blue.shade900
+                          ? Colors.lightBlue
                           : Colors.pinkAccent,
                     ),
                     CircleAvatar(
                       radius: width * 0.02,
-                      backgroundColor: Colors.white70,
+                      backgroundColor: Colors.grey,
                     ),
                     CircleAvatar(
                       radius: width * 0.02,
-                      backgroundColor: Colors.white70,
+                      backgroundColor: Colors.grey,
                     ),
                   ],
                 ),
@@ -76,7 +77,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                   "Cinsiyetiniz",
                   style: TextStyle(
                     fontSize: width * 0.065,
-                    color: Colors.blue.shade900,
+                    color: Colors.white70,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -91,7 +92,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                       image: "assets/images/male.png",
                       label: "Erkek",
                       isSelected: selectedGender == "Erkek",
-                      selectedColor: Colors.blue.shade900,
+                      selectedColor: Colors.lightBlue,
                       onTap: () => setState(() {
                         selectedGender = "Erkek";
                       }),

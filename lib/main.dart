@@ -33,11 +33,11 @@ class AquaMind extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.lightBlue,
-        scaffoldBackgroundColor: Colors.blue.shade50,
+        scaffoldBackgroundColor: Color(0xFF062549),
         textTheme: GoogleFonts.nunitoTextTheme(),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const HiPage(),
     );
   }
 }

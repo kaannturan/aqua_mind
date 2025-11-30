@@ -67,6 +67,7 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
                       isActive: true,
                       icon: Icons.height_outlined,
                       text: "Boy",
+                      selectedColor: Colors.lightBlue,
                     ),
                     CircleAvatar(
                       radius: width * 0.02,

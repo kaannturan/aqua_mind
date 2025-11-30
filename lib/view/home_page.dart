@@ -1,11 +1,18 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unused_local_variable
 
 import 'dart:math';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int height;
+  final int weight;
+  final double dailyWater;
+  const HomePage(
+      {super.key,
+      required this.dailyWater,
+      required this.height,
+      required this.weight});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,14 +20,27 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double waterLevel = 0.9; // Su seviyesi (0.0 - 1.0)
-  int currentWater = 500; // Mevcut su miktarı (ml)
-  int targetWater = 2400; // Hedef su miktarı (ml)
+  int currentWater = 00; // Mevcut su miktarı (ml)
+  late int targetWater; // Hedef su miktarı (ml)
+  late double liter;
+
+  @override
+  void initState() {
+    super.initState();
+    targetWater = widget.dailyWater.toInt();
+    liter = widget.dailyWater / 1000;
+  }
 
   void addWater(int amount) {
     setState(() {
+      int newWater = currentWater + amount;
+
+      if (currentWater >= targetWater) {
+        return;
+      }
+
       currentWater = (currentWater + amount).clamp(0, targetWater);
-      waterLevel =
-          1.0 - (currentWater / targetWater * 0.85); // 0.15'ten 1.0'a kadar
+      waterLevel = 1.0 - (currentWater / targetWater * 0.85);
       waterLevel = waterLevel.clamp(0.15, 1.0);
     });
   }
@@ -39,15 +59,14 @@ class _HomePageState extends State<HomePage> {
     final width = size.width;
     final height = size.height;
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.blue.shade900),
-        backgroundColor: Colors.blue.shade50,
+        iconTheme: IconThemeData(color: Colors.white70),
+        backgroundColor: Color(0xff062549),
         elevation: 0,
         title: Text(
           "AquaMind",
           style: TextStyle(
-            color: Colors.blue.shade900,
+            color: Colors.white70,
             fontSize: width * 0.06,
             fontWeight: FontWeight.bold,
           ),
@@ -80,18 +99,22 @@ class _HomePageState extends State<HomePage> {
                 title: Text('Ana Sayfa'),
               ),
               ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Ayarlar'),
-              ),
-              ListTile(
                 leading: Icon(Icons.person),
                 title: Text('Hakkımızda'),
               ),
               ListTile(
                 leading: Icon(Icons.mail),
-                title: Text('Görüşlerinizi Bildirin'),
+                title: Text('Görüşleriniz'),
               ),
-              SizedBox(height: height * 0.54),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.solidBell),
+                title: Text('Hatırlatıcı'),
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Ayarlar'),
+              ),
+              SizedBox(height: height * 0.48),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -124,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                       "İyi Günler",
                       style: TextStyle(
                         fontSize: width * 0.04,
-                        color: Colors.blue.shade900,
+                        color: Colors.white70,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -152,211 +175,217 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               SizedBox(height: height * 0.03),
-              Text("  $currentWater / $targetWater ml   "),
+              Text(
+                "  $currentWater / $targetWater ml   ",
+                style: TextStyle(color: Colors.white70),
+              ),
+              SizedBox(
+                height: height * 0.016,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Günlük Hedefiniz : ${targetWater / 1000} Litre",
+                    "Günlük Hedefiniz : $targetWater ml",
                     style: TextStyle(
                       fontSize: width * 0.04,
-                      color: Colors.black,
+                      color: Colors.white70,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
               SizedBox(height: height * 0.05),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => addWater(200),
-                      borderRadius: BorderRadius.circular(60),
-                      child: Container(
-                        width: width * 0.15,
-                        height: height * 0.08,
-                        decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                            colors: [
-                              Colors.blue.shade300,
-                              Colors.blue.shade600,
+              Container(
+                width: width * 0.9,
+                height: height * 0.099,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(23),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: currentWater >= targetWater
+                            ? null
+                            : () => addWater(100),
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          width: width * 0.15,
+                          height: height * 0.08,
+                          decoration: BoxDecoration(
+                            gradient: RadialGradient(
+                              colors: [
+                                Colors.blue,
+                                Colors.blue,
+                              ],
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.glassWater,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "100 ml",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                              )
                             ],
                           ),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blue.withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.glassWater,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              "200 ml",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            )
-                          ],
                         ),
                       ),
                     ),
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => addWater(500),
-                      borderRadius: BorderRadius.circular(60),
-                      child: Container(
-                        width: width * 0.15,
-                        height: height * 0.08,
-                        decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                            colors: [
-                              Colors.blue.shade300,
-                              Colors.blue,
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: currentWater >= targetWater
+                            ? null
+                            : () => addWater(200),
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          width: width * 0.15,
+                          height: height * 0.08,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: AlignmentGeometry.topLeft,
+                              end: AlignmentGeometry.bottomRight,
+                              colors: [
+                                Colors.blue,
+                                Colors.blue,
+                              ],
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.wineGlass,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "200 ml",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                              )
                             ],
                           ),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blue.withOpacity(0.8),
-                              blurRadius: 10,
-                              offset: Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.wineGlass,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              "500 ml",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            )
-                          ],
                         ),
                       ),
                     ),
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => addWater(1000),
-                      child: Container(
-                        width: width * 0.15,
-                        height: height * 0.08,
-                        decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                            colors: [
-                              Colors.blue.shade300,
-                              Colors.blue,
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: currentWater >= targetWater
+                            ? null
+                            : () => addWater(500),
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          width: width * 0.15,
+                          height: height * 0.08,
+                          decoration: BoxDecoration(
+                            gradient: RadialGradient(
+                              colors: [
+                                Colors.blue,
+                                Colors.blue,
+                              ],
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.bottleDroplet,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "500 ml",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                              )
                             ],
                           ),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blue.withOpacity(0.8),
-                              blurRadius: 10,
-                              offset: Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.bottleDroplet,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              "1000 ml",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            )
-                          ],
                         ),
                       ),
                     ),
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => removeWater(100),
-                      child: Container(
-                        width: width * 0.15,
-                        height: height * 0.08,
-                        decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                            colors: [
-                              Colors.red,
-                              Colors.red,
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(60),
+                        onTap: () => removeWater(100),
+                        child: Container(
+                          width: width * 0.15,
+                          height: height * 0.08,
+                          decoration: BoxDecoration(
+                            gradient: RadialGradient(
+                              colors: [
+                                Colors.red,
+                                Colors.red,
+                              ],
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.downLong,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "100 ml",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                              )
                             ],
                           ),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.red.withOpacity(0.8),
-                              blurRadius: 10,
-                              offset: Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.downLong,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              "100 ml",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            )
-                          ],
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: height * 0.010,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue.shade50,
+                    borderRadius: BorderRadius.circular(27)),
+                width: width * 0.9,
+                height: height * 0.100,
               )
             ],
           ),
