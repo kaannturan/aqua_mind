@@ -60,6 +60,15 @@ class _HomePageState extends State<HomePage> {
     final height = size.height;
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 13),
+            child: Icon(
+              FontAwesomeIcons.solidBell,
+              size: 22,
+            ),
+          ),
+        ],
         iconTheme: IconThemeData(color: Colors.white70),
         backgroundColor: Color(0xff062549),
         elevation: 0,
@@ -136,21 +145,29 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      FontAwesomeIcons.droplet,
-                      color: Colors.blue.shade300,
-                      size: width * 0.04,
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 7),
+                          child: Icon(
+                            FontAwesomeIcons.droplet,
+                            color: Colors.blue.shade300,
+                            size: width * 0.04,
+                          ),
+                        ),
+                        Text(
+                          "İyi Günler",
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(width: width * 0.02),
-                    Text(
-                      "İyi Günler",
-                      style: TextStyle(
-                        fontSize: width * 0.04,
-                        color: Colors.white70,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -186,9 +203,9 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Günlük Hedefiniz : $targetWater ml",
+                    "Günlük hedefiniz : $targetWater ml",
                     style: TextStyle(
-                      fontSize: width * 0.04,
+                      fontSize: width * 0.05,
                       color: Colors.white70,
                       fontWeight: FontWeight.w600,
                     ),
@@ -384,18 +401,14 @@ class _HomePageState extends State<HomePage> {
               // bilgiler container
               Container(
                 decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
-                    borderRadius: BorderRadius.circular(27)),
+                    color: Colors.white.withOpacity(0.07),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.white24, width: 1)),
                 width: width * 0.9,
                 height: height / 3,
                 child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                          "Günlük su Miktarınız hem zihin berraklığınız için hem de zinde olmanız için çok önemlidir"),
-                    )
-                  ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Container()],
                 ),
               ),
             ],

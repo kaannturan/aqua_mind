@@ -2,10 +2,17 @@ import 'package:aqua_mind/models/user_model.dart';
 
 class DailyCalculate {
   static double calculateDailyWater(UserModel user) {
-    if (user.gender.toLowerCase() == "Erkek") {
-      return user.weight * 35;
+    double rawValue;
+
+    if (user.gender.toLowerCase() == "erkek") {
+      rawValue = user.weight * 35;
     } else {
-      return user.weight * 31;
+      rawValue = user.weight * 31;
     }
+
+    // En yakın yüzlüğe yuvarla
+    double rounded = (rawValue / 100).round() * 100;
+
+    return rounded;
   }
 }

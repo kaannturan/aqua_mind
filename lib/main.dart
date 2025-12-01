@@ -1,4 +1,5 @@
 // ignore_for_file: unused_import
+import 'package:aqua_mind/view/aktiflik_view.dart';
 import 'package:aqua_mind/view/height_choice_view.dart';
 import 'package:aqua_mind/view/hi_view.dart';
 import 'package:aqua_mind/view/home_page.dart';

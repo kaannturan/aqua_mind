@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable, deprecated_member_use
 import 'package:aqua_mind/models/user_model.dart';
 import 'package:aqua_mind/util/daily_calculate.dart';
-import 'package:aqua_mind/view/home_page.dart';
 import 'package:aqua_mind/view/loading_view.dart';
 import 'package:aqua_mind/widgets/step_item_gender.dart';
 import 'package:flutter/material.dart';
