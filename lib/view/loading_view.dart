@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'home_view.dart';
 
 class LoadingPage extends StatefulWidget {
   final int height;
@@ -61,38 +61,51 @@ class _LoadingPageState extends State<LoadingPage>
 
     return Scaffold(
       backgroundColor: const Color(0xff062549),
-      body: Stack(
-        children: [
-          // DALGA ANİMASYONU
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return CustomPaint(
-                size: size,
-                painter: WavePainter(_controller.value),
-              );
-            },
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.black,
+              Color(0xff062549),
+              Color(0xff062549),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-
-          // YAZI & LOGO
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.water_drop, color: Colors.white, size: 70),
-                const SizedBox(height: 20),
-                Text(
-                  "Hesaplama Yapılıyor..",
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: size.width * 0.06,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+        ),
+        child: Stack(
+          children: [
+            // DALGA ANİMASYONU
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return CustomPaint(
+                  size: size,
+                  painter: WavePainter(_controller.value),
+                );
+              },
             ),
-          ),
-        ],
+
+            // YAZI & LOGO
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.water_drop, color: Colors.white, size: 70),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Hesaplama Yapılıyor..",
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: size.width * 0.06,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
