@@ -99,20 +99,20 @@ class _HomePageState extends State<HomePage> {
                 title: Text('Ana Sayfa'),
               ),
               ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Hakkımızda'),
-              ),
-              ListTile(
-                leading: Icon(Icons.mail),
-                title: Text('Görüşleriniz'),
-              ),
-              ListTile(
                 leading: Icon(FontAwesomeIcons.solidBell),
                 title: Text('Hatırlatıcı'),
               ),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Ayarlar'),
+              ),
+              ListTile(
+                leading: Icon(Icons.mail),
+                title: Text('Görüşleriniz'),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Hakkımızda'),
               ),
               SizedBox(height: height * 0.48),
               Row(
@@ -380,13 +380,24 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: height * 0.010,
               ),
+
+              // bilgiler container
               Container(
                 decoration: BoxDecoration(
                     color: Colors.blue.shade50,
                     borderRadius: BorderRadius.circular(27)),
                 width: width * 0.9,
-                height: height * 0.100,
-              )
+                height: height / 3,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          "Günlük su Miktarınız hem zihin berraklığınız için hem de zinde olmanız için çok önemlidir"),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),
