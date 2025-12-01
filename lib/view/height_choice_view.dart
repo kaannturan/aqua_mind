@@ -51,30 +51,25 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
           ),
           child: Column(
             children: [
-              SizedBox(height: height * 0.0),
-
               // Üst step indicators
-              SizedBox(
-                height: height * 0.12,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      radius: width * 0.02,
-                      backgroundColor: Colors.grey,
-                    ),
-                    StepItemGender(
-                      isActive: true,
-                      icon: Icons.height_outlined,
-                      text: "Boy",
-                      selectedColor: Colors.lightBlue,
-                    ),
-                    CircleAvatar(
-                      radius: width * 0.02,
-                      backgroundColor: Colors.grey,
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircleAvatar(
+                    radius: width * 0.02,
+                    backgroundColor: Colors.grey,
+                  ),
+                  StepItemGender(
+                    isActive: true,
+                    icon: Icons.height_outlined,
+                    text: "Boy",
+                    selectedColor: Colors.lightBlue,
+                  ),
+                  CircleAvatar(
+                    radius: width * 0.02,
+                    backgroundColor: Colors.grey,
+                  ),
+                ],
               ),
 
               SizedBox(height: height * 0.02),
@@ -108,7 +103,7 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
 
                                 // Animasyonlu icon (görsel yerine)
                                 SizedBox(
-                                  width: constraints.maxWidth * 0.9,
+                                  width: constraints.maxWidth * 0.5,
                                   height: constraints.maxHeight * 0.4,
                                   child: AnimatedContainer(
                                     duration:
@@ -121,7 +116,6 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
                                     child: Image.asset(
                                       "assets/images/mutre.png",
                                       filterQuality: FilterQuality.high,
-                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),

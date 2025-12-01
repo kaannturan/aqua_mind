@@ -48,29 +48,24 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
           ),
           child: Column(
             children: [
-              SizedBox(height: height * 0.02),
-
               // Üst step indicators
-              SizedBox(
-                height: height * 0.12,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      radius: width * 0.02,
-                      backgroundColor: Colors.grey,
-                    ),
-                    CircleAvatar(
-                      radius: width * 0.02,
-                      backgroundColor: Colors.grey,
-                    ),
-                    StepItemGender(
-                      isActive: true,
-                      icon: Icons.monitor_weight_outlined,
-                      text: "Kilo",
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircleAvatar(
+                    radius: width * 0.02,
+                    backgroundColor: Colors.grey,
+                  ),
+                  CircleAvatar(
+                    radius: width * 0.02,
+                    backgroundColor: Colors.grey,
+                  ),
+                  StepItemGender(
+                    isActive: true,
+                    icon: Icons.monitor_weight_outlined,
+                    text: "Kilo",
+                  ),
+                ],
               ),
 
               SizedBox(height: height * 0.02),
