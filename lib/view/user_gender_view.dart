@@ -97,7 +97,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
 
                 // Cinsiyet seçenekleri
                 Expanded(
-                  child: Column(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomContainerGender(
@@ -192,7 +192,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                           child: Text(
                             "Devam Et",
                             style: TextStyle(
-                              fontSize: width * 0.044,
+                              fontSize: width * 0.04,
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                             ),

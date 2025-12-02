@@ -4,6 +4,7 @@ import 'package:aqua_mind/core/utils/daily_calculate.dart';
 import 'package:aqua_mind/view/loading_view.dart';
 import 'package:aqua_mind/core/widgets/step_item_gender.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WeightChoiceView extends StatefulWidget {
   final int height;
@@ -30,6 +31,16 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void saveUserData(
+      double dailyWater, double height, double weight, String gender) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("completedSetup", true);
+    await prefs.setDouble("dailyWater", dailyWater);
+    await prefs.setDouble("height", height);
+    await prefs.setDouble("weight", weight);
+    await prefs.setString("gender", gender);
   }
 
   @override
@@ -220,13 +231,28 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                       // Hesapla butonu
                       Flexible(
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             double dailyWater =
-                                DailyCalculate.calculateDailyWater(UserModel(
-                                    gender: widget.gender,
-                                    height: widget.height,
-                                    weight: selectedWeight));
-                            Navigator.push(
+                                DailyCalculate.calculateDailyWater(
+                              UserModel(
+                                gender: widget.gender,
+                                height: widget.height,
+                                weight: selectedWeight,
+                              ),
+                            );
+
+                            // ✅ SharedPreferences'a kaydet
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool("completedSetup", true);
+                            await prefs.setDouble("dailyWater", dailyWater);
+                            await prefs.setDouble(
+                                "height", widget.height.toDouble());
+                            await prefs.setDouble(
+                                "weight", selectedWeight.toDouble());
+                            await prefs.setString("gender", widget.gender);
+
+                            // ✅ LoadingPage'e yönlendir, geri dönülmesin
+                            Navigator.pushReplacement(
                               context,
                               PageRouteBuilder(
                                 pageBuilder:
@@ -241,10 +267,8 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                                   const begin = Offset(1.0, 0.0);
                                   const end = Offset.zero;
                                   const curve = Curves.easeInOut;
-                                  var tween =
-                                      Tween(begin: begin, end: end).chain(
-                                    CurveTween(curve: curve),
-                                  );
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
                                   return SlideTransition(
                                     position: animation.drive(tween),
                                     child: child,

@@ -1,8 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unused_local_variable
-
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unused_local_variable, use_build_context_synchronously
 import 'dart:math';
+import 'package:aqua_mind/view/hi_view.dart';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   final int height;
@@ -19,9 +20,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double waterLevel = 0.9; // Su seviyesi (0.0 - 1.0)
-  int currentWater = 00; // Mevcut su miktarı (ml)
-  late int targetWater; // Hedef su miktarı (ml)
+  double waterLevel = 0.9;
+  int currentWater = 00;
+  late int targetWater;
   late double liter;
 
   @override
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
       drawer: SizedBox(
         width: 250,
         child: Drawer(
-          backgroundColor: Color(0xFF062549),
+          backgroundColor: const Color(0xFF062549),
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: height * 0.17,
                   child: DrawerHeader(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
                           Colors.black,
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                         end: Alignment.bottomRight,
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'AquaMind',
                       style: TextStyle(
                         color: Colors.white,
@@ -125,48 +126,76 @@ class _HomePageState extends State<HomePage> {
                 ),
                 ListTile(
                   textColor: Colors.white,
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.home,
                     color: Colors.white,
                   ),
-                  title: Text('Ana Sayfa'),
+                  title: const Text('Ana Sayfa'),
                 ),
                 ListTile(
                   textColor: Colors.white,
-                  leading: Icon(
+                  leading: const Icon(
                     FontAwesomeIcons.solidBell,
                     color: Colors.white,
                   ),
-                  title: Text('Hatırlatıcı'),
+                  title: const Text('Hatırlatıcı'),
                 ),
                 ListTile(
                   textColor: Colors.white,
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.settings,
                     color: Colors.white,
                   ),
-                  title: Text('Ayarlar'),
+                  title: const Text('Ayarlar'),
                 ),
                 ListTile(
                   textColor: Colors.white,
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.mail,
                     color: Colors.white,
                   ),
-                  title: Text('Görüşleriniz'),
+                  title: const Text('Görüşleriniz'),
                 ),
                 ListTile(
                   textColor: Colors.white,
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.person,
                     color: Colors.white,
                   ),
-                  title: Text('Hakkımızda'),
+                  title: const Text('Hakkımızda'),
                 ),
-                SizedBox(height: height * 0.48),
+
+                const Divider(
+                    color: Colors.white70), // opsiyonel görsel ayırıcı
+
+                // Sıfırla butonu
+                ListTile(
+                  textColor: Colors.white,
+                  leading: const Icon(
+                    Icons.restart_alt,
+                    color: Colors.white,
+                  ),
+                  title: const Text('Verileri Sıfırla'),
+                  onTap: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.remove("completedSetup");
+                    await prefs.remove("dailyWater");
+                    await prefs.remove("height");
+                    await prefs.remove("weight");
+                    await prefs.remove("gender");
+
+                    // Setup ekranına geri dön
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HiPage()),
+                    );
+                  },
+                ),
+
+                SizedBox(height: height * 0.40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                  children: const [
                     Text(
                       "2026@AquaMind",
                       style: TextStyle(color: Colors.white, fontSize: 10),
@@ -201,39 +230,61 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            "İyi Günler",
-                            style: TextStyle(
-                              fontSize: width * 0.04,
-                              color: Colors.white70,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Icon(
-                              FontAwesomeIcons.droplet,
-                              color: Colors.blue.shade300,
-                              size: width * 0.04,
+                          TextButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 6.0, left: 0),
+                                  child: Text(
+                                    "Seviye I",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: Icon(
+                                    FontAwesomeIcons.droplet,
+                                    color: Colors.blue.shade300,
+                                    size: width * 0.03,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(width: width * 0.02),
                       Row(
                         children: [
-                          Text(
-                            "Rozetlerim",
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: Icon(
-                              FontAwesomeIcons.award,
-                              color: Colors.red,
-                              size: 14,
+                          TextButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 2, left: 10.0),
+                                  child: Text(
+                                    "Rozetlerim",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 6.0),
+                                  child: Icon(
+                                    FontAwesomeIcons.award,
+                                    color: Colors.amber,
+                                    size: 14,
+                                  ),
+                                )
+                              ],
                             ),
-                          )
+                          ),
                         ],
                       )
                     ],
@@ -314,7 +365,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  FontAwesomeIcons.glassWater,
+                                  FontAwesomeIcons.whiskeyGlass,
                                   color: Colors.white,
                                   size: 20,
                                 ),
@@ -323,7 +374,7 @@ class _HomePageState extends State<HomePage> {
                                   "100 ml",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,
                                   ),
@@ -358,7 +409,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  FontAwesomeIcons.wineGlass,
+                                  FontAwesomeIcons.glassWater,
                                   color: Colors.white,
                                   size: 20,
                                 ),
@@ -367,7 +418,7 @@ class _HomePageState extends State<HomePage> {
                                   "200 ml",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,
                                   ),
@@ -400,7 +451,7 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  FontAwesomeIcons.bottleDroplet,
+                                  FontAwesomeIcons.bottleWater,
                                   color: Colors.white,
                                   size: 20,
                                 ),
@@ -409,7 +460,7 @@ class _HomePageState extends State<HomePage> {
                                   "500 ml",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,
                                   ),
@@ -449,7 +500,7 @@ class _HomePageState extends State<HomePage> {
                                   "100 ml",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,
                                   ),
