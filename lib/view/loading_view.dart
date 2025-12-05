@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'home_view.dart';
+import 'home_view/home_view.dart';
 
 class LoadingPage extends StatefulWidget {
   final int height;

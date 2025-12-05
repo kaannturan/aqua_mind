@@ -1,6 +1,6 @@
 // main.dart
 import 'package:aqua_mind/view/hi_view.dart';
-import 'package:aqua_mind/view/home_view.dart';
+import 'package:aqua_mind/view/home_view/home_view.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
