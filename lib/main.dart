@@ -18,8 +18,6 @@ void main() async {
   final dailyWater = prefs.getDouble("dailyWater") ?? 0.0;
   final isCompleted = prefs.getBool("completedSetup") ?? false;
 
-  // double değerleri int'e çeviriyoruz
-
   final height = (prefs.getDouble("height") ?? 0.0).toInt();
   final weight = (prefs.getDouble("weight") ?? 0.0).toInt();
 

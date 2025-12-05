@@ -1,5 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unused_local_variable, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unused_local_variable, use_build_context_synchronously, unused_element
 import 'dart:math';
+import 'dart:ui';
 import 'package:aqua_mind/view/hi_view.dart';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import 'package:flutter/material.dart';
@@ -19,10 +20,23 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+DateTime safeParse(String dateStr) {
+  // Eğer gün tek haneliyse başına 0 ekle
+  final parts = dateStr.split("-");
+  if (parts.length == 3) {
+    final y = parts[0];
+    final m = parts[1].padLeft(2, "0");
+    final d = parts[2].padLeft(2, "0");
+    return DateTime.parse("$y-$m-$d");
+  }
+  return DateTime.now();
+}
+
 class _HomePageState extends State<HomePage> {
-  double waterLevel = 0.9;
-  int currentWater = 00;
+  double? waterLevel;
+  int currentWater = 0;
   late int targetWater;
+
   late double liter;
 
   @override
@@ -30,28 +44,111 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     targetWater = widget.dailyWater.toInt();
     liter = widget.dailyWater / 1000;
+
+    _loadTodayWater();
   }
 
-  void addWater(int amount) {
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+
+  String getTodayString() {
+    final today = DateTime.now();
+    return "${today.year}-${twoDigits(today.month)}-${twoDigits(today.day)}";
+  }
+
+  Future<void> _loadTodayWater() async {
+    final prefs = await SharedPreferences.getInstance();
+    final todayString = getTodayString();
+
+    int savedWater = prefs.getInt("todayDrankWater") ?? 0;
+    final lastDate = prefs.getString("lastDrinkDate") ?? todayString;
+
+    //gün değişiminde sıfırla
+
+    if (lastDate != todayString) {
+      savedWater = 0;
+      await prefs.setInt("todayDrankWater", 0);
+    }
+
+    setState(() {
+      currentWater = savedWater;
+      waterLevel = 1.0 - (currentWater / targetWater * 0.85);
+      waterLevel = waterLevel!.clamp(0.15, 1.0);
+    });
+  }
+
+  Future<void> _saveWater() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final todayString = getTodayString();
+
+    await prefs.setInt("todayDrankWater", currentWater);
+    await prefs.setString("lastDrinkDate", todayString);
+  }
+
+  Future<void> _saveWeeklyWater() async {
+    final prefs = await SharedPreferences.getInstance();
+    final today = DateTime.now();
+    final todayString = getTodayString();
+
+    // Weekly data (list of "date:amount")
+    List<String> savedList = prefs.getStringList("weeklyWater") ?? [];
+
+    Map<String, double> weekly = {};
+    for (var entry in savedList) {
+      final parts = entry.split(":");
+      weekly[parts[0]] = double.parse(parts[1]);
+    }
+
+    // Bugünün verisini ekle / güncelle
+    weekly[todayString] = currentWater.toDouble();
+    // Sadece son 7 günü tut
+    List<String> newList = [];
+    var sortedKeys = weekly.keys.toList()..sort((a, b) => b.compareTo(a));
+    for (int i = 0; i < min(7, sortedKeys.length); i++) {
+      final key = sortedKeys[i];
+      newList.add("$key:${weekly[key]}");
+    }
+
+    await prefs.setStringList("weeklyWater", newList);
+  }
+
+  Future<Map<String, double>> _loadWeeklyWater() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> savedList = prefs.getStringList("weeklyWater") ?? [];
+    Map<String, double> weekly = {};
+    for (var entry in savedList) {
+      final parts = entry.split(":");
+      weekly[parts[0]] = double.parse(parts[1]);
+    }
+    return weekly;
+  }
+
+  void addWater(int amount) async {
+    if (currentWater >= targetWater) return;
     setState(() {
       int newWater = currentWater + amount;
-
       if (currentWater >= targetWater) {
         return;
       }
 
       currentWater = (currentWater + amount).clamp(0, targetWater);
       waterLevel = 1.0 - (currentWater / targetWater * 0.85);
-      waterLevel = waterLevel.clamp(0.15, 1.0);
+      waterLevel = waterLevel!.clamp(0.15, 1.0);
     });
+
+    await _saveWater();
+    await _saveWeeklyWater();
   }
 
-  void removeWater(int amount) {
+  void removeWater(int amount) async {
     setState(() {
       currentWater = (currentWater - amount).clamp(0, targetWater);
       waterLevel = 1.0 - (currentWater / targetWater * 0.85);
-      waterLevel = waterLevel.clamp(0.15, 1.0);
+      waterLevel = waterLevel!.clamp(0.15, 1.0);
     });
+
+    await _saveWater();
+    await _saveWeeklyWater();
   }
 
   @override
@@ -59,6 +156,23 @@ class _HomePageState extends State<HomePage> {
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
+    if (waterLevel == null) {
+      return Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.black, Color(0xff062549)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Center(
+            child: CircularProgressIndicator(color: Colors.blueAccent),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -184,6 +298,10 @@ class _HomePageState extends State<HomePage> {
                     await prefs.remove("weight");
                     await prefs.remove("gender");
 
+                    await prefs.remove("todayDrankWater");
+                    await prefs.remove("lastDrinkDate");
+                    await prefs.remove("weeklyWater");
+
                     // Setup ekranına geri dön
                     Navigator.pushReplacement(
                       context,
@@ -299,7 +417,7 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             width: width,
                             height: height * 0.5,
-                            child: WaterWaveFill(waterLevel: waterLevel),
+                            child: WaterWaveFill(waterLevel: waterLevel!),
                           ),
                         ),
                         CustomPaint(
@@ -518,16 +636,235 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 // bilgiler container
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.07),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white24, width: 1)),
-                  width: width * 0.9,
-                  height: height / 3,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Container()],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Bugünkü İlerleme",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      // İçilen su - hedef bilgi satırı
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "İçilen Su:",
+                            style:
+                                TextStyle(color: Colors.white70, fontSize: 16),
+                          ),
+                          Text(
+                            "$currentWater ml",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Günlük Hedef:",
+                            style:
+                                TextStyle(color: Colors.white70, fontSize: 16),
+                          ),
+                          Text(
+                            "$targetWater ml",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Kalan:",
+                            style:
+                                TextStyle(color: Colors.white70, fontSize: 16),
+                          ),
+                          Text(
+                            "${(targetWater - currentWater).clamp(0, targetWater)} ml",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      // Progress Bar
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: LinearProgressIndicator(
+                          value: currentWater / targetWater,
+                          minHeight: 12,
+                          backgroundColor: Colors.white12,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+                      Center(
+                        child: Text(
+                          "%${((currentWater / targetWater) * 100).clamp(0, 100).toInt()} tamamlandı",
+                          style: TextStyle(color: Colors.white70, fontSize: 14),
+                        ),
+                      ),
+
+                      SizedBox(),
+                      FutureBuilder(
+                        future: _loadWeeklyWater(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return const Text(
+                              "Hata oluştu",
+                              style: TextStyle(color: Colors.white),
+                            );
+                          } else {
+                            final weeklyData = snapshot.data ?? {};
+                            return WeeklyWaterContainer(
+                                weeklyData: weeklyData,
+                                targetWater: targetWater);
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// WeeklyWaterContainer
+
+class WeeklyWaterContainer extends StatelessWidget {
+  final Map<String, double> weeklyData;
+  final int targetWater;
+
+  const WeeklyWaterContainer({
+    super.key,
+    required this.weeklyData,
+    required this.targetWater,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+
+    // Haftanın günleri
+    final days = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+
+    // weeklyData tarihleri "yyyy-MM-dd" formatında, onları günlere eşle
+    Map<String, double> dailyMap = {};
+    for (var entry in weeklyData.entries) {
+      final date = safeParse(entry.key);
+      final weekdayIndex = date.weekday - 1; // 0: Pzt, 6: Paz
+      dailyMap[days[weekdayIndex]] = entry.value;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            height: 180,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.white24),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Haftalık Su Takibi",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: days.map(
+                      (day) {
+                        final drank = dailyMap[day] ?? 0.0;
+                        final barHeight =
+                            (drank / targetWater * 100).clamp(0, 100);
+
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              drank >= targetWater ? "🎉" : "",
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            Container(
+                              width: width * 0.08,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.blueAccent,
+                                    Colors.blue.shade200,
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              day,
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ).toList(),
                   ),
                 ),
               ],
@@ -630,11 +967,12 @@ class _WaterWaveFillState extends State<WaterWaveFill>
   late AnimationController _levelController;
   late Animation<double> _levelAnimation;
 
-  double _currentLevel = 0.9;
+  late double _currentLevel;
 
   @override
   void initState() {
     super.initState();
+    _currentLevel = widget.waterLevel;
     _backController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 3),
@@ -693,7 +1031,8 @@ class _WaterWaveFillState extends State<WaterWaveFill>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: Listenable.merge(
-          [_backController, _frontController, _levelAnimation]),
+        [_backController, _frontController, _levelAnimation],
+      ),
       builder: (context, child) {
         return CustomPaint(
           painter: WavePainter(
