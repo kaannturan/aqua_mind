@@ -6,6 +6,8 @@ import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../badges/achievement_system.dart';
+
 class HomePage extends StatefulWidget {
   final int height;
   final int weight;
@@ -43,6 +45,10 @@ class _HomePageState extends State<HomePage>
   late AnimationController _progressController;
   late Animation<double> _progressAnimation;
 
+  int currentLevel = 1;
+  int consecutiveDays = 0;
+  List<Badgee> badges = [];
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +65,19 @@ class _HomePageState extends State<HomePage>
     );
 
     _loadTodayWater();
+    _loadLevelAndBadges();
+  }
+
+  Future<void> _loadLevelAndBadges() async {
+    final level = await LevelSystem.getCurrentLevel();
+    final consecutive = await LevelSystem.getConsecutiveDays();
+    final unlockedBadges = await BadgeSystem.getUnlockedBadges();
+
+    setState(() {
+      currentLevel = level;
+      consecutiveDays = consecutive;
+      badges = unlockedBadges;
+    });
   }
 
   @override
@@ -167,7 +186,6 @@ class _HomePageState extends State<HomePage>
       waterLevel = waterLevel!.clamp(0.15, 1.0);
     });
 
-    // Progress bar animasyonu
     final newProgress = currentWater / targetWater;
     _progressAnimation = Tween<double>(
       begin: oldProgress,
@@ -181,6 +199,13 @@ class _HomePageState extends State<HomePage>
 
     await _saveWater();
     await _saveWeeklyWater();
+
+    // YENİ: Rozet ve seviye kontrolü
+    final todayString = getTodayString();
+    await LevelSystem.addDataDate(todayString);
+    await LevelSystem.updateConsecutiveDays();
+    await BadgeSystem.checkAndUnlockBadges(currentWater, targetWater);
+    await _loadLevelAndBadges(); // Güncel verileri yükle
 
     final newWeeklyData = await _loadWeeklyWater();
 
@@ -447,11 +472,11 @@ class _HomePageState extends State<HomePage>
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 6.0, left: 0),
+                                      right: 5.0, left: 0),
                                   child: Text(
-                                    "Seviye I",
+                                    "Seviye $currentLevel",
                                     style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 14,
                                       color: Colors.white70,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -473,14 +498,16 @@ class _HomePageState extends State<HomePage>
                       Row(
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              BadgeSystem.showBadgesDialog(context, badges);
+                            },
                             child: Row(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       right: 2, left: 10.0),
                                   child: Text(
-                                    "Rozetlerim",
+                                    "Rozetlerim ${badges.where((b) => b.isUnlocked).length}/${badges.length}",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 15),
                                   ),
