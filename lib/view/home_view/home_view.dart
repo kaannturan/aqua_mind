@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage>
 
     _progressController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 800),
+      duration: Duration(milliseconds: 200),
     );
 
     _progressAnimation = Tween<double>(begin: 0.0, end: 0.0).animate(
