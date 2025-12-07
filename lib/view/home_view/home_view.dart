@@ -32,7 +32,8 @@ DateTime safeParse(String dateStr) {
   return DateTime.now();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   double? waterLevel;
   int currentWater = 0;
   late int targetWater;
@@ -40,11 +41,23 @@ class _HomePageState extends State<HomePage> {
   Map<String, double> weeklyData = {};
   final ScrollController _scrollController = ScrollController();
 
+  late AnimationController _progressController;
+  late Animation<double> _progressAnimation;
+
   @override
   void initState() {
     super.initState();
     targetWater = widget.dailyWater.toInt();
     liter = widget.dailyWater / 1000;
+
+    _progressController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+    );
+
+    _progressAnimation = Tween<double>(begin: 0.0, end: 0.0).animate(
+      CurvedAnimation(parent: _progressController, curve: Curves.easeInOut),
+    );
 
     _loadTodayWater();
   }
@@ -52,6 +65,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _progressController.dispose();
     super.dispose();
   }
 
@@ -83,13 +97,20 @@ class _HomePageState extends State<HomePage> {
       waterLevel = waterLevel!.clamp(0.15, 1.0);
       weeklyData = loadedWeeklyData;
     });
+
+    // İlk progress animasyonunu ayarla
+    _progressAnimation = Tween<double>(
+      begin: 0.0,
+      end: currentWater / targetWater,
+    ).animate(
+      CurvedAnimation(parent: _progressController, curve: Curves.easeInOut),
+    );
+    _progressController.forward();
   }
 
   Future<void> _saveWater() async {
     final prefs = await SharedPreferences.getInstance();
-
     final todayString = getTodayString();
-
     await prefs.setInt("todayDrankWater", currentWater);
     await prefs.setString("lastDrinkDate", todayString);
   }
@@ -136,40 +157,55 @@ class _HomePageState extends State<HomePage> {
   void addWater(int amount) async {
     if (currentWater >= targetWater) return;
 
-    final currentScrollPosition =
+    final scrollPosition =
         _scrollController.hasClients ? _scrollController.offset : 0.0;
 
-    setState(() {
-      int newWater = currentWater + amount;
-      if (currentWater >= targetWater) {
-        return;
-      }
+    final oldProgress = currentWater / targetWater;
 
+    setState(() {
       currentWater = (currentWater + amount).clamp(0, targetWater);
       waterLevel = 1.0 - (currentWater / targetWater * 0.85);
       waterLevel = waterLevel!.clamp(0.15, 1.0);
     });
 
+    // Progress bar animasyonu
+    final newProgress = currentWater / targetWater;
+    _progressAnimation = Tween<double>(
+      begin: oldProgress,
+      end: newProgress,
+    ).animate(CurvedAnimation(
+      parent: _progressController,
+      curve: Curves.easeInOut,
+    ));
+
+    _progressController.forward(from: 0.0);
+
     await _saveWater();
     await _saveWeeklyWater();
 
-    final loadedWeeklyData = await _loadWeeklyWater();
-    setState(() {
-      weeklyData = loadedWeeklyData;
-    });
+    final newWeeklyData = await _loadWeeklyWater();
 
-    // Scroll pozisyonunu geri yükle
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(currentScrollPosition);
-      }
-    });
+    if (mounted) {
+      setState(() {
+        weeklyData = newWeeklyData;
+      });
+    }
+
+    if (_scrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(scrollPosition);
+        }
+      });
+    }
   }
 
 // remover fonksiyonu
   void removeWater(int amount) async {
-    final currentScrollPosition =
+    final scrollPosition =
         _scrollController.hasClients ? _scrollController.offset : 0.0;
+
+    final oldProgress = currentWater / targetWater;
 
     setState(() {
       currentWater = (currentWater - amount).clamp(0, targetWater);
@@ -177,19 +213,36 @@ class _HomePageState extends State<HomePage> {
       waterLevel = waterLevel!.clamp(0.15, 1.0);
     });
 
+    // Progress bar animasyonu
+    final newProgress = currentWater / targetWater;
+    _progressAnimation = Tween<double>(
+      begin: oldProgress,
+      end: newProgress,
+    ).animate(CurvedAnimation(
+      parent: _progressController,
+      curve: Curves.easeInOut,
+    ));
+
+    _progressController.forward(from: 0.0);
+
     await _saveWater();
     await _saveWeeklyWater();
-    final loadedWeeklyData = await _loadWeeklyWater();
-    setState(() {
-      weeklyData = loadedWeeklyData;
-    });
 
-    // Scroll pozisyonunu geri yükle
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(currentScrollPosition);
-      }
-    });
+    final newWeeklyData = await _loadWeeklyWater();
+
+    if (mounted) {
+      setState(() {
+        weeklyData = newWeeklyData;
+      });
+    }
+
+    if (_scrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(scrollPosition);
+        }
+      });
+    }
   }
 
   @override
@@ -755,27 +808,71 @@ class _HomePageState extends State<HomePage> {
 
                       const SizedBox(height: 18),
 
-                      // Progress Bar
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: LinearProgressIndicator(
-                          value: currentWater / targetWater,
-                          minHeight: 12,
-                          backgroundColor: Colors.white12,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.blueAccent),
-                        ),
+                      // Progress Bar - Animasyonlu
+                      AnimatedBuilder(
+                        animation: _progressAnimation,
+                        builder: (context, child) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Stack(
+                              children: [
+                                // Arka plan
+                                Container(
+                                  height: 12,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white12,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                // Animasyonlu progress
+                                FractionallySizedBox(
+                                  widthFactor:
+                                      _progressAnimation.value.clamp(0.0, 1.0),
+                                  child: Container(
+                                    height: 12,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.blueAccent,
+                                          Colors.blue.shade300,
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.blueAccent
+                                              .withOpacity(0.4),
+                                          blurRadius: 8,
+                                          spreadRadius: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
 
                       const SizedBox(height: 8),
-                      Center(
-                        child: Text(
-                          "%${((currentWater / targetWater) * 100).clamp(0, 100).toInt()} tamamlandı",
-                          style: TextStyle(color: Colors.white70, fontSize: 14),
-                        ),
+                      AnimatedBuilder(
+                        animation: _progressAnimation,
+                        builder: (context, child) {
+                          return Center(
+                            child: Text(
+                              "%${(_progressAnimation.value * 100).clamp(0, 100).toInt()} tamamlandı",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          );
+                        },
                       ),
 
-                      SizedBox(),
+                      const SizedBox(height: 16),
                       WeeklyWaterContainer(
                         weeklyData: weeklyData,
                         targetWater: targetWater,
@@ -882,9 +979,9 @@ class WeeklyWaterContainer extends StatelessWidget {
                           else
                             SizedBox(height: 5), // Boşluk için
                           const SizedBox(height: 4),
-                          // Bar
+// Bar
                           Container(
-                            width: width * 0.03,
+                            width: width * 0.08,
                             height: barHeight * 0.8,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
@@ -913,7 +1010,7 @@ class WeeklyWaterContainer extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 6),
-                          // Gün ismi
+// Gün ismi
                           Text(
                             day,
                             style: TextStyle(
@@ -945,7 +1042,6 @@ class WaterDropClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
-
     path.moveTo(size.width * 0.5, size.height * 0.05);
 
     path.cubicTo(
@@ -979,7 +1075,6 @@ class WaterStack extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
-
     path.moveTo(size.width * 0.5, size.height * 0.05);
 
     path.cubicTo(
@@ -1017,9 +1112,7 @@ class WaterStack extends CustomPainter {
 // Dalga animasyonu için widget
 class WaterWaveFill extends StatefulWidget {
   final double waterLevel;
-
   const WaterWaveFill({super.key, required this.waterLevel});
-
   @override
   _WaterWaveFillState createState() => _WaterWaveFillState();
 }
@@ -1030,9 +1123,7 @@ class _WaterWaveFillState extends State<WaterWaveFill>
   late AnimationController _frontController;
   late AnimationController _levelController;
   late Animation<double> _levelAnimation;
-
   late double _currentLevel;
-
   @override
   void initState() {
     super.initState();
@@ -1041,7 +1132,6 @@ class _WaterWaveFillState extends State<WaterWaveFill>
       vsync: this,
       duration: Duration(seconds: 3),
     )..repeat();
-
     _frontController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 4),
@@ -1067,7 +1157,6 @@ class _WaterWaveFillState extends State<WaterWaveFill>
     if (oldWidget.waterLevel != widget.waterLevel) {
       double startlevel =
           _levelController.isAnimating ? _levelAnimation.value : _currentLevel;
-
       _levelAnimation = Tween<double>(
         begin: startlevel,
         end: widget.waterLevel,
@@ -1114,9 +1203,7 @@ class WavePainter extends CustomPainter {
   final double backValue;
   final double frontValue;
   final double waterLevel;
-
   WavePainter(this.backValue, this.frontValue, this.waterLevel);
-
   @override
   void paint(Canvas canvas, Size size) {
     final bgPaint = Paint()
@@ -1128,7 +1215,6 @@ class WavePainter extends CustomPainter {
           Colors.blue.shade200,
         ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-
     final shadowPaint = Paint()
       ..color = Colors.blue.shade900.withOpacity(0.25)
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 15);
