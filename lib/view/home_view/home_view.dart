@@ -36,8 +36,9 @@ class _HomePageState extends State<HomePage> {
   double? waterLevel;
   int currentWater = 0;
   late int targetWater;
-
   late double liter;
+  Map<String, double> weeklyData = {};
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -48,6 +49,12 @@ class _HomePageState extends State<HomePage> {
     _loadTodayWater();
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   String twoDigits(int n) => n.toString().padLeft(2, "0");
 
   String getTodayString() {
@@ -55,24 +62,26 @@ class _HomePageState extends State<HomePage> {
     return "${today.year}-${twoDigits(today.month)}-${twoDigits(today.day)}";
   }
 
+  // load today water fonksiyonu
   Future<void> _loadTodayWater() async {
     final prefs = await SharedPreferences.getInstance();
     final todayString = getTodayString();
-
     int savedWater = prefs.getInt("todayDrankWater") ?? 0;
     final lastDate = prefs.getString("lastDrinkDate") ?? todayString;
 
     //gün değişiminde sıfırla
-
     if (lastDate != todayString) {
       savedWater = 0;
       await prefs.setInt("todayDrankWater", 0);
     }
 
+    final loadedWeeklyData = await _loadWeeklyWater();
+
     setState(() {
       currentWater = savedWater;
       waterLevel = 1.0 - (currentWater / targetWater * 0.85);
       waterLevel = waterLevel!.clamp(0.15, 1.0);
+      weeklyData = loadedWeeklyData;
     });
   }
 
@@ -123,8 +132,13 @@ class _HomePageState extends State<HomePage> {
     return weekly;
   }
 
+// add water fonksiyonu
   void addWater(int amount) async {
     if (currentWater >= targetWater) return;
+
+    final currentScrollPosition =
+        _scrollController.hasClients ? _scrollController.offset : 0.0;
+
     setState(() {
       int newWater = currentWater + amount;
       if (currentWater >= targetWater) {
@@ -138,9 +152,25 @@ class _HomePageState extends State<HomePage> {
 
     await _saveWater();
     await _saveWeeklyWater();
+
+    final loadedWeeklyData = await _loadWeeklyWater();
+    setState(() {
+      weeklyData = loadedWeeklyData;
+    });
+
+    // Scroll pozisyonunu geri yükle
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(currentScrollPosition);
+      }
+    });
   }
 
+// remover fonksiyonu
   void removeWater(int amount) async {
+    final currentScrollPosition =
+        _scrollController.hasClients ? _scrollController.offset : 0.0;
+
     setState(() {
       currentWater = (currentWater - amount).clamp(0, targetWater);
       waterLevel = 1.0 - (currentWater / targetWater * 0.85);
@@ -149,6 +179,17 @@ class _HomePageState extends State<HomePage> {
 
     await _saveWater();
     await _saveWeeklyWater();
+    final loadedWeeklyData = await _loadWeeklyWater();
+    setState(() {
+      weeklyData = loadedWeeklyData;
+    });
+
+    // Scroll pozisyonunu geri yükle
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(currentScrollPosition);
+      }
+    });
   }
 
   @override
@@ -338,6 +379,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -734,27 +776,10 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       SizedBox(),
-                      FutureBuilder(
-                        future: _loadWeeklyWater(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (snapshot.hasError) {
-                            return const Text(
-                              "Hata oluştu",
-                              style: TextStyle(color: Colors.white),
-                            );
-                          } else {
-                            final weeklyData = snapshot.data ?? {};
-                            return WeeklyWaterContainer(
-                                weeklyData: weeklyData,
-                                targetWater: targetWater);
-                          }
-                        },
-                      )
+                      WeeklyWaterContainer(
+                        weeklyData: weeklyData,
+                        targetWater: targetWater,
+                      ),
                     ],
                   ),
                 )
@@ -803,7 +828,7 @@ class WeeklyWaterContainer extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
           child: Container(
             padding: const EdgeInsets.all(16),
-            height: 180,
+            height: 200,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(20),
@@ -825,46 +850,85 @@ class WeeklyWaterContainer extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: days.map(
-                      (day) {
-                        final drank = dailyMap[day] ?? 0.0;
-                        final barHeight =
-                            (drank / targetWater * 100).clamp(0, 100);
+                    children: days.map((day) {
+                      final drank = dailyMap[day] ?? 0.0;
+                      final barHeight =
+                          (drank / targetWater * 100).clamp(0, 100);
+                      final isCompleted = drank >= targetWater;
 
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              drank >= targetWater ? "🎉" : "",
-                              style: const TextStyle(fontSize: 16),
-                            ),
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          // Onay tiki - hedef tamamlandığında
+                          if (isCompleted)
                             Container(
-                              width: width * 0.08,
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.blueAccent,
-                                    Colors.blue.shade200,
-                                  ],
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                ),
-                                borderRadius: BorderRadius.circular(6),
+                                color: Colors.green.shade400,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.green.withOpacity(0.5),
+                                    blurRadius: 8,
+                                    spreadRadius: 1,
+                                  ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              day,
-                              style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 14,
                               ),
+                            )
+                          else
+                            SizedBox(height: 5), // Boşluk için
+                          const SizedBox(height: 4),
+                          // Bar
+                          Container(
+                            width: width * 0.03,
+                            height: barHeight * 0.8,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: isCompleted
+                                    ? [
+                                        Colors.blue.shade600,
+                                        Colors.blue.shade300,
+                                      ]
+                                    : [
+                                        Colors.blueAccent,
+                                        Colors.blue.shade200,
+                                      ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                              ),
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: isCompleted
+                                  ? [
+                                      BoxShadow(
+                                        color: Colors.blue.withOpacity(0.4),
+                                        blurRadius: 6,
+                                        spreadRadius: 1,
+                                      ),
+                                    ]
+                                  : null,
                             ),
-                          ],
-                        );
-                      },
-                    ).toList(),
+                          ),
+                          const SizedBox(height: 6),
+                          // Gün ismi
+                          Text(
+                            day,
+                            style: TextStyle(
+                              color: isCompleted
+                                  ? Colors.blue.shade200
+                                  : Colors.white70,
+                              fontSize: 12,
+                              fontWeight: isCompleted
+                                  ? FontWeight.bold
+                                  : FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
                   ),
                 ),
               ],
