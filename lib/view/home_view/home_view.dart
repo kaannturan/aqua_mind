@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 DateTime safeParse(String dateStr) {
-  // Eğer gün tek haneliyse başına 0 ekle
   final parts = dateStr.split("-");
   if (parts.length == 3) {
     final y = parts[0];
@@ -373,8 +372,7 @@ class _HomePageState extends State<HomePage>
                   title: const Text('Hakkımızda'),
                 ),
 
-                const Divider(
-                    color: Colors.white70), // opsiyonel görsel ayırıcı
+                const Divider(color: Colors.white70),
 
                 // Sıfırla butonu
                 ListTile(
@@ -808,7 +806,7 @@ class _HomePageState extends State<HomePage>
 
                       const SizedBox(height: 18),
 
-                      // Progress Bar - Animasyonlu
+                      // Progress Bar - animasyonlu
                       AnimatedBuilder(
                         animation: _progressAnimation,
                         builder: (context, child) {
@@ -979,7 +977,7 @@ class WeeklyWaterContainer extends StatelessWidget {
                           else
                             SizedBox(height: 5), // Boşluk için
                           const SizedBox(height: 4),
-// Bar
+                          // Bar
                           Container(
                             width: width * 0.08,
                             height: barHeight * 0.8,
@@ -1010,7 +1008,7 @@ class WeeklyWaterContainer extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 6),
-// Gün ismi
+                          // Gün ismi
                           Text(
                             day,
                             style: TextStyle(
