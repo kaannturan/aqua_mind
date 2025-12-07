@@ -5,8 +5,7 @@ import 'package:aqua_mind/view/hi_view.dart';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../badges/achievement_system.dart';
+import '../../badges and levels/achievement_system.dart';
 
 class HomePage extends StatefulWidget {
   final int height;
@@ -504,12 +503,12 @@ class _HomePageState extends State<HomePage>
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 2, left: 10.0),
+                                  padding:
+                                      const EdgeInsets.only(right: 0, left: 0),
                                   child: Text(
                                     "Rozetlerim ${badges.where((b) => b.isUnlocked).length}/${badges.length}",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 15),
+                                        color: Colors.white, fontSize: 14),
                                   ),
                                 ),
                                 Padding(

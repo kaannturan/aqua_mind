@@ -151,7 +151,7 @@ class BadgeSystem {
       ),
       Badgee(
         id: 'ocean_bender',
-        name: 'Okyanus Bükücü',
+        name: 'Okyanuslar Kralı',
         description: '3 ay boyunca veri girdin',
         icon: '🌀',
       ),
@@ -218,7 +218,7 @@ class BadgeSystem {
       await unlockBadge('hydro_master');
     }
 
-    // Okyanus Bükücü - 90 gün
+    // Okyanuslar Kralı - 90 gün
     if (totalDays >= 90) {
       await unlockBadge('ocean_bender');
     }
