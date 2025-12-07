@@ -988,7 +988,7 @@ class WeeklyWaterContainer extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.green.withOpacity(0.5),
+                                    color: Colors.green.withOpacity(0.1),
                                     blurRadius: 8,
                                     spreadRadius: 1,
                                   ),
@@ -1005,7 +1005,7 @@ class WeeklyWaterContainer extends StatelessWidget {
                           const SizedBox(height: 4),
                           // Bar
                           Container(
-                            width: width * 0.08,
+                            width: width * 0.03,
                             height: barHeight * 0.8,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(

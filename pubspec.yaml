@@ -28,14 +28,17 @@ dev_dependencies:
 
   flutter_lints: ^5.0.0
 
+
 flutter:
+
   uses-material-design: true
 
   assets:
     - assets/images/
 
+  generate: true
 
-# Localization ayarları
+
 l10n:
   arb-dir: lib/l10n
   template-arb-file: app_en.arb

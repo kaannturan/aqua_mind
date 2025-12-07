@@ -1,0 +1,8 @@
+{
+  "@@locale": "hi",
+  "appTitle": "AquaMind",
+  "home_dailyGoal": "दैनिक पानी लक्ष्य: {ml} ml",
+  "@home_dailyGoal": { "placeholders": { "ml": {} } },
+  "addWater": "पानी जोड़ें",
+  "weeklyTracking": "साप्ताहिक ट्रैकिंग"
+}

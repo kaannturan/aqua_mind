@@ -1,0 +1,8 @@
+{
+  "@@locale": "vi",
+  "appTitle": "AquaMind",
+  "home_dailyGoal": "Mục tiêu nước hằng ngày: {ml} ml",
+  "@home_dailyGoal": { "placeholders": { "ml": {} } },
+  "addWater": "Thêm nước",
+  "weeklyTracking": "Theo dõi hàng tuần"
+}

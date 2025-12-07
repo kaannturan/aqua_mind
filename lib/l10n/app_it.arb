@@ -1,0 +1,8 @@
+{
+  "@@locale": "it",
+  "appTitle": "AquaMind",
+  "home_dailyGoal": "Obiettivo giornaliero di acqua: {ml} ml",
+  "@home_dailyGoal": { "placeholders": { "ml": {} } },
+  "addWater": "Aggiungi acqua",
+  "weeklyTracking": "Monitoraggio settimanale"
+}

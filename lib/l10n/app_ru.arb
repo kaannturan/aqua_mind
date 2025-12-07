@@ -1,0 +1,8 @@
+{
+  "@@locale": "ru",
+  "appTitle": "AquaMind",
+  "home_dailyGoal": "Ежедневная норма воды: {ml} мл",
+  "@home_dailyGoal": { "placeholders": { "ml": {} } },
+  "addWater": "Добавить воду",
+  "weeklyTracking": "Еженедельный контроль"
+}

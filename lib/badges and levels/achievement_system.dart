@@ -147,13 +147,13 @@ class BadgeSystem {
         id: 'hydro_master',
         name: 'Hydro Ustası',
         description: '1 ay boyunca veri girdin',
-        icon: '👑',
+        icon: '🌀',
       ),
       Badgee(
         id: 'ocean_bender',
         name: 'Okyanuslar Kralı',
         description: '3 ay boyunca veri girdin',
-        icon: '🌀',
+        icon: '👑',
       ),
       Badgee(
         id: 'aqua_legend',

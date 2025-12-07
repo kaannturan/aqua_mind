@@ -1,0 +1,8 @@
+{
+  "@@locale": "zh",
+  "appTitle": "AquaMind",
+  "home_dailyGoal": "每日饮水目标: {ml} 毫升",
+  "@home_dailyGoal": { "placeholders": { "ml": {} } },
+  "addWater": "添加饮水",
+  "weeklyTracking": "每周跟踪"
+}

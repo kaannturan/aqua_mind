@@ -1,6 +1,13 @@
 {
   "@@locale": "tr",
   "appTitle": "AquaMind",
+  "home_dailyGoal": "Günlük hedef: {ml} ml",
+  "@home_dailyGoal": {
+    "description": "ml değişkeni ile günlük hedef",
+    "placeholders": {
+      "ml": {}
+    }
+  },
   "addWater": "Su ekle",
-  "weeklyTracking": "Haftalık Takip"
+  "weeklyTracking": "Haftalık takip"
 }
