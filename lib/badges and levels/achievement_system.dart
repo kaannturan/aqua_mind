@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unnecessary_this, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,14 +9,14 @@ class Badgee {
   final String id;
   final String name;
   final String description;
-  final String icon;
+  final IconData iconData;
   final bool isUnlocked;
 
   Badgee({
     required this.id,
     required this.name,
     required this.description,
-    required this.icon,
+    required this.iconData,
     this.isUnlocked = false,
   });
 
@@ -25,7 +25,7 @@ class Badgee {
       id: this.id,
       name: this.name,
       description: this.description,
-      icon: this.icon,
+      iconData: this.iconData,
       isUnlocked: isUnlocked ?? this.isUnlocked,
     );
   }
@@ -51,38 +51,39 @@ class LevelSystem {
   static Future<void> updateConsecutiveDays() async {
     final prefs = await SharedPreferences.getInstance();
     final today = DateTime.now();
+    final todayString = formatDate(today);
     final lastDate = prefs.getString('lastConsecutiveDate');
 
     if (lastDate == null) {
-      // İlk gün
       await prefs.setInt('consecutiveDays', 1);
-      await prefs.setString('lastConsecutiveDate', _formatDate(today));
+      await prefs.setString('lastConsecutiveDate', todayString);
+      return;
+    }
+
+    if (lastDate == todayString) {
       return;
     }
 
     final lastDateTime = DateTime.parse(lastDate);
-    final difference = today.difference(lastDateTime).inDays;
+    final todayDateTime = DateTime.parse(todayString);
+    final difference = todayDateTime.difference(lastDateTime).inDays;
 
     if (difference == 1) {
-      // Ardışık gün
       final current = await getConsecutiveDays();
       await prefs.setInt('consecutiveDays', current + 1);
-      await prefs.setString('lastConsecutiveDate', _formatDate(today));
+      await prefs.setString('lastConsecutiveDate', todayString);
 
-      // Her 7 günde bir seviye atla
       if ((current + 1) % 7 == 0) {
         final level = await getCurrentLevel();
         await setLevel(level + 1);
       }
     } else if (difference > 1) {
-      // Seri kırıldı
       await prefs.setInt('consecutiveDays', 1);
-      await prefs.setString('lastConsecutiveDate', _formatDate(today));
+      await prefs.setString('lastConsecutiveDate', todayString);
     }
-    // difference == 0 ise bugün zaten kaydedilmiş
   }
 
-  static String _formatDate(DateTime date) {
+  static String formatDate(DateTime date) {
     return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 
@@ -111,55 +112,49 @@ class BadgeSystem {
         id: 'first_drop',
         name: 'İlk Damla',
         description: 'Uygulamayı ilk kez kullandın',
-        icon: '💧',
+        iconData: FontAwesomeIcons.droplet, // ✅ YENİ
       ),
       Badgee(
         id: 'blue_spark',
         name: 'Mavi Kıvılcım',
         description: 'Günlük hedefini ilk kez tamamladın',
-        icon: '⚡',
-      ),
-      Badgee(
-        id: 'healer',
-        name: 'Şifacı',
-        description: 'Uygulamayı bir arkadaşına paylaştın',
-        icon: '🌟',
+        iconData: FontAwesomeIcons.boltLightning, // ✅ YENİ
       ),
       Badgee(
         id: 'flow_starter',
         name: 'Akış Başlatıcı',
         description: '5 gün üst üste hedefini tamamladın',
-        icon: '🌊',
+        iconData: FontAwesomeIcons.fire, // ✅ YENİ
       ),
       Badgee(
         id: 'blue_energy',
         name: 'Mavi Enerji',
         description: 'İlk hafta düzenli su içtin',
-        icon: '💙',
+        iconData: FontAwesomeIcons.star, // ✅ YENİ
       ),
       Badgee(
         id: 'water_hunter',
         name: 'Su Avcısı',
         description: '15 gün veri girdin',
-        icon: '🎯',
+        iconData: FontAwesomeIcons.bullseye, // ✅ YENİ
       ),
       Badgee(
         id: 'hydro_master',
         name: 'Hydro Ustası',
         description: '1 ay boyunca veri girdin',
-        icon: '🌀',
+        iconData: FontAwesomeIcons.medal, // ✅ YENİ
       ),
       Badgee(
         id: 'ocean_bender',
         name: 'Okyanuslar Kralı',
         description: '3 ay boyunca veri girdin',
-        icon: '👑',
+        iconData: FontAwesomeIcons.crown, // ✅ YENİ
       ),
       Badgee(
         id: 'aqua_legend',
         name: 'Aqua Efsanesi',
         description: '6 ay boyunca veri girdin',
-        icon: '🏆',
+        iconData: FontAwesomeIcons.trophy, // ✅ YENİ
       ),
     ];
   }
@@ -173,63 +168,115 @@ class BadgeSystem {
     }).toList();
   }
 
-  static Future<void> unlockBadge(String badgeId) async {
+  static Future<bool> unlockBadge(String badgeId) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> unlockedIds = prefs.getStringList('unlockedBadges') ?? [];
 
     if (!unlockedIds.contains(badgeId)) {
       unlockedIds.add(badgeId);
       await prefs.setStringList('unlockedBadges', unlockedIds);
+      return true;
     }
+    return false;
   }
 
-  static Future<void> checkAndUnlockBadges(
+  static Future<List<String>> checkAndUnlockBadges(
       int currentWater, int targetWater) async {
+    List<String> newBadges = [];
+
     final consecutiveDays = await LevelSystem.getConsecutiveDays();
     final totalDays = await LevelSystem.getTotalDaysWithData();
 
-    // İlk Damla - ilk veri
     if (totalDays >= 1) {
-      await unlockBadge('first_drop');
+      bool isNew = await unlockBadge('first_drop');
+      if (isNew) newBadges.add('first_drop');
     }
 
-    // Mavi Kıvılcım - ilk hedef tamamlama
     if (currentWater >= targetWater) {
-      await unlockBadge('blue_spark');
+      bool isNew = await unlockBadge('blue_spark');
+      if (isNew) newBadges.add('blue_spark');
     }
 
-    // Akış Başlatıcı - 5 gün üst üste
     if (consecutiveDays >= 5) {
-      await unlockBadge('flow_starter');
+      bool isNew = await unlockBadge('flow_starter');
+      if (isNew) newBadges.add('flow_starter');
     }
 
-    // Mavi Enerji - 7 gün veri
     if (totalDays >= 7) {
-      await unlockBadge('blue_energy');
+      bool isNew = await unlockBadge('blue_energy');
+      if (isNew) newBadges.add('blue_energy');
     }
 
-    // Su Avcısı - 15 gün
     if (totalDays >= 15) {
-      await unlockBadge('water_hunter');
+      bool isNew = await unlockBadge('water_hunter');
+      if (isNew) newBadges.add('water_hunter');
     }
 
-    // Hydro Ustası - 30 gün
     if (totalDays >= 30) {
-      await unlockBadge('hydro_master');
+      bool isNew = await unlockBadge('hydro_master');
+      if (isNew) newBadges.add('hydro_master');
     }
 
-    // Okyanuslar Kralı - 90 gün
     if (totalDays >= 90) {
-      await unlockBadge('ocean_bender');
+      bool isNew = await unlockBadge('ocean_bender');
+      if (isNew) newBadges.add('ocean_bender');
     }
 
-    // Aqua Efsanesi - 180 gün
     if (totalDays >= 180) {
-      await unlockBadge('aqua_legend');
+      bool isNew = await unlockBadge('aqua_legend');
+      if (isNew) newBadges.add('aqua_legend');
     }
+
+    return newBadges;
   }
 
-  // DIALOG FONKSİYONU
+  // ✅ GÜNCELLEME: Icon yerine IconData kullanımı
+  static void showNewBadgeNotification(BuildContext context, String badgeId) {
+    final badge = getAllBadges().firstWhere((b) => b.id == badgeId);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.blue.shade700,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        content: Row(
+          children: [
+            // ✅ DEĞİŞTİ: Icon widget kullanımı
+            Icon(
+              badge.iconData,
+              color: Colors.white,
+              size: 24,
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '🎉 Yeni Rozet!',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Text(badge.name, style: TextStyle(fontSize: 14)),
+                ],
+              ),
+            ),
+          ],
+        ),
+        duration: Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Gör',
+          textColor: Colors.white,
+          onPressed: () async {
+            final badges = await getUnlockedBadges();
+            showBadgesDialog(context, badges);
+          },
+        ),
+      ),
+    );
+  }
+
+  // ✅ GÜNCELLEME: Dialog'da icon gösterimi
   static void showBadgesDialog(BuildContext context, List<Badgee> badges) {
     showDialog(
       context: context,
@@ -297,14 +344,13 @@ class BadgeSystem {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              badge.icon,
-                              style: TextStyle(
-                                fontSize: 40,
-                                color: badge.isUnlocked
-                                    ? Colors.white
-                                    : Colors.white.withOpacity(0.3),
-                              ),
+                            // ✅ DEĞİŞTİ: Icon widget kullanımı
+                            Icon(
+                              badge.iconData,
+                              size: 40,
+                              color: badge.isUnlocked
+                                  ? Colors.blue.shade300
+                                  : Colors.white.withOpacity(0.3),
                             ),
                             SizedBox(height: 8),
                             Text(

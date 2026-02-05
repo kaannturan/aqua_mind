@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:aqua_mind/view/hi_view.dart';
+import 'package:aqua_mind/view/language_settings.dart';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,14 +94,12 @@ class _HomePageState extends State<HomePage>
     return "${today.year}-${twoDigits(today.month)}-${twoDigits(today.day)}";
   }
 
-  // load today water fonksiyonu
   Future<void> _loadTodayWater() async {
     final prefs = await SharedPreferences.getInstance();
     final todayString = getTodayString();
     int savedWater = prefs.getInt("todayDrankWater") ?? 0;
     final lastDate = prefs.getString("lastDrinkDate") ?? todayString;
 
-    //gün değişiminde sıfırla
     if (lastDate != todayString) {
       savedWater = 0;
       await prefs.setInt("todayDrankWater", 0);
@@ -115,7 +114,6 @@ class _HomePageState extends State<HomePage>
       weeklyData = loadedWeeklyData;
     });
 
-    // İlk progress animasyonunu ayarla
     _progressAnimation = Tween<double>(
       begin: 0.0,
       end: currentWater / targetWater,
@@ -137,7 +135,6 @@ class _HomePageState extends State<HomePage>
     final today = DateTime.now();
     final todayString = getTodayString();
 
-    // Weekly data (list of "date:amount")
     List<String> savedList = prefs.getStringList("weeklyWater") ?? [];
 
     Map<String, double> weekly = {};
@@ -146,9 +143,7 @@ class _HomePageState extends State<HomePage>
       weekly[parts[0]] = double.parse(parts[1]);
     }
 
-    // Bugünün verisini ekle / güncelle
     weekly[todayString] = currentWater.toDouble();
-    // Sadece son 7 günü tut
     List<String> newList = [];
     var sortedKeys = weekly.keys.toList()..sort((a, b) => b.compareTo(a));
     for (int i = 0; i < min(7, sortedKeys.length); i++) {
@@ -170,7 +165,6 @@ class _HomePageState extends State<HomePage>
     return weekly;
   }
 
-// add water fonksiyonu
   void addWater(int amount) async {
     if (currentWater >= targetWater) return;
 
@@ -199,12 +193,21 @@ class _HomePageState extends State<HomePage>
     await _saveWater();
     await _saveWeeklyWater();
 
-    // YENİ: Rozet ve seviye kontrolü
     final todayString = getTodayString();
     await LevelSystem.addDataDate(todayString);
     await LevelSystem.updateConsecutiveDays();
-    await BadgeSystem.checkAndUnlockBadges(currentWater, targetWater);
-    await _loadLevelAndBadges(); // Güncel verileri yükle
+
+    // ✅ YENİ: Rozet kontrolü ve bildirim
+    final newBadges =
+        await BadgeSystem.checkAndUnlockBadges(currentWater, targetWater);
+    await _loadLevelAndBadges();
+
+    // Yeni rozet kazanıldıysa bildir
+    if (newBadges.isNotEmpty && mounted) {
+      for (var badgeId in newBadges) {
+        BadgeSystem.showNewBadgeNotification(context, badgeId);
+      }
+    }
 
     final newWeeklyData = await _loadWeeklyWater();
 
@@ -223,7 +226,6 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-// remover fonksiyonu
   void removeWater(int amount) async {
     final scrollPosition =
         _scrollController.hasClients ? _scrollController.offset : 0.0;
@@ -236,7 +238,6 @@ class _HomePageState extends State<HomePage>
       waterLevel = waterLevel!.clamp(0.15, 1.0);
     });
 
-    // Progress bar animasyonu
     final newProgress = currentWater / targetWater;
     _progressAnimation = Tween<double>(
       begin: oldProgress,
@@ -388,6 +389,23 @@ class _HomePageState extends State<HomePage>
                   title: const Text('Görüşleriniz'),
                 ),
                 ListTile(
+                  leading: Icon(Icons.language, color: Colors.white),
+                  title: Text(
+                    'Dil Ayarları',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LanguageSettingsPage(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
                   textColor: Colors.white,
                   leading: const Icon(
                     Icons.person,
@@ -395,10 +413,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   title: const Text('Hakkımızda'),
                 ),
-
                 const Divider(color: Colors.white70),
-
-                // Sıfırla butonu
                 ListTile(
                   textColor: Colors.white,
                   leading: const Icon(
@@ -413,19 +428,16 @@ class _HomePageState extends State<HomePage>
                     await prefs.remove("height");
                     await prefs.remove("weight");
                     await prefs.remove("gender");
-
                     await prefs.remove("todayDrankWater");
                     await prefs.remove("lastDrinkDate");
                     await prefs.remove("weeklyWater");
 
-                    // Setup ekranına geri dön
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const HiPage()),
                     );
                   },
                 ),
-
                 SizedBox(height: height * 0.40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -441,480 +453,732 @@ class _HomePageState extends State<HomePage>
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.black,
-              Color(0xff062549),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      body: Stack(
+        children: [
+          // ✅ YENİ: Arka plan gradient
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black,
+                  Color(0xff062549),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 5.0, left: 0),
-                                  child: Text(
-                                    "Seviye $currentLevel",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold,
+
+          // ✅ YENİ: Animasyonlu damlacıklar
+          DropletsBackground(),
+
+          // Mevcut içerik
+          SafeArea(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 5.0, left: 0),
+                                    child: Text(
+                                      "Seviye $currentLevel",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 0),
-                                  child: Icon(
-                                    FontAwesomeIcons.droplet,
-                                    color: Colors.blue.shade300,
-                                    size: width * 0.03,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    child: Icon(
+                                      FontAwesomeIcons.droplet,
+                                      color: Colors.blue.shade300,
+                                      size: width * 0.03,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              BadgeSystem.showBadgesDialog(context, badges);
-                            },
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(right: 0, left: 0),
-                                  child: Text(
-                                    "Rozetlerim ${badges.where((b) => b.isUnlocked).length}/${badges.length}",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                BadgeSystem.showBadgesDialog(context, badges);
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 0, left: 0),
+                                    child: Text(
+                                      "Rozetlerim ${badges.where((b) => b.isUnlocked).length}/${badges.length}",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 6.0),
-                                  child: Icon(
-                                    FontAwesomeIcons.award,
-                                    color: Colors.amber,
-                                    size: 14,
-                                  ),
-                                )
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 6.0),
+                                    child: Icon(
+                                      FontAwesomeIcons.award,
+                                      color: Colors.amber,
+                                      size: 14,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    Stack(
-                      children: [
-                        ClipPath(
-                          clipper: WaterDropClipper(),
-                          child: SizedBox(
-                            width: width,
-                            height: height * 0.5,
-                            child: WaterWaveFill(waterLevel: waterLevel!),
-                          ),
-                        ),
-                        CustomPaint(
-                          size: Size(width, height * 0.5),
-                          painter: WaterStack(),
-                        ),
+                          ],
+                        )
                       ],
                     ),
-                  ],
-                ),
-                SizedBox(height: height * 0.03),
-                Text(
-                  "  $currentWater / $targetWater ml   ",
-                  style: TextStyle(color: Colors.white70),
-                ),
-                SizedBox(
-                  height: height * 0.016,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Günlük hedefiniz : $targetWater ml",
-                      style: TextStyle(
-                        fontSize: width * 0.05,
-                        color: Colors.white70,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: height * 0.05),
-                Container(
-                  width: width * 0.9,
-                  height: height * 0.099,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(23),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Column(
                     children: [
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: currentWater >= targetWater
-                              ? null
-                              : () => addWater(100),
-                          borderRadius: BorderRadius.circular(60),
-                          child: Container(
-                            width: width * 0.15,
-                            height: height * 0.08,
-                            decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                colors: [
-                                  Colors.blue,
-                                  Colors.blue,
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.whiskeyGlass,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  "100 ml",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                  ),
-                                )
-                              ],
+                      Stack(
+                        children: [
+                          ClipPath(
+                            clipper: WaterDropClipper(),
+                            child: SizedBox(
+                              width: width,
+                              height: height * 0.5,
+                              child: WaterWaveFill(waterLevel: waterLevel!),
                             ),
                           ),
-                        ),
-                      ),
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: currentWater >= targetWater
-                              ? null
-                              : () => addWater(200),
-                          borderRadius: BorderRadius.circular(60),
-                          child: Container(
-                            width: width * 0.15,
-                            height: height * 0.08,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: AlignmentGeometry.topLeft,
-                                end: AlignmentGeometry.bottomRight,
-                                colors: [
-                                  Colors.blue,
-                                  Colors.blue,
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.glassWater,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  "200 ml",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                  ),
-                                )
-                              ],
-                            ),
+                          CustomPaint(
+                            size: Size(width, height * 0.5),
+                            painter: WaterStack(),
                           ),
-                        ),
-                      ),
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: currentWater >= targetWater
-                              ? null
-                              : () => addWater(500),
-                          borderRadius: BorderRadius.circular(60),
-                          child: Container(
-                            width: width * 0.15,
-                            height: height * 0.08,
-                            decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                colors: [
-                                  Colors.blue,
-                                  Colors.blue,
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.bottleWater,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  "500 ml",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(60),
-                          onTap: () => removeWater(100),
-                          child: Container(
-                            width: width * 0.15,
-                            height: height * 0.08,
-                            decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                colors: [
-                                  Colors.red,
-                                  Colors.red,
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.downLong,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  "100 ml",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: height * 0.010,
-                ),
-
-                // bilgiler container
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(height: height * 0.03),
+                  Text(
+                    "  $currentWater / $targetWater ml   ",
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                  SizedBox(
+                    height: height * 0.016,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Bugünkü İlerleme",
+                        "Günlük hedefiniz : $targetWater ml",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontSize: width * 0.05,
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ),
-                      const SizedBox(height: 12),
-
-                      // İçilen su - hedef bilgi satırı
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "İçilen Su:",
-                            style:
-                                TextStyle(color: Colors.white70, fontSize: 16),
-                          ),
-                          Text(
-                            "$currentWater ml",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Günlük Hedef:",
-                            style:
-                                TextStyle(color: Colors.white70, fontSize: 16),
-                          ),
-                          Text(
-                            "$targetWater ml",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Kalan:",
-                            style:
-                                TextStyle(color: Colors.white70, fontSize: 16),
-                          ),
-                          Text(
-                            "${(targetWater - currentWater).clamp(0, targetWater)} ml",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 18),
-
-                      // Progress Bar - animasyonlu
-                      AnimatedBuilder(
-                        animation: _progressAnimation,
-                        builder: (context, child) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Stack(
-                              children: [
-                                // Arka plan
-                                Container(
-                                  height: 12,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white12,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                // Animasyonlu progress
-                                FractionallySizedBox(
-                                  widthFactor:
-                                      _progressAnimation.value.clamp(0.0, 1.0),
-                                  child: Container(
-                                    height: 12,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Colors.blueAccent,
-                                          Colors.blue.shade300,
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.blueAccent
-                                              .withOpacity(0.4),
-                                          blurRadius: 8,
-                                          spreadRadius: 1,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-
-                      const SizedBox(height: 8),
-                      AnimatedBuilder(
-                        animation: _progressAnimation,
-                        builder: (context, child) {
-                          return Center(
-                            child: Text(
-                              "%${(_progressAnimation.value * 100).clamp(0, 100).toInt()} tamamlandı",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-
-                      const SizedBox(height: 16),
-                      WeeklyWaterContainer(
-                        weeklyData: weeklyData,
-                        targetWater: targetWater,
                       ),
                     ],
                   ),
-                )
-              ],
+                  SizedBox(height: height * 0.05),
+                  Container(
+                    width: width * 0.9,
+                    height: height * 0.099,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(23),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: currentWater >= targetWater
+                                ? null
+                                : () => addWater(100),
+                            borderRadius: BorderRadius.circular(60),
+                            child: Container(
+                              width: width * 0.15,
+                              height: height * 0.08,
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  colors: [
+                                    Colors.blue,
+                                    Colors.blue,
+                                  ],
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.whiskeyGlass,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    "100 ml",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: currentWater >= targetWater
+                                ? null
+                                : () => addWater(200),
+                            borderRadius: BorderRadius.circular(60),
+                            child: Container(
+                              width: width * 0.15,
+                              height: height * 0.08,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: AlignmentGeometry.topLeft,
+                                  end: AlignmentGeometry.bottomRight,
+                                  colors: [
+                                    Colors.blue,
+                                    Colors.blue,
+                                  ],
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.glassWater,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    "200 ml",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: currentWater >= targetWater
+                                ? null
+                                : () => addWater(500),
+                            borderRadius: BorderRadius.circular(60),
+                            child: Container(
+                              width: width * 0.15,
+                              height: height * 0.08,
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  colors: [
+                                    Colors.blue,
+                                    Colors.blue,
+                                  ],
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.bottleWater,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    "500 ml",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(60),
+                            onTap: () => removeWater(100),
+                            child: Container(
+                              width: width * 0.15,
+                              height: height * 0.08,
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  colors: [
+                                    Colors.red,
+                                    Colors.red,
+                                  ],
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.downLong,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    "100 ml",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.010,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Bugünkü İlerleme",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "İçilen Su:",
+                              style: TextStyle(
+                                  color: Colors.white70, fontSize: 16),
+                            ),
+                            Text(
+                              "$currentWater ml",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Günlük Hedef:",
+                              style: TextStyle(
+                                  color: Colors.white70, fontSize: 16),
+                            ),
+                            Text(
+                              "$targetWater ml",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Kalan:",
+                              style: TextStyle(
+                                  color: Colors.white70, fontSize: 16),
+                            ),
+                            Text(
+                              "${(targetWater - currentWater).clamp(0, targetWater)} ml",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 18),
+                        AnimatedBuilder(
+                          animation: _progressAnimation,
+                          builder: (context, child) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 12,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white12,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  FractionallySizedBox(
+                                    widthFactor: _progressAnimation.value
+                                        .clamp(0.0, 1.0),
+                                    child: Container(
+                                      height: 12,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Colors.blueAccent,
+                                            Colors.blue.shade300,
+                                          ],
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.blueAccent
+                                                .withOpacity(0.4),
+                                            blurRadius: 8,
+                                            spreadRadius: 1,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        AnimatedBuilder(
+                          animation: _progressAnimation,
+                          builder: (context, child) {
+                            return Center(
+                              child: Text(
+                                "%${(_progressAnimation.value * 100).clamp(0, 100).toInt()} tamamlandı",
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        WeeklyWaterContainer(
+                          weeklyData: weeklyData,
+                          targetWater: targetWater,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-// WeeklyWaterContainer
+// ✅ YENİ: Damlacık Arka Plan Widget'ı
+class DropletsBackground extends StatefulWidget {
+  const DropletsBackground({super.key});
 
+  @override
+  State<DropletsBackground> createState() => _DropletsBackgroundState();
+}
+
+class _DropletsBackgroundState extends State<DropletsBackground> {
+  final List<Droplet> droplets = [];
+  final Random random = Random();
+
+  @override
+  void initState() {
+    super.initState();
+    _generateDroplets();
+  }
+
+  void _generateDroplets() {
+    // 15-20 arası rastgele damlacık oluştur
+    final count = 80 + random.nextInt(21);
+    for (int i = 0; i < count; i++) {
+      droplets.add(Droplet(
+        size: 6 + random.nextDouble() * 10, // 3-10px arası boyut
+        top: random.nextDouble(), // 0-1 arası (ekranın yüzdesi)
+        left: random.nextDouble(), // 0-1 arası
+        duration:
+            Duration(milliseconds: 2000 + random.nextInt(2000)), // 2-4 saniye
+        delay:
+            Duration(milliseconds: random.nextInt(2000)), // 0-2 saniye gecikme
+      ));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Stack(
+      children: droplets.map((droplet) {
+        return WaterDroplet(
+          size: droplet.size,
+          top: size.height * droplet.top,
+          left: size.width * droplet.left,
+          duration: droplet.duration,
+          delay: droplet.delay,
+        );
+      }).toList(),
+    );
+  }
+}
+
+class Droplet {
+  final double size;
+  final double top;
+  final double left;
+  final Duration duration;
+  final Duration delay;
+
+  Droplet({
+    required this.size,
+    required this.top,
+    required this.left,
+    required this.duration,
+    required this.delay,
+  });
+}
+
+// ✅ YENİ: Animasyonlu Damlacık Widget'ı
+class WaterDroplet extends StatefulWidget {
+  final double size;
+  final double top;
+  final double left;
+  final Duration duration;
+  final Duration delay;
+
+  const WaterDroplet({
+    super.key,
+    required this.size,
+    required this.top,
+    required this.left,
+    required this.duration,
+    this.delay = Duration.zero,
+  });
+
+  @override
+  State<WaterDroplet> createState() => _WaterDropletState();
+}
+
+class _WaterDropletState extends State<WaterDroplet>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.duration,
+    );
+
+    _fadeAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.0, end: 0.6)
+            .chain(CurveTween(curve: Curves.easeIn)),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.6, end: 0.6),
+        weight: 40,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.6, end: 0.0)
+            .chain(CurveTween(curve: Curves.easeOut)),
+        weight: 30,
+      ),
+    ]).animate(_controller);
+
+    _scaleAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.8, end: 1.0)
+            .chain(CurveTween(curve: Curves.easeOut)),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 1.0, end: 1.0),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 1.0, end: 0.8)
+            .chain(CurveTween(curve: Curves.easeIn)),
+        weight: 20,
+      ),
+    ]).animate(_controller);
+
+    Future.delayed(widget.delay, () {
+      if (mounted) {
+        _controller.repeat();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: widget.top,
+      left: widget.left,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Opacity(
+            opacity: _fadeAnimation.value,
+            child: Transform.scale(
+              scale: _scaleAnimation.value,
+              child: CustomPaint(
+                size: Size(widget.size, widget.size * 1), // ✅ Damla daha uzun
+                painter: WaterDropletPainter(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+// ✅ YENİ: Su Damlası Çizen Painter
+class WaterDropletPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..shader = RadialGradient(
+        center: Alignment(0.0, -0.3),
+        radius: 0.8,
+        colors: [
+          Colors.white.withOpacity(0.8),
+          Colors.blue.shade200.withOpacity(0.6),
+          Colors.blue.shade400.withOpacity(0.4),
+          Colors.blue.shade600.withOpacity(0.2),
+        ],
+        stops: [0.0, 0.3, 0.6, 1.0],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..style = PaintingStyle.fill;
+
+    // Gölge
+    final shadowPaint = Paint()
+      ..color = Colors.blue.withOpacity(0.3)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 4);
+
+    final path = Path();
+
+    // Damla şekli çiz
+    final centerX = size.width / 2;
+    final topY = size.height * 0.1;
+    final bottomY = size.height * 0.9;
+
+    // Üst kısım (sivri uç)
+    path.moveTo(centerX, topY);
+
+    // Sağ taraf
+    path.cubicTo(
+      centerX + size.width * 0.35,
+      topY + size.height * 0.2, // Kontrol noktası 1
+      centerX + size.width * 0.45,
+      topY + size.height * 0.5, // Kontrol noktası 2
+      centerX, bottomY, // Bitiş noktası (alt)
+    );
+
+    // Sol taraf
+    path.cubicTo(
+      centerX - size.width * 0.45,
+      topY + size.height * 0.5, // Kontrol noktası 1
+      centerX - size.width * 0.35,
+      topY + size.height * 0.2, // Kontrol noktası 2
+      centerX, topY, // Bitiş noktası (üst)
+    );
+
+    path.close();
+
+    // Gölge çiz
+    canvas.drawPath(path, shadowPaint);
+
+    // Damla çiz
+    canvas.drawPath(path, paint);
+
+    // ✅ Işıltı efekti (highlight)
+    final highlightPaint = Paint()
+      ..color = Colors.white.withOpacity(0.4)
+      ..style = PaintingStyle.fill;
+
+    final highlightPath = Path();
+    final highlightX = centerX - size.width * 0.15;
+    final highlightY = topY + size.height * 0.25;
+
+    // Küçük elips (ışıltı)
+    highlightPath.addOval(
+      Rect.fromCenter(
+        center: Offset(highlightX, highlightY),
+        width: size.width * 0.2,
+        height: size.height * 0.15,
+      ),
+    );
+
+    canvas.drawPath(highlightPath, highlightPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// WeeklyWaterContainer (değişiklik yok)
 class WeeklyWaterContainer extends StatelessWidget {
   final Map<String, double> weeklyData;
   final int targetWater;
@@ -925,19 +1189,22 @@ class WeeklyWaterContainer extends StatelessWidget {
     required this.targetWater,
   });
 
+  DateTime _getWeekStart(DateTime date) {
+    int weekday = date.weekday;
+    return date.subtract(Duration(days: weekday - 1));
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final width = size.width;
 
-    // Haftanın günleri
     final days = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 
-    // weeklyData tarihleri "yyyy-MM-dd" formatında, onları günlere eşle
     Map<String, double> dailyMap = {};
     for (var entry in weeklyData.entries) {
       final date = safeParse(entry.key);
-      final weekdayIndex = date.weekday - 1; // 0: Pzt, 6: Paz
+      final weekdayIndex = date.weekday - 1;
       dailyMap[days[weekdayIndex]] = entry.value;
     }
 
@@ -980,7 +1247,6 @@ class WeeklyWaterContainer extends StatelessWidget {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          // Onay tiki - hedef tamamlandığında
                           if (isCompleted)
                             Container(
                               decoration: BoxDecoration(
@@ -1001,9 +1267,8 @@ class WeeklyWaterContainer extends StatelessWidget {
                               ),
                             )
                           else
-                            SizedBox(height: 5), // Boşluk için
+                            SizedBox(height: 5),
                           const SizedBox(height: 4),
-                          // Bar
                           Container(
                             width: width * 0.03,
                             height: barHeight * 0.8,
@@ -1034,7 +1299,6 @@ class WeeklyWaterContainer extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 6),
-                          // Gün ismi
                           Text(
                             day,
                             style: TextStyle(
@@ -1061,7 +1325,7 @@ class WeeklyWaterContainer extends StatelessWidget {
   }
 }
 
-// su damlası şekli
+// Su damlası şekli (değişiklik yok)
 class WaterDropClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -1094,7 +1358,7 @@ class WaterDropClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper oldClipper) => false;
 }
 
-// su kenarı
+// Su kenarı (değişiklik yok)
 class WaterStack extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -1133,7 +1397,7 @@ class WaterStack extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-// Dalga animasyonu için widget
+// Dalga animasyonu (değişiklik yok)
 class WaterWaveFill extends StatefulWidget {
   final double waterLevel;
   const WaterWaveFill({super.key, required this.waterLevel});

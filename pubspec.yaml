@@ -18,9 +18,11 @@ dependencies:
   font_awesome_flutter: ^10.12.0
   shared_preferences: ^2.5.3
   cupertino_icons: ^1.0.8
+  provider: ^6.1.1
 
   flutter_localizations:
     sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -30,7 +32,6 @@ dev_dependencies:
 
 
 flutter:
-
   uses-material-design: true
 
   assets:
@@ -38,8 +39,6 @@ flutter:
 
   generate: true
 
-
-l10n:
-  arb-dir: lib/l10n
-  template-arb-file: app_en.arb
-  output-localization-file: app_localizations.dart
+# l10n yapılandırması en üst seviyede, flutter bölümünün dışında
+flutter_intl:
+  enabled: true

@@ -1,10 +1,14 @@
-// main.dart
+import 'package:aqua_mind/core/utils/provider_local.dart';
+import 'package:aqua_mind/l10n/app_localizations.dart';
+
 import 'package:aqua_mind/view/hi_view.dart';
 import 'package:aqua_mind/view/home_view/home_view.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart'; // ✅ YENİ
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -22,13 +26,17 @@ void main() async {
   final weight = (prefs.getDouble("weight") ?? 0.0).toInt();
 
   runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => AquaMind(
-        isCompleted: isCompleted,
-        dailyWater: dailyWater,
-        height: height,
-        weight: weight,
+    // ✅ YENİ: ChangeNotifierProvider ile sarmalama
+    ChangeNotifierProvider(
+      create: (_) => LocaleProvider(),
+      child: DevicePreview(
+        enabled: false,
+        builder: (context) => AquaMind(
+          isCompleted: isCompleted,
+          dailyWater: dailyWater,
+          height: height,
+          weight: weight,
+        ),
       ),
     ),
   );
@@ -50,22 +58,37 @@ class AquaMind extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: DevicePreview.locale(context),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: GoogleFonts.nunitoTextTheme(),
-        useMaterial3: true,
-      ),
-      home: isCompleted
-          ? HomePage(
-              dailyWater: dailyWater,
-              height: height,
-              weight: weight,
-            )
-          : const HiPage(),
+    // ✅ YENİ: Provider'dan locale okuma
+    return Consumer<LocaleProvider>(
+      builder: (context, localeProvider, child) {
+        return MaterialApp(
+          locale: localeProvider.locale, // ✅ DEĞİŞTİ
+          debugShowCheckedModeBanner: false,
+
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'), // İngilizce
+            Locale('tr'), // Türkçe
+          ],
+
+          theme: ThemeData(
+            textTheme: GoogleFonts.nunitoTextTheme(),
+            useMaterial3: true,
+          ),
+          home: isCompleted
+              ? HomePage(
+                  dailyWater: dailyWater,
+                  height: height,
+                  weight: weight,
+                )
+              : const HiPage(),
+        );
+      },
     );
   }
 }
-
-//Color(0xFF062549) lacivert arka plan
