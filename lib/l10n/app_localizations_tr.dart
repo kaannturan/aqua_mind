@@ -21,4 +21,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get weeklyTracking => 'Haftalık takip';
+
+  @override
+  String get home => 'Ana Sayfa';
+
+  @override
+  String get reminder => 'Hatırlatıcı';
+
+  @override
+  String get settings => 'Ayarlar';
+
+  @override
+  String get languageSettings => 'Dil Ayarları';
+
+  @override
+  String get about => 'Hakkımızda';
+
+  @override
+  String get feedback => 'Görüşleriniz';
 }

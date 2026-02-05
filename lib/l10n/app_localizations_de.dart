@@ -13,12 +13,30 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String home_dailyGoal(Object ml) {
-    return 'Tägliches Wasserziel: $ml ml';
+    return 'Tagesziel: $ml ml';
   }
 
   @override
   String get addWater => 'Wasser hinzufügen';
 
   @override
-  String get weeklyTracking => 'Wöchentliche Verfolgung';
+  String get weeklyTracking => 'Wöchentliche Übersicht';
+
+  @override
+  String get home => 'Startseite';
+
+  @override
+  String get reminder => 'Erinnerung';
+
+  @override
+  String get settings => 'Einstellungen';
+
+  @override
+  String get languageSettings => 'Sprache';
+
+  @override
+  String get about => 'Über uns';
+
+  @override
+  String get feedback => 'Feedback';
 }

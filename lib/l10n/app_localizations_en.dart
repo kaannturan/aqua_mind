@@ -13,7 +13,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String home_dailyGoal(Object ml) {
-    return 'Daily water goal: $ml ml';
+    return 'Daily goal: $ml ml';
   }
 
   @override
@@ -21,4 +21,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weeklyTracking => 'Weekly tracking';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get reminder => 'Reminder';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get languageSettings => 'Language Settings';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get feedback => 'Feedback';
 }

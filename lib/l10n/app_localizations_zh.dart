@@ -13,12 +13,30 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String home_dailyGoal(Object ml) {
-    return '每日饮水目标: $ml 毫升';
+    return '每日目标：$ml 毫升';
   }
 
   @override
-  String get addWater => '添加饮水';
+  String get addWater => '添加水';
 
   @override
   String get weeklyTracking => '每周跟踪';
+
+  @override
+  String get home => '主页';
+
+  @override
+  String get reminder => '提醒';
+
+  @override
+  String get settings => '设置';
+
+  @override
+  String get languageSettings => '语言';
+
+  @override
+  String get about => '关于';
+
+  @override
+  String get feedback => '反馈';
 }

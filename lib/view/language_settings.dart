@@ -59,6 +59,126 @@ class LanguageSettingsPage extends StatelessWidget {
                 localeProvider.setLocale(const Locale('en'));
               },
             ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Fransızca',
+              subtitle: 'French',
+              flag: '🇫🇷',
+              languageCode: 'fr',
+              isSelected: currentLocale == 'fr',
+              onTap: () {
+                localeProvider.setLocale(const Locale('fr'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Almanca',
+              subtitle: 'German',
+              flag: '🇩🇪',
+              languageCode: 'de',
+              isSelected: currentLocale == 'de',
+              onTap: () {
+                localeProvider.setLocale(const Locale('de'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'İspanyolca',
+              subtitle: 'Spanish',
+              flag: '🇪🇸',
+              languageCode: 'es',
+              isSelected: currentLocale == 'es',
+              onTap: () {
+                localeProvider.setLocale(const Locale('es'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'İtalyanca',
+              subtitle: 'Italian',
+              flag: '🇮🇹',
+              languageCode: 'it',
+              isSelected: currentLocale == 'it',
+              onTap: () {
+                localeProvider.setLocale(const Locale('it'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Portekizce',
+              subtitle: 'Portuguese',
+              flag: '🇵🇹',
+              languageCode: 'pt',
+              isSelected: currentLocale == 'pt',
+              onTap: () {
+                localeProvider.setLocale(const Locale('pt'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Çince',
+              subtitle: 'Chinese',
+              flag: '🇨🇳',
+              languageCode: 'zh',
+              isSelected: currentLocale == 'zh',
+              onTap: () {
+                localeProvider.setLocale(const Locale('zh'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Japonca',
+              subtitle: 'Japanese',
+              flag: '🇯🇵',
+              languageCode: 'ja',
+              isSelected: currentLocale == 'ja',
+              onTap: () {
+                localeProvider.setLocale(const Locale('ja'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Rusça',
+              subtitle: 'Russian',
+              flag: '🇷🇺',
+              languageCode: 'ru',
+              isSelected: currentLocale == 'ru',
+              onTap: () {
+                localeProvider.setLocale(const Locale('ru'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Arapça',
+              subtitle: 'Arabic',
+              flag: '🇸🇦',
+              languageCode: 'ar',
+              isSelected: currentLocale == 'ar',
+              onTap: () {
+                localeProvider.setLocale(const Locale('ar'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Korece',
+              subtitle: 'Korean',
+              flag: '🇰🇷',
+              languageCode: 'ko',
+              isSelected: currentLocale == 'ko',
+              onTap: () {
+                localeProvider.setLocale(const Locale('ko'));
+              },
+            ),
           ],
         ),
       ),
@@ -79,23 +199,23 @@ class LanguageSettingsPage extends StatelessWidget {
         color: isSelected
             ? Colors.blue.withOpacity(0.5)
             : Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(25),
         border: Border.all(
           color: isSelected ? Colors.blue : Colors.white24,
-          width: 2,
+          width: 1,
         ),
       ),
       child: ListTile(
         leading: Text(
           flag,
-          style: TextStyle(fontSize: 32),
+          style: TextStyle(fontSize: 30),
         ),
         title: Text(
           title,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 17,
           ),
         ),
         subtitle: Text(
@@ -106,8 +226,8 @@ class LanguageSettingsPage extends StatelessWidget {
           ),
         ),
         trailing: isSelected
-            ? Icon(Icons.check_circle, color: Colors.blue, size: 28)
-            : Icon(Icons.circle_outlined, color: Colors.white38, size: 28),
+            ? Icon(Icons.check_circle, color: Colors.blue, size: 24)
+            : Icon(Icons.circle_outlined, color: Colors.white38, size: 24),
         onTap: onTap,
       ),
     );

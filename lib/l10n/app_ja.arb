@@ -1,8 +1,13 @@
 {
   "@@locale": "ja",
   "appTitle": "AquaMind",
-  "home_dailyGoal": "1日の水目標: {ml} ml",
-  "@home_dailyGoal": { "placeholders": { "ml": {} } },
+  "home_dailyGoal": "1日の目標：{ml} ml",
   "addWater": "水を追加",
-  "weeklyTracking": "週次トラッキング"
+  "weeklyTracking": "週間トラッキング",
+  "home": "ホーム",
+  "reminder": "リマインダー",
+  "settings": "設定",
+  "languageSettings": "言語",
+  "about": "情報",
+  "feedback": "フィードバック"
 }

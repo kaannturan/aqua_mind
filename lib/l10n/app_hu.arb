@@ -1,8 +1,0 @@
-{
-  "@@locale": "hu",
-  "appTitle": "AquaMind",
-  "home_dailyGoal": "Napi vízcél: {ml} ml",
-  "@home_dailyGoal": { "placeholders": { "ml": {} } },
-  "addWater": "Víz hozzáadása",
-  "weeklyTracking": "Heti követés"
-}

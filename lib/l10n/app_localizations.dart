@@ -6,29 +6,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
-import 'app_localizations_da.dart';
 import 'app_localizations_de.dart';
-import 'app_localizations_el.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
-import 'app_localizations_hi.dart';
-import 'app_localizations_hu.dart';
-import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
 import 'app_localizations_ja.dart';
 import 'app_localizations_ko.dart';
-import 'app_localizations_ms.dart';
-import 'app_localizations_nl.dart';
-import 'app_localizations_no.dart';
-import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
-import 'app_localizations_ro.dart';
 import 'app_localizations_ru.dart';
-import 'app_localizations_sv.dart';
-import 'app_localizations_th.dart';
 import 'app_localizations_tr.dart';
-import 'app_localizations_vi.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -115,29 +102,16 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
-    Locale('da'),
     Locale('de'),
-    Locale('el'),
     Locale('en'),
     Locale('es'),
     Locale('fr'),
-    Locale('hi'),
-    Locale('hu'),
-    Locale('id'),
     Locale('it'),
     Locale('ja'),
     Locale('ko'),
-    Locale('ms'),
-    Locale('nl'),
-    Locale('no'),
-    Locale('pl'),
     Locale('pt'),
-    Locale('ro'),
     Locale('ru'),
-    Locale('sv'),
-    Locale('th'),
     Locale('tr'),
-    Locale('vi'),
     Locale('zh')
   ];
 
@@ -147,10 +121,10 @@ abstract class AppLocalizations {
   /// **'AquaMind'**
   String get appTitle;
 
-  /// Shows target water with ml variable
+  /// No description provided for @home_dailyGoal.
   ///
   /// In en, this message translates to:
-  /// **'Daily water goal: {ml} ml'**
+  /// **'Daily goal: {ml} ml'**
   String home_dailyGoal(Object ml);
 
   /// No description provided for @addWater.
@@ -164,6 +138,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Weekly tracking'**
   String get weeklyTracking;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @reminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get reminder;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @languageSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Language Settings'**
+  String get languageSettings;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @feedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get feedback;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -175,7 +185,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ar', 'da', 'de', 'el', 'en', 'es', 'fr', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'ms', 'nl', 'no', 'pl', 'pt', 'ro', 'ru', 'sv', 'th', 'tr', 'vi', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['ar', 'de', 'en', 'es', 'fr', 'it', 'ja', 'ko', 'pt', 'ru', 'tr', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -187,29 +197,16 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ar': return AppLocalizationsAr();
-    case 'da': return AppLocalizationsDa();
     case 'de': return AppLocalizationsDe();
-    case 'el': return AppLocalizationsEl();
     case 'en': return AppLocalizationsEn();
     case 'es': return AppLocalizationsEs();
     case 'fr': return AppLocalizationsFr();
-    case 'hi': return AppLocalizationsHi();
-    case 'hu': return AppLocalizationsHu();
-    case 'id': return AppLocalizationsId();
     case 'it': return AppLocalizationsIt();
     case 'ja': return AppLocalizationsJa();
     case 'ko': return AppLocalizationsKo();
-    case 'ms': return AppLocalizationsMs();
-    case 'nl': return AppLocalizationsNl();
-    case 'no': return AppLocalizationsNo();
-    case 'pl': return AppLocalizationsPl();
     case 'pt': return AppLocalizationsPt();
-    case 'ro': return AppLocalizationsRo();
     case 'ru': return AppLocalizationsRu();
-    case 'sv': return AppLocalizationsSv();
-    case 'th': return AppLocalizationsTh();
     case 'tr': return AppLocalizationsTr();
-    case 'vi': return AppLocalizationsVi();
     case 'zh': return AppLocalizationsZh();
   }
 

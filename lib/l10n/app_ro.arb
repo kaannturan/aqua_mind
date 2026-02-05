@@ -1,8 +1,0 @@
-{
-  "@@locale": "ro",
-  "appTitle": "AquaMind",
-  "home_dailyGoal": "Obiectiv zilnic de apă: {ml} ml",
-  "@home_dailyGoal": { "placeholders": { "ml": {} } },
-  "addWater": "Adaugă apă",
-  "weeklyTracking": "Urmărire săptămânală"
-}

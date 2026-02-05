@@ -74,6 +74,16 @@ class AquaMind extends StatelessWidget {
           supportedLocales: const [
             Locale('en'), // İngilizce
             Locale('tr'), // Türkçe
+            Locale('es'), // İspanyolca
+            Locale('de'), // Almanca
+            Locale('fr'), // Fransızca
+            Locale('it'), // İtalyanca
+            Locale('pt'), // Portekizce
+            Locale('ru'), // Rusça
+            Locale('zh'), // Çince
+            Locale('ja'), // Japonca
+            Locale('ko'), // Korece
+            Locale("ar"), // Arapça
           ],
 
           theme: ThemeData(

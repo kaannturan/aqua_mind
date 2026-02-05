@@ -1,8 +1,0 @@
-{
-  "@@locale": "nl",
-  "appTitle": "AquaMind",
-  "home_dailyGoal": "Dagelijks waterdoel: {ml} ml",
-  "@home_dailyGoal": { "placeholders": { "ml": {} } },
-  "addWater": "Water toevoegen",
-  "weeklyTracking": "Wekelijkse tracking"
-}

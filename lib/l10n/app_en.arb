@@ -1,13 +1,15 @@
 {
   "@@locale": "en",
+
   "appTitle": "AquaMind",
-  "home_dailyGoal": "Daily water goal: {ml} ml",
-  "@home_dailyGoal": {
-    "description": "Shows target water with ml variable",
-    "placeholders": {
-      "ml": {}
-    }
-  },
+  "home_dailyGoal": "Daily goal: {ml} ml",
   "addWater": "Add water",
-  "weeklyTracking": "Weekly tracking"
+  "weeklyTracking": "Weekly tracking",
+
+  "home": "Home",
+  "reminder": "Reminder",
+  "settings": "Settings",
+  "languageSettings": "Language Settings",
+  "about": "About",
+  "feedback": "Feedback"
 }

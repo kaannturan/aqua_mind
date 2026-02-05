@@ -1,8 +1,0 @@
-{
-  "@@locale": "ms",
-  "appTitle": "AquaMind",
-  "home_dailyGoal": "Sasaran air harian: {ml} ml",
-  "@home_dailyGoal": { "placeholders": { "ml": {} } },
-  "addWater": "Tambah air",
-  "weeklyTracking": "Penjejakan mingguan"
-}
