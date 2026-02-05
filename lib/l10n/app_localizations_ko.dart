@@ -39,4 +39,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get feedback => '피드백';
+
+  @override
+  String get resetApp => '앱 재설정';
 }

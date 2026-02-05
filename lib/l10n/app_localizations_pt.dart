@@ -39,4 +39,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get feedback => 'Feedback';
+
+  @override
+  String get resetApp => 'Redefinir aplicativo';
 }

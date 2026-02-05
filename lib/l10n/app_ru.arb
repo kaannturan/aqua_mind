@@ -9,5 +9,7 @@
   "settings": "Настройки",
   "languageSettings": "Язык",
   "about": "О нас",
-  "feedback": "Отзыв"
+  "feedback": "Отзыв",
+  "resetApp": "Сбросить приложение"
 }
+

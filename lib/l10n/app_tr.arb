@@ -19,5 +19,6 @@
   "settings": "Ayarlar",
   "languageSettings": "Dil Ayarları",
   "about": "Hakkımızda",
-  "feedback": "Görüşleriniz"
+  "feedback": "Görüşleriniz",
+  "resetApp": "Uygulamayı Sıfırla"
 }

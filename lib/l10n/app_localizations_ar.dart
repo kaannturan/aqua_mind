@@ -39,4 +39,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get feedback => 'ملاحظات';
+
+  @override
+  String get resetApp => 'إعادة ضبط التطبيق';
 }

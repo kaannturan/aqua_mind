@@ -39,4 +39,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get feedback => 'Opinión';
+
+  @override
+  String get resetApp => 'Restablecer aplicación';
 }

@@ -9,5 +9,7 @@
   "settings": "設定",
   "languageSettings": "言語",
   "about": "情報",
-  "feedback": "フィードバック"
+  "feedback": "フィードバック",
+  "resetApp": "アプリをリセット"
+
 }

@@ -7,6 +7,7 @@ import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../badges and levels/achievement_system.dart';
+import 'package:aqua_mind/l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   final int height;
@@ -45,7 +46,6 @@ class _HomePageState extends State<HomePage>
   late AnimationController _progressController;
   late Animation<double> _progressAnimation;
 
-  int currentLevel = 1;
   int consecutiveDays = 0;
   List<Badgee> badges = [];
 
@@ -74,7 +74,6 @@ class _HomePageState extends State<HomePage>
     final unlockedBadges = await BadgeSystem.getUnlockedBadges();
 
     setState(() {
-      currentLevel = level;
       consecutiveDays = consecutive;
       badges = unlockedBadges;
     });
@@ -271,6 +270,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -362,7 +362,7 @@ class _HomePageState extends State<HomePage>
                     Icons.home,
                     color: Colors.white,
                   ),
-                  title: const Text('Ana Sayfa'),
+                  title: Text(loc.home),
                 ),
                 ListTile(
                   textColor: Colors.white,
@@ -370,7 +370,7 @@ class _HomePageState extends State<HomePage>
                     FontAwesomeIcons.solidBell,
                     color: Colors.white,
                   ),
-                  title: const Text('Hatırlatıcı'),
+                  title: Text(loc.reminder),
                 ),
                 ListTile(
                   textColor: Colors.white,
@@ -378,7 +378,7 @@ class _HomePageState extends State<HomePage>
                     Icons.settings,
                     color: Colors.white,
                   ),
-                  title: const Text('Ayarlar'),
+                  title: Text(loc.settings),
                 ),
                 ListTile(
                   textColor: Colors.white,
@@ -386,12 +386,12 @@ class _HomePageState extends State<HomePage>
                     Icons.mail,
                     color: Colors.white,
                   ),
-                  title: const Text('Görüşleriniz'),
+                  title: Text(loc.feedback),
                 ),
                 ListTile(
                   leading: Icon(Icons.language, color: Colors.white),
                   title: Text(
-                    'Dil Ayarları',
+                    loc.languageSettings,
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -411,7 +411,7 @@ class _HomePageState extends State<HomePage>
                     Icons.person,
                     color: Colors.white,
                   ),
-                  title: const Text('Hakkımızda'),
+                  title: Text(loc.about),
                 ),
                 const Divider(color: Colors.white70),
                 ListTile(
@@ -420,7 +420,7 @@ class _HomePageState extends State<HomePage>
                     Icons.restart_alt,
                     color: Colors.white,
                   ),
-                  title: const Text('Verileri Sıfırla'),
+                  title: Text("verileri sıfırla"),
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
                     await prefs.remove("completedSetup");
@@ -438,7 +438,7 @@ class _HomePageState extends State<HomePage>
                     );
                   },
                 ),
-                SizedBox(height: height * 0.40),
+                SizedBox(height: height * 0.34),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: const [
@@ -495,23 +495,35 @@ class _HomePageState extends State<HomePage>
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         right: 5.0, left: 0),
-                                    child: Text(
-                                      "Seviye $currentLevel",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white70,
-                                        fontWeight: FontWeight.bold,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        FontAwesomeIcons.person,
+                                        color: Colors.blue.shade300,
+                                        size: width * 0.08,
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    child: Icon(
-                                      FontAwesomeIcons.droplet,
-                                      color: Colors.blue.shade300,
-                                      size: width * 0.03,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.blue.withOpacity(0.6),
                                     ),
-                                  ),
+                                    height: height * 0.05,
+                                    width: width * 0.56,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          right: 5.0,
+                                          top: 2.0,
+                                          bottom: 0.0),
+                                      child: Text(
+                                        '''Günde ortalama 2500 ml su içmeniz önerilir :)''',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 13),
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -529,7 +541,7 @@ class _HomePageState extends State<HomePage>
                                     padding: const EdgeInsets.only(
                                         right: 0, left: 0),
                                     child: Text(
-                                      "Rozetlerim ${badges.where((b) => b.isUnlocked).length}/${badges.length}",
+                                      "${badges.where((b) => b.isUnlocked).length}/${badges.length}",
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 14),
                                     ),
@@ -591,10 +603,8 @@ class _HomePageState extends State<HomePage>
                       ),
                     ],
                   ),
-                  SizedBox(height: height * 0.05),
+                  SizedBox(height: height * 0.02),
                   Container(
-                    width: width * 0.9,
-                    height: height * 0.099,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(23),
@@ -774,7 +784,7 @@ class _HomePageState extends State<HomePage>
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.010,
+                    height: height * 0.01,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),

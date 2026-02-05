@@ -39,4 +39,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get feedback => 'Feedback';
+
+  @override
+  String get resetApp => 'Reimposta app';
 }

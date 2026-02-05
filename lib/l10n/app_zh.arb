@@ -9,5 +9,7 @@
   "settings": "设置",
   "languageSettings": "语言",
   "about": "关于",
-  "feedback": "反馈"
+  "feedback": "反馈",
+  "resetApp": "重置应用"
+
 }

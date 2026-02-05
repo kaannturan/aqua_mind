@@ -2,6 +2,11 @@
   "@@locale": "es",
   "appTitle": "AquaMind",
   "home_dailyGoal": "Meta diaria: {ml} ml",
+  "@home_dailyGoal": {
+    "placeholders": {
+      "ml": {}
+    }
+  },
   "addWater": "Añadir agua",
   "weeklyTracking": "Seguimiento semanal",
   "home": "Inicio",
@@ -9,5 +14,6 @@
   "settings": "Ajustes",
   "languageSettings": "Idioma",
   "about": "Acerca de",
-  "feedback": "Opinión"
+  "feedback": "Opinión",
+  "resetApp": "Restablecer aplicación"
 }

@@ -39,4 +39,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get feedback => 'Отзыв';
+
+  @override
+  String get resetApp => 'Сбросить приложение';
 }

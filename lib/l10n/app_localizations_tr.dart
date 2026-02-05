@@ -39,4 +39,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get feedback => 'Görüşleriniz';
+
+  @override
+  String get resetApp => 'Uygulamayı Sıfırla';
 }

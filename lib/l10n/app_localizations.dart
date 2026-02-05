@@ -121,7 +121,7 @@ abstract class AppLocalizations {
   /// **'AquaMind'**
   String get appTitle;
 
-  /// No description provided for @home_dailyGoal.
+  /// Daily water goal with ml value
   ///
   /// In en, this message translates to:
   /// **'Daily goal: {ml} ml'**
@@ -174,6 +174,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Feedback'**
   String get feedback;
+
+  /// No description provided for @resetApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset App'**
+  String get resetApp;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -9,5 +9,7 @@
   "settings": "Paramètres",
   "languageSettings": "Langue",
   "about": "À propos",
-  "feedback": "Retour"
+  "feedback": "Retour",
+  "resetApp": "Réinitialiser l'application"
+
 }

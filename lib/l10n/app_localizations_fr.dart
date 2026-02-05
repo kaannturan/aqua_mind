@@ -39,4 +39,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get feedback => 'Retour';
+
+  @override
+  String get resetApp => 'Réinitialiser l\'application';
 }

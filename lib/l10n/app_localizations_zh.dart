@@ -39,4 +39,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get feedback => '反馈';
+
+  @override
+  String get resetApp => '重置应用';
 }
