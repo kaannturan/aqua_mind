@@ -10,6 +10,12 @@
   "languageSettings": "Sprache",
   "about": "Über uns",
   "feedback": "Feedback",
-  "resetApp": "App zurücksetzen"
+  "resetApp": "App zurücksetzen",
+  "drinkRecommendation": "Es wird empfohlen, täglich durchschnittlich 2500 ml Wasser zu trinken.",
+  "dailyTarget": "Ihr tägliches Ziel : ",
+  "todayProgress": "Dein heutiger Fortschritt"
+
+
+
 
 }

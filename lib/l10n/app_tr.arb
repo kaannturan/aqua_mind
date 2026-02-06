@@ -20,5 +20,11 @@
   "languageSettings": "Dil Ayarları",
   "about": "Hakkımızda",
   "feedback": "Görüşleriniz",
-  "resetApp": "Uygulamayı Sıfırla"
+  "resetApp": "Uygulamayı Sıfırla",
+  "drinkRecommendation": "Günde ortalama 2500 ml su içmeniz önerilir.",
+  "dailyTarget": "Günlük hedefiniz : ",
+  "todayProgress": "Bugünkü ilerlemen"
+
+
+
 }

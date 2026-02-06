@@ -42,4 +42,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get resetApp => 'Réinitialiser l\'application';
+
+  @override
+  String get drinkRecommendation => 'Il est recommandé de boire en moyenne 2500 ml d\'eau par jour.';
+
+  @override
+  String get dailyTarget => 'Votre objectif quotidien : ';
+
+  @override
+  String get todayProgress => 'Votre progrès du jour';
 }

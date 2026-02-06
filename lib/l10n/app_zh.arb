@@ -10,6 +10,12 @@
   "languageSettings": "语言",
   "about": "关于",
   "feedback": "反馈",
-  "resetApp": "重置应用"
+  "resetApp": "重置应用",
+  "drinkRecommendation": "建议每天平均饮用 2500 毫升水",
+  "dailyTarget": "您的每日目标 : ",
+  "todayProgress": "你今天的进度"
+
+
+
 
 }

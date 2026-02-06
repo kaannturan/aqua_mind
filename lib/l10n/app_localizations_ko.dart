@@ -42,4 +42,13 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get resetApp => '앱 재설정';
+
+  @override
+  String get drinkRecommendation => '하루 평균 2500ml의 물을 마시는 것이 권장됩니다';
+
+  @override
+  String get dailyTarget => '하루 목표 : ';
+
+  @override
+  String get todayProgress => '오늘의 진행 상황';
 }

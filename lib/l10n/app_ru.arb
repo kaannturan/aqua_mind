@@ -10,6 +10,12 @@
   "languageSettings": "Язык",
   "about": "О нас",
   "feedback": "Отзыв",
-  "resetApp": "Сбросить приложение"
+  "resetApp": "Сбросить приложение",
+  "drinkRecommendation": "Рекомендуется пить в среднем 2500 мл воды в день.",
+  "dailyTarget": "Ваша дневная цель : ",
+  "todayProgress": "Твой прогресс за сегодня"
+
+
+
 }
 

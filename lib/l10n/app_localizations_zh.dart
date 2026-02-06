@@ -42,4 +42,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get resetApp => '重置应用';
+
+  @override
+  String get drinkRecommendation => '建议每天平均饮用 2500 毫升水';
+
+  @override
+  String get dailyTarget => '您的每日目标 : ';
+
+  @override
+  String get todayProgress => '你今天的进度';
 }

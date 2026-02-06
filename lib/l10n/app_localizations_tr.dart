@@ -42,4 +42,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get resetApp => 'Uygulamayı Sıfırla';
+
+  @override
+  String get drinkRecommendation => 'Günde ortalama 2500 ml su içmeniz önerilir.';
+
+  @override
+  String get dailyTarget => 'Günlük hedefiniz : ';
+
+  @override
+  String get todayProgress => 'Bugünkü ilerlemen';
 }

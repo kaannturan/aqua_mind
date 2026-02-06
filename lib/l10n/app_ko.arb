@@ -10,6 +10,12 @@
   "languageSettings": "언어",
   "about": "정보",
   "feedback": "피드백",
-  "resetApp": "앱 재설정"
+  "resetApp": "앱 재설정",
+  "drinkRecommendation": "하루 평균 2500ml의 물을 마시는 것이 권장됩니다",
+  "dailyTarget": "하루 목표 : ",
+  "todayProgress": "오늘의 진행 상황"
+
+
+
 
 }

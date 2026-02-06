@@ -42,4 +42,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get resetApp => 'Сбросить приложение';
+
+  @override
+  String get drinkRecommendation => 'Рекомендуется пить в среднем 2500 мл воды в день.';
+
+  @override
+  String get dailyTarget => 'Ваша дневная цель : ';
+
+  @override
+  String get todayProgress => 'Твой прогресс за сегодня';
 }

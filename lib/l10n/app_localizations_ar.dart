@@ -42,4 +42,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get resetApp => 'إعادة ضبط التطبيق';
+
+  @override
+  String get drinkRecommendation => 'يُنصح بشرب متوسط 2500 مل من الماء يوميًا :)';
+
+  @override
+  String get dailyTarget => 'هدفك اليومي : ';
+
+  @override
+  String get todayProgress => 'تقدمك اليوم : ';
 }

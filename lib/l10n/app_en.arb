@@ -20,5 +20,10 @@
   "languageSettings": "Language Settings",
   "about": "About",
   "feedback": "Feedback",
-  "resetApp": "Reset App"
+  "resetApp": "Reset App",
+  "drinkRecommendation": "It is recommended to drink an average of 2500 ml of water per day.",
+  "dailyTarget": "Your daily target : ",
+  "todayProgress": "Your progress today"
+
+
 }

@@ -42,4 +42,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get resetApp => 'Reimposta app';
+
+  @override
+  String get drinkRecommendation => 'Si consiglia di bere in media 2500 ml di acqua al giorno.';
+
+  @override
+  String get dailyTarget => 'Il tuo obiettivo giornaliero : ';
+
+  @override
+  String get todayProgress => 'Il tuo progresso di oggi';
 }

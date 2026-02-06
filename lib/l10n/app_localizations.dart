@@ -180,6 +180,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset App'**
   String get resetApp;
+
+  /// No description provided for @drinkRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'It is recommended to drink an average of 2500 ml of water per day.'**
+  String get drinkRecommendation;
+
+  /// No description provided for @dailyTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Your daily target : '**
+  String get dailyTarget;
+
+  /// No description provided for @todayProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Your progress today'**
+  String get todayProgress;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

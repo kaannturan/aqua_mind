@@ -10,6 +10,12 @@
   "languageSettings": "Langue",
   "about": "À propos",
   "feedback": "Retour",
-  "resetApp": "Réinitialiser l'application"
+  "resetApp": "Réinitialiser l'application",
+  "drinkRecommendation": "Il est recommandé de boire en moyenne 2500 ml d'eau par jour.",
+  "dailyTarget": "Votre objectif quotidien : ",
+  "todayProgress": "Votre progrès du jour"
+
+
+
 
 }

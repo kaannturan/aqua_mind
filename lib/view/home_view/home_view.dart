@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../badges and levels/achievement_system.dart';
 import 'package:aqua_mind/l10n/app_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomePage extends StatefulWidget {
   final int height;
@@ -36,6 +37,10 @@ DateTime safeParse(String dateStr) {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  BannerAd? _bannerAd;
+  BannerAd? _bottomBannerAd; //  Alt reklam
+  InterstitialAd? _interstitialAd; // Tam ekran reklam
+
   double? waterLevel;
   int currentWater = 0;
   late int targetWater;
@@ -66,6 +71,83 @@ class _HomePageState extends State<HomePage>
 
     _loadTodayWater();
     _loadLevelAndBadges();
+
+    // Drawer içindeki banner
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          print(' Drawer reklamı yüklendi');
+          setState(() {});
+        },
+        onAdFailedToLoad: (ad, error) {
+          print(' Drawer reklamı hatası: $error');
+          ad.dispose();
+        },
+      ),
+    )..load();
+
+    // Alt banner
+    _bottomBannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      size: AdSize.largeBanner, // Uzun ince reklam
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          print(' Alt reklam yüklendi');
+          setState(() {});
+        },
+        onAdFailedToLoad: (ad, error) {
+          print(' Alt reklam hatası: $error');
+          ad.dispose();
+        },
+      ),
+    )..load();
+
+    // Tam ekran reklam
+    _loadInterstitialAd();
+  }
+
+  // Tam ekran reklam yükleme
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId:
+          'ca-app-pub-3940256099942544/1033173712', // Test interstitial ID
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          print('Tam ekran reklam yüklendi');
+          _interstitialAd = ad;
+
+          // 5 saniye
+          Future.delayed(Duration(seconds: 5), () {
+            _showInterstitialAd();
+          });
+        },
+        onAdFailedToLoad: (error) {
+          print(' Tam ekran reklam hatası: $error');
+        },
+      ),
+    );
+  }
+
+  // ✅ YENİ: Tam ekran reklamı göster
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          _interstitialAd = null;
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          _interstitialAd = null;
+        },
+      );
+      _interstitialAd!.show();
+    }
   }
 
   Future<void> _loadLevelAndBadges() async {
@@ -83,6 +165,9 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     _scrollController.dispose();
     _progressController.dispose();
+    _bannerAd?.dispose();
+    _bottomBannerAd?.dispose();
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -196,12 +281,10 @@ class _HomePageState extends State<HomePage>
     await LevelSystem.addDataDate(todayString);
     await LevelSystem.updateConsecutiveDays();
 
-    // ✅ YENİ: Rozet kontrolü ve bildirim
     final newBadges =
         await BadgeSystem.checkAndUnlockBadges(currentWater, targetWater);
     await _loadLevelAndBadges();
 
-    // Yeni rozet kazanıldıysa bildir
     if (newBadges.isNotEmpty && mounted) {
       for (var badgeId in newBadges) {
         BadgeSystem.showNewBadgeNotification(context, badgeId);
@@ -392,9 +475,7 @@ class _HomePageState extends State<HomePage>
                   leading: Icon(Icons.language, color: Colors.white),
                   title: Text(
                     loc.languageSettings,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
                     Navigator.push(
@@ -420,7 +501,7 @@ class _HomePageState extends State<HomePage>
                     Icons.restart_alt,
                     color: Colors.white,
                   ),
-                  title: Text("verileri sıfırla"),
+                  title: Text(loc.resetApp),
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
                     await prefs.remove("completedSetup");
@@ -438,7 +519,20 @@ class _HomePageState extends State<HomePage>
                     );
                   },
                 ),
-                SizedBox(height: height * 0.34),
+
+                // drawer alt reklam
+                if (_bannerAd != null)
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    alignment: Alignment.center,
+                    color: Colors.transparent,
+                    width: _bannerAd!.size.width.toDouble(),
+                    height: _bannerAd!.size.height.toDouble(),
+                    child: AdWidget(ad: _bannerAd!),
+                  ),
+
+                SizedBox(height: 10),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: const [
@@ -448,6 +542,8 @@ class _HomePageState extends State<HomePage>
                     ),
                   ],
                 ),
+
+                SizedBox(height: 10),
               ],
             ),
           ),
@@ -455,7 +551,6 @@ class _HomePageState extends State<HomePage>
       ),
       body: Stack(
         children: [
-          // ✅ YENİ: Arka plan gradient
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -473,8 +568,6 @@ class _HomePageState extends State<HomePage>
               ),
             ),
           ),
-
-          // Mevcut içerik
           SafeArea(
             child: SingleChildScrollView(
               controller: _scrollController,
@@ -510,7 +603,7 @@ class _HomePageState extends State<HomePage>
                                       color: Colors.blue.withOpacity(0.6),
                                     ),
                                     height: height * 0.05,
-                                    width: width * 0.56,
+                                    width: width * 0.60,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 8.0,
@@ -518,7 +611,7 @@ class _HomePageState extends State<HomePage>
                                           top: 2.0,
                                           bottom: 0.0),
                                       child: Text(
-                                        '''Günde ortalama 2500 ml su içmeniz önerilir :)''',
+                                        loc.drinkRecommendation,
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 13),
                                       ),
@@ -587,14 +680,12 @@ class _HomePageState extends State<HomePage>
                     "  $currentWater / $targetWater ml   ",
                     style: TextStyle(color: Colors.white70),
                   ),
-                  SizedBox(
-                    height: height * 0.016,
-                  ),
+                  SizedBox(height: height * 0.006),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Günlük hedefiniz : $targetWater ml",
+                        " ${loc.dailyTarget}$targetWater ml",
                         style: TextStyle(
                           fontSize: width * 0.05,
                           color: Colors.white70,
@@ -793,7 +884,7 @@ class _HomePageState extends State<HomePage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Bugünkü İlerleme",
+                          loc.todayProgress,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -921,7 +1012,26 @@ class _HomePageState extends State<HomePage>
                         ),
                       ],
                     ),
-                  )
+                  ),
+
+                  // Alt reklam alanı (uzun ince)
+                  if (_bottomBannerAd != null)
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      alignment: Alignment.center,
+                      width: _bottomBannerAd!.size.width.toDouble(),
+                      height: _bottomBannerAd!.size.height.toDouble(),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                        border:
+                            Border.all(color: Colors.blue.shade300, width: 2),
+                      ),
+                      child: AdWidget(ad: _bottomBannerAd!),
+                    ),
+
+                  SizedBox(height: 20),
                 ],
               ),
             ),
@@ -932,7 +1042,7 @@ class _HomePageState extends State<HomePage>
   }
 }
 
-// WeeklyWaterContainer (değişiklik yok)
+// WeeklyWaterContainer
 class WeeklyWaterContainer extends StatelessWidget {
   final Map<String, double> weeklyData;
   final int targetWater;
@@ -1079,7 +1189,7 @@ class WeeklyWaterContainer extends StatelessWidget {
   }
 }
 
-// Su damlası şekli (değişiklik yok)
+// Su damlası şekli
 class WaterDropClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -1112,7 +1222,7 @@ class WaterDropClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper oldClipper) => false;
 }
 
-// Su kenarı (değişiklik yok)
+// Su kenarı
 class WaterStack extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -1151,7 +1261,7 @@ class WaterStack extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-// Dalga animasyonu (değişiklik yok)
+// Dalga animasyonu
 class WaterWaveFill extends StatefulWidget {
   final double waterLevel;
   const WaterWaveFill({super.key, required this.waterLevel});
@@ -1259,14 +1369,14 @@ class WavePainter extends CustomPainter {
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     final shadowPaint = Paint()
       ..color = Colors.blue.shade900.withOpacity(0.25)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 15);
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 20);
 
     final backWavePaint = Paint()
-      ..color = Colors.blue.shade400.withOpacity(0.6)
+      ..color = Colors.blue.shade700.withOpacity(0.9)
       ..style = PaintingStyle.fill;
 
     final frontWavePaint = Paint()
-      ..color = Colors.blue.shade600.withOpacity(0.8)
+      ..color = Colors.blue.shade700.withOpacity(0.9)
       ..style = PaintingStyle.fill;
 
     double baseHeight = size.height * waterLevel;

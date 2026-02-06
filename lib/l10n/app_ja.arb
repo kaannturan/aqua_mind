@@ -10,6 +10,12 @@
   "languageSettings": "言語",
   "about": "情報",
   "feedback": "フィードバック",
-  "resetApp": "アプリをリセット"
+  "resetApp": "アプリをリセット",
+  "drinkRecommendation": "1日に平均2500mlの水を飲むことが推奨されています",
+  "dailyTarget": "1日の目標 : ",
+  "todayProgress": "今日の進捗"
+
+
+
 
 }

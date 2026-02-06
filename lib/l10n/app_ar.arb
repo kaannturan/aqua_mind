@@ -1,15 +1,29 @@
 {
   "@@locale": "ar",
+
   "appTitle": "AquaMind",
+
   "home_dailyGoal": "الهدف اليومي: {ml} مل",
+  "@home_dailyGoal": {
+    "description": "Daily goal with ml variable",
+    "placeholders": {
+      "ml": {}
+    }
+  },
+
   "addWater": "إضافة ماء",
   "weeklyTracking": "متابعة أسبوعية",
+
   "home": "الرئيسية",
   "reminder": "تذكير",
   "settings": "الإعدادات",
   "languageSettings": "اللغة",
   "about": "حول",
   "feedback": "ملاحظات",
-  "resetApp": "إعادة ضبط التطبيق"
+  "resetApp": "إعادة ضبط التطبيق",
 
+  "drinkRecommendation": "يُنصح بشرب متوسط 2500 مل من الماء يوميًا :)",
+  "dailyTarget": "هدفك اليومي : ",
+  "todayProgress": "تقدمك اليوم : "
 }
+

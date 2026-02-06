@@ -42,4 +42,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get resetApp => 'アプリをリセット';
+
+  @override
+  String get drinkRecommendation => '1日に平均2500mlの水を飲むことが推奨されています';
+
+  @override
+  String get dailyTarget => '1日の目標 : ';
+
+  @override
+  String get todayProgress => '今日の進捗';
 }

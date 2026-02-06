@@ -10,5 +10,11 @@
   "languageSettings": "Idioma",
   "about": "Sobre",
   "feedback": "Feedback",
-  "resetApp": "Redefinir aplicativo"
+  "resetApp": "Redefinir aplicativo",
+  "drinkRecommendation": "Recomenda-se beber em média 2500 ml de água por dia.",
+  "dailyTarget": "Sua meta diária : ",
+  "todayProgress": "Seu progresso de hoje"
+
+
+
 }
