@@ -455,14 +455,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   title: Text(loc.reminder),
                 ),
-                ListTile(
-                  textColor: Colors.white,
-                  leading: const Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                  title: Text(loc.settings),
-                ),
+
                 ListTile(
                   textColor: Colors.white,
                   leading: const Icon(

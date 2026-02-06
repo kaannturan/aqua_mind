@@ -85,7 +85,7 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                     StepItemGender(
                       isActive: true,
                       icon: Icons.monitor_weight_outlined,
-                      text: "Kilo",
+                      text: "Weight",
                     ),
                   ],
                 ),
@@ -94,7 +94,7 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
 
                 // Başlık
                 Text(
-                  "Kilonuzu Seçiniz",
+                  "Choose your weight",
                   style: TextStyle(
                     fontSize: width * 0.065,
                     fontWeight: FontWeight.bold,
@@ -104,13 +104,13 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
 
                 SizedBox(height: height * 0.02),
 
-                // Scroll bölümü - Resim + Scroll
+                // Scroll bölümü
                 Expanded(
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       return Row(
                         children: [
-                          // Sol taraf - Animasyonlu Karakter/Icon
+                          // Sol taraf
                           Expanded(
                             flex: 1,
                             child: Center(
@@ -119,7 +119,7 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                                 children: [
                                   const SizedBox(height: 20),
 
-                                  // Animasyonlu icon (görsel yerine)
+                                  // Animasyonlu icon
                                   SizedBox(
                                     width: constraints.maxWidth * 0.5,
                                     height: constraints.maxHeight * 0.4,
@@ -291,7 +291,7 @@ class _WeightChoiceViewState extends State<WeightChoiceView> {
                             ),
                           ),
                           child: Text(
-                            "Hesapla",
+                            "Let's Calculate",
                             style: TextStyle(
                               fontSize: width * 0.043,
                               color: Colors.white,

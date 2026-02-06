@@ -73,7 +73,7 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
                     StepItemGender(
                       isActive: true,
                       icon: Icons.height_outlined,
-                      text: "Boy",
+                      text: "Height",
                       selectedColor: Colors.lightBlue,
                     ),
                     CircleAvatar(
@@ -87,7 +87,7 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
 
                 // Başlık
                 Text(
-                  "Boyunuzu Seçiniz",
+                  "Choose your height",
                   style: TextStyle(
                     fontSize: width * 0.065,
                     fontWeight: FontWeight.bold,
@@ -270,7 +270,7 @@ class _HeightChoiceViewState extends State<HeightChoiceView> {
                             ),
                           ),
                           child: Text(
-                            "Devam Et",
+                            "Continue",
                             style: TextStyle(
                               fontSize: width * 0.044,
                               color: Colors.white,

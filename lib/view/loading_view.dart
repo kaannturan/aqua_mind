@@ -94,7 +94,7 @@ class _LoadingPageState extends State<LoadingPage>
                   Icon(Icons.water_drop, color: Colors.white, size: 70),
                   const SizedBox(height: 20),
                   Text(
-                    "Hesaplama Yapılıyor..",
+                    "Calculation is in progress...",
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: size.width * 0.06,

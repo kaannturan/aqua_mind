@@ -13,7 +13,7 @@ class UserGenderPage extends StatefulWidget {
 }
 
 class _UserGenderPageState extends State<UserGenderPage> {
-  String selectedGender = "Erkek";
+  String selectedGender = "Male";
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +49,11 @@ class _UserGenderPageState extends State<UserGenderPage> {
                     children: [
                       StepItemGender(
                         isActive: true,
-                        icon: selectedGender == "Erkek"
+                        icon: selectedGender == "Male"
                             ? Icons.male
                             : Icons.female,
                         text: selectedGender,
-                        selectedColor: selectedGender == "Erkek"
+                        selectedColor: selectedGender == "Male"
                             ? Colors.lightBlue
                             : Colors.pinkAccent,
                       ),
@@ -86,9 +86,9 @@ class _UserGenderPageState extends State<UserGenderPage> {
                     );
                   },
                   child: Text(
-                    "Cinsiyetiniz",
+                    "What's your gender ?",
                     style: TextStyle(
-                      fontSize: width * 0.065,
+                      fontSize: width * 0.060,
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -102,20 +102,20 @@ class _UserGenderPageState extends State<UserGenderPage> {
                     children: [
                       CustomContainerGender(
                         image: "assets/images/male.png",
-                        label: "Erkek",
-                        isSelected: selectedGender == "Erkek",
+                        label: "Male",
+                        isSelected: selectedGender == "Male",
                         selectedColor: Colors.lightBlue,
                         onTap: () => setState(() {
-                          selectedGender = "Erkek";
+                          selectedGender = "Male";
                         }),
                       ),
                       CustomContainerGender(
                         image: "assets/images/female.png",
-                        label: "Kadın",
-                        isSelected: selectedGender == "Kadın",
+                        label: "Female",
+                        isSelected: selectedGender == "Female",
                         selectedColor: Colors.pinkAccent,
                         onTap: () => setState(() {
-                          selectedGender = "Kadın";
+                          selectedGender = "Female";
                         }),
                       ),
                     ],
@@ -190,7 +190,7 @@ class _UserGenderPageState extends State<UserGenderPage> {
                             ),
                           ),
                           child: Text(
-                            "Devam Et",
+                            "Continue",
                             style: TextStyle(
                               fontSize: width * 0.04,
                               color: Colors.white,

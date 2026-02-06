@@ -50,7 +50,7 @@ class HiPage extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "Merhaba,\nAquaMind'a Hoşgeldiniz!",
+                          "Hi There,\nWelcome to AquaMind!",
                           style: TextStyle(
                             fontSize: width * 0.07,
                             color: Colors.white70,
@@ -71,9 +71,7 @@ class HiPage extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "Sağlıklı alışkanlıklar edinmek,\n"
-                          "beden ve zihin sağlığınızı güçlendirmek için\n"
-                          "doğru yerdesiniz.",
+                          "You are in the right place to build healthy habits and strengthen your body and mind.\nLet's start by setting up your profile.",
                           style: TextStyle(
                             fontSize: width * 0.042,
                             color: Colors.white70,
@@ -137,7 +135,7 @@ class HiPage extends StatelessWidget {
                               vertical: height * 0.018,
                             ),
                             child: Text(
-                              "Devam Et",
+                              "Continue",
                               style: TextStyle(
                                 fontSize: width * 0.043,
                                 fontWeight: FontWeight.w600,
