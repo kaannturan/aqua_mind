@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unused_local_variable, use_build_context_synchronously, unused_element
 import 'dart:math';
 import 'dart:ui';
+import 'package:aqua_mind/core/utils/reminder_settings_page.dart';
 import 'package:aqua_mind/view/hi_view.dart';
 import 'package:aqua_mind/view/language_settings.dart';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
@@ -38,8 +39,8 @@ DateTime safeParse(String dateStr) {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   BannerAd? _bannerAd;
-  BannerAd? _bottomBannerAd; //  Alt reklam
-  InterstitialAd? _interstitialAd; // Tam ekran reklam
+  BannerAd? _bottomBannerAd;
+  InterstitialAd? _interstitialAd;
 
   double? waterLevel;
   int currentWater = 0;
@@ -72,68 +73,60 @@ class _HomePageState extends State<HomePage>
     _loadTodayWater();
     _loadLevelAndBadges();
 
-    // Drawer içindeki banner
     _bannerAd = BannerAd(
       adUnitId: 'ca-app-pub-3940256099942544/6300978111',
       size: AdSize.banner,
       request: AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          print(' Drawer reklamı yüklendi');
+          print('Drawer reklamı yüklendi');
           setState(() {});
         },
         onAdFailedToLoad: (ad, error) {
-          print(' Drawer reklamı hatası: $error');
+          print('Drawer reklamı hatası: $error');
           ad.dispose();
         },
       ),
     )..load();
 
-    // Alt banner
     _bottomBannerAd = BannerAd(
       adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-      size: AdSize.largeBanner, // Uzun ince reklam
+      size: AdSize.largeBanner,
       request: AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          print(' Alt reklam yüklendi');
+          print('Alt reklam yüklendi');
           setState(() {});
         },
         onAdFailedToLoad: (ad, error) {
-          print(' Alt reklam hatası: $error');
+          print('Alt reklam hatası: $error');
           ad.dispose();
         },
       ),
     )..load();
 
-    // Tam ekran reklam
     _loadInterstitialAd();
   }
 
-  // Tam ekran reklam yükleme
   void _loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId:
-          'ca-app-pub-3940256099942544/1033173712', // Test interstitial ID
+      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
           print('Tam ekran reklam yüklendi');
           _interstitialAd = ad;
-
-          // 5 saniye
           Future.delayed(Duration(seconds: 5), () {
             _showInterstitialAd();
           });
         },
         onAdFailedToLoad: (error) {
-          print(' Tam ekran reklam hatası: $error');
+          print('Tam ekran reklam hatası: $error');
         },
       ),
     );
   }
 
-  // ✅ YENİ: Tam ekran reklamı göster
   void _showInterstitialAd() {
     if (_interstitialAd != null) {
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
@@ -380,9 +373,20 @@ class _HomePageState extends State<HomePage>
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 13),
-            child: Icon(
-              FontAwesomeIcons.solidBell,
-              size: 22,
+            child: IconButton(
+              icon: const Icon(
+                FontAwesomeIcons.solidBell,
+                size: 22,
+                color: Colors.white70,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReminderSettingsPage(),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -446,6 +450,7 @@ class _HomePageState extends State<HomePage>
                     color: Colors.white,
                   ),
                   title: Text(loc.home),
+                  onTap: () => Navigator.pop(context),
                 ),
                 ListTile(
                   textColor: Colors.white,
@@ -454,8 +459,15 @@ class _HomePageState extends State<HomePage>
                     color: Colors.white,
                   ),
                   title: Text(loc.reminder),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ReminderSettingsPage(),
+                      ),
+                    );
+                  },
                 ),
-
                 ListTile(
                   textColor: Colors.white,
                   leading: const Icon(
@@ -463,6 +475,22 @@ class _HomePageState extends State<HomePage>
                     color: Colors.white,
                   ),
                   title: Text(loc.feedback),
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: Text("Görüşleriniz bizim için değerli."),
+                            content: Text('''
+Muhammet Kaan Turan
+
+Uygulama ile ilgili görüş, öneri ve şikayetlerinizi bu mail adresine iletebilirsiniz. Tüm geri bildirimler bizim için çok değerli.
+kaannturan@gmail.com'''),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Close"),
+                              ),
+                            ],
+                          )),
                 ),
                 ListTile(
                   leading: Icon(Icons.language, color: Colors.white),
@@ -479,15 +507,6 @@ class _HomePageState extends State<HomePage>
                     );
                   },
                 ),
-                ListTile(
-                  textColor: Colors.white,
-                  leading: const Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  title: Text(loc.about),
-                ),
-                const Divider(color: Colors.white70),
                 ListTile(
                   textColor: Colors.white,
                   leading: const Icon(
@@ -512,8 +531,6 @@ class _HomePageState extends State<HomePage>
                     );
                   },
                 ),
-
-                // drawer alt reklam
                 if (_bannerAd != null)
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 10),
@@ -523,9 +540,7 @@ class _HomePageState extends State<HomePage>
                     height: _bannerAd!.size.height.toDouble(),
                     child: AdWidget(ad: _bannerAd!),
                   ),
-
                 SizedBox(height: 10),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: const [
@@ -535,7 +550,6 @@ class _HomePageState extends State<HomePage>
                     ),
                   ],
                 ),
-
                 SizedBox(height: 10),
               ],
             ),
@@ -586,7 +600,7 @@ class _HomePageState extends State<HomePage>
                                       child: Icon(
                                         FontAwesomeIcons.person,
                                         color: Colors.blue.shade300,
-                                        size: width * 0.08,
+                                        size: width * 0.07,
                                       ),
                                     ),
                                   ),
@@ -1006,8 +1020,6 @@ class _HomePageState extends State<HomePage>
                       ],
                     ),
                   ),
-
-                  // Alt reklam alanı (uzun ince)
                   if (_bottomBannerAd != null)
                     Container(
                       margin:
@@ -1023,7 +1035,6 @@ class _HomePageState extends State<HomePage>
                       ),
                       child: AdWidget(ad: _bottomBannerAd!),
                     ),
-
                   SizedBox(height: 20),
                 ],
               ),
@@ -1035,7 +1046,8 @@ class _HomePageState extends State<HomePage>
   }
 }
 
-// WeeklyWaterContainer
+// [Geri kalan kodlar aynı - WeeklyWaterContainer, WaterDropClipper, vs...]
+
 class WeeklyWaterContainer extends StatelessWidget {
   final Map<String, double> weeklyData;
   final int targetWater;
@@ -1182,7 +1194,6 @@ class WeeklyWaterContainer extends StatelessWidget {
   }
 }
 
-// Su damlası şekli
 class WaterDropClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -1215,7 +1226,6 @@ class WaterDropClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper oldClipper) => false;
 }
 
-// Su kenarı
 class WaterStack extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -1254,7 +1264,6 @@ class WaterStack extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-// Dalga animasyonu
 class WaterWaveFill extends StatefulWidget {
   final double waterLevel;
   const WaterWaveFill({super.key, required this.waterLevel});
