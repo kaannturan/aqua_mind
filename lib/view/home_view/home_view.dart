@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:aqua_mind/core/utils/reminder_settings_page.dart';
+import 'package:aqua_mind/models/badgee_model.dart';
 import 'package:aqua_mind/view/hi_view.dart';
 import 'package:aqua_mind/view/language_settings.dart';
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
@@ -15,11 +16,7 @@ class HomePage extends StatefulWidget {
   final int height;
   final int weight;
   final double dailyWater;
-  const HomePage(
-      {super.key,
-      required this.dailyWater,
-      required this.height,
-      required this.weight});
+  const HomePage({super.key, required this.dailyWater, required this.height, required this.weight});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -36,8 +33,7 @@ DateTime safeParse(String dateStr) {
   return DateTime.now();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   BannerAd? _bannerAd;
   BannerAd? _bottomBannerAd;
   InterstitialAd? _interstitialAd;
@@ -245,8 +241,7 @@ class _HomePageState extends State<HomePage>
   void addWater(int amount) async {
     if (currentWater >= targetWater) return;
 
-    final scrollPosition =
-        _scrollController.hasClients ? _scrollController.offset : 0.0;
+    final scrollPosition = _scrollController.hasClients ? _scrollController.offset : 0.0;
 
     final oldProgress = currentWater / targetWater;
 
@@ -274,8 +269,7 @@ class _HomePageState extends State<HomePage>
     await LevelSystem.addDataDate(todayString);
     await LevelSystem.updateConsecutiveDays();
 
-    final newBadges =
-        await BadgeSystem.checkAndUnlockBadges(currentWater, targetWater);
+    final newBadges = await BadgeSystem.checkAndUnlockBadges(currentWater, targetWater);
     await _loadLevelAndBadges();
 
     if (newBadges.isNotEmpty && mounted) {
@@ -302,8 +296,7 @@ class _HomePageState extends State<HomePage>
   }
 
   void removeWater(int amount) async {
-    final scrollPosition =
-        _scrollController.hasClients ? _scrollController.offset : 0.0;
+    final scrollPosition = _scrollController.hasClients ? _scrollController.offset : 0.0;
 
     final oldProgress = currentWater / targetWater;
 
@@ -593,8 +586,7 @@ kaannturan@gmail.com'''),
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 5.0, left: 0),
+                                    padding: const EdgeInsets.only(right: 5.0, left: 0),
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 0),
                                       child: Icon(
@@ -612,15 +604,10 @@ kaannturan@gmail.com'''),
                                     height: height * 0.05,
                                     width: width * 0.60,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0,
-                                          right: 5.0,
-                                          top: 2.0,
-                                          bottom: 0.0),
+                                      padding: const EdgeInsets.only(left: 8.0, right: 5.0, top: 2.0, bottom: 0.0),
                                       child: Text(
                                         loc.drinkRecommendation,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 13),
+                                        style: TextStyle(color: Colors.white, fontSize: 13),
                                       ),
                                     ),
                                   )
@@ -638,12 +625,10 @@ kaannturan@gmail.com'''),
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 0, left: 0),
+                                    padding: const EdgeInsets.only(right: 0, left: 0),
                                     child: Text(
                                       "${badges.where((b) => b.isUnlocked).length}/${badges.length}",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 14),
+                                      style: TextStyle(color: Colors.white, fontSize: 14),
                                     ),
                                   ),
                                   Padding(
@@ -713,9 +698,7 @@ kaannturan@gmail.com'''),
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: currentWater >= targetWater
-                                ? null
-                                : () => addWater(100),
+                            onTap: currentWater >= targetWater ? null : () => addWater(100),
                             borderRadius: BorderRadius.circular(60),
                             child: Container(
                               width: width * 0.15,
@@ -755,9 +738,7 @@ kaannturan@gmail.com'''),
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: currentWater >= targetWater
-                                ? null
-                                : () => addWater(200),
+                            onTap: currentWater >= targetWater ? null : () => addWater(200),
                             borderRadius: BorderRadius.circular(60),
                             child: Container(
                               width: width * 0.15,
@@ -799,9 +780,7 @@ kaannturan@gmail.com'''),
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: currentWater >= targetWater
-                                ? null
-                                : () => addWater(500),
+                            onTap: currentWater >= targetWater ? null : () => addWater(500),
                             borderRadius: BorderRadius.circular(60),
                             child: Container(
                               width: width * 0.15,
@@ -904,15 +883,11 @@ kaannturan@gmail.com'''),
                           children: [
                             Text(
                               "İçilen Su:",
-                              style: TextStyle(
-                                  color: Colors.white70, fontSize: 16),
+                              style: TextStyle(color: Colors.white70, fontSize: 16),
                             ),
                             Text(
                               "$currentWater ml",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -922,15 +897,11 @@ kaannturan@gmail.com'''),
                           children: [
                             Text(
                               "Günlük Hedef:",
-                              style: TextStyle(
-                                  color: Colors.white70, fontSize: 16),
+                              style: TextStyle(color: Colors.white70, fontSize: 16),
                             ),
                             Text(
                               "$targetWater ml",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -940,15 +911,11 @@ kaannturan@gmail.com'''),
                           children: [
                             Text(
                               "Kalan:",
-                              style: TextStyle(
-                                  color: Colors.white70, fontSize: 16),
+                              style: TextStyle(color: Colors.white70, fontSize: 16),
                             ),
                             Text(
                               "${(targetWater - currentWater).clamp(0, targetWater)} ml",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -968,8 +935,7 @@ kaannturan@gmail.com'''),
                                     ),
                                   ),
                                   FractionallySizedBox(
-                                    widthFactor: _progressAnimation.value
-                                        .clamp(0.0, 1.0),
+                                    widthFactor: _progressAnimation.value.clamp(0.0, 1.0),
                                     child: Container(
                                       height: 12,
                                       decoration: BoxDecoration(
@@ -982,8 +948,7 @@ kaannturan@gmail.com'''),
                                         borderRadius: BorderRadius.circular(12),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.blueAccent
-                                                .withOpacity(0.4),
+                                            color: Colors.blueAccent.withOpacity(0.4),
                                             blurRadius: 8,
                                             spreadRadius: 1,
                                           ),
@@ -1022,16 +987,14 @@ kaannturan@gmail.com'''),
                   ),
                   if (_bottomBannerAd != null)
                     Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       alignment: Alignment.center,
                       width: _bottomBannerAd!.size.width.toDouble(),
                       height: _bottomBannerAd!.size.height.toDouble(),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
-                        border:
-                            Border.all(color: Colors.blue.shade300, width: 2),
+                        border: Border.all(color: Colors.blue.shade300, width: 2),
                       ),
                       child: AdWidget(ad: _bottomBannerAd!),
                     ),
@@ -1109,8 +1072,7 @@ class WeeklyWaterContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: days.map((day) {
                       final drank = dailyMap[day] ?? 0.0;
-                      final barHeight =
-                          (drank / targetWater * 100).clamp(0, 100);
+                      final barHeight = (drank / targetWater * 100).clamp(0, 100);
                       final isCompleted = drank >= targetWater;
 
                       return Column(
@@ -1171,13 +1133,9 @@ class WeeklyWaterContainer extends StatelessWidget {
                           Text(
                             day,
                             style: TextStyle(
-                              color: isCompleted
-                                  ? Colors.blue.shade200
-                                  : Colors.white70,
+                              color: isCompleted ? Colors.blue.shade200 : Colors.white70,
                               fontSize: 12,
-                              fontWeight: isCompleted
-                                  ? FontWeight.bold
-                                  : FontWeight.w500,
+                              fontWeight: isCompleted ? FontWeight.bold : FontWeight.w500,
                             ),
                           ),
                         ],
@@ -1271,8 +1229,7 @@ class WaterWaveFill extends StatefulWidget {
   _WaterWaveFillState createState() => _WaterWaveFillState();
 }
 
-class _WaterWaveFillState extends State<WaterWaveFill>
-    with TickerProviderStateMixin {
+class _WaterWaveFillState extends State<WaterWaveFill> with TickerProviderStateMixin {
   late AnimationController _backController;
   late AnimationController _frontController;
   late AnimationController _levelController;
@@ -1309,8 +1266,7 @@ class _WaterWaveFillState extends State<WaterWaveFill>
   void didUpdateWidget(WaterWaveFill oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.waterLevel != widget.waterLevel) {
-      double startlevel =
-          _levelController.isAnimating ? _levelAnimation.value : _currentLevel;
+      double startlevel = _levelController.isAnimating ? _levelAnimation.value : _currentLevel;
       _levelAnimation = Tween<double>(
         begin: startlevel,
         end: widget.waterLevel,
@@ -1402,8 +1358,7 @@ class WavePainter extends CustomPainter {
 
     final frontWave = Path()..moveTo(0, baseHeight - 8);
     for (double x = 0; x <= size.width; x++) {
-      double y =
-          (baseHeight - 8) + sin((x / size.width * 2 * 3.14) + frontPhase) * 14;
+      double y = (baseHeight - 8) + sin((x / size.width * 2 * 3.14) + frontPhase) * 14;
       frontWave.lineTo(x, y);
     }
     frontWave.lineTo(size.width, size.height);

@@ -1,8 +1,8 @@
 // ignore_for_file: unused_element, unused_local_variable
 
+import 'package:aqua_mind/core/service/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aqua_mind/main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ReminderSettingsPage extends StatefulWidget {
@@ -64,8 +64,7 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
     );
 
     if (picked != null) {
-      final timeString =
-          '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
+      final timeString = '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
 
       if (!_reminderTimes.contains(timeString)) {
         setState(() {
@@ -210,9 +209,7 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                                   ],
                                 )
                               : null,
-                          color: _remindersEnabled
-                              ? null
-                              : Colors.grey.withOpacity(0.3),
+                          color: _remindersEnabled ? null : Colors.grey.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: const Icon(

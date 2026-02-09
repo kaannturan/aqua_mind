@@ -1,35 +1,9 @@
 // ignore_for_file: deprecated_member_use, unnecessary_this, use_build_context_synchronously
 
+import 'package:aqua_mind/models/badgee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-// Rozet Modeli
-class Badgee {
-  final String id;
-  final String name;
-  final String description;
-  final IconData iconData;
-  final bool isUnlocked;
-
-  Badgee({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.iconData,
-    this.isUnlocked = false,
-  });
-
-  Badgee copyWith({bool? isUnlocked}) {
-    return Badgee(
-      id: this.id,
-      name: this.name,
-      description: this.description,
-      iconData: this.iconData,
-      isUnlocked: isUnlocked ?? this.isUnlocked,
-    );
-  }
-}
 
 // Seviye Sistemi
 class LevelSystem {
@@ -180,8 +154,7 @@ class BadgeSystem {
     return false;
   }
 
-  static Future<List<String>> checkAndUnlockBadges(
-      int currentWater, int targetWater) async {
+  static Future<List<String>> checkAndUnlockBadges(int currentWater, int targetWater) async {
     List<String> newBadges = [];
 
     final consecutiveDays = await LevelSystem.getConsecutiveDays();
@@ -330,14 +303,10 @@ class BadgeSystem {
                       final badge = badges[index];
                       return Container(
                         decoration: BoxDecoration(
-                          color: badge.isUnlocked
-                              ? Colors.blue.withOpacity(0.2)
-                              : Colors.white.withOpacity(0.1),
+                          color: badge.isUnlocked ? Colors.blue.withOpacity(0.2) : Colors.white.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: badge.isUnlocked
-                                ? Colors.blue.shade300
-                                : Colors.white24,
+                            color: badge.isUnlocked ? Colors.blue.shade300 : Colors.white24,
                             width: 2,
                           ),
                         ),
@@ -348,17 +317,13 @@ class BadgeSystem {
                             Icon(
                               badge.iconData,
                               size: 40,
-                              color: badge.isUnlocked
-                                  ? Colors.blue.shade300
-                                  : Colors.white.withOpacity(0.3),
+                              color: badge.isUnlocked ? Colors.blue.shade300 : Colors.white.withOpacity(0.3),
                             ),
                             SizedBox(height: 8),
                             Text(
                               badge.name,
                               style: TextStyle(
-                                color: badge.isUnlocked
-                                    ? Colors.white
-                                    : Colors.white54,
+                                color: badge.isUnlocked ? Colors.white : Colors.white54,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -370,9 +335,7 @@ class BadgeSystem {
                               child: Text(
                                 badge.description,
                                 style: TextStyle(
-                                  color: badge.isUnlocked
-                                      ? Colors.white70
-                                      : Colors.white38,
+                                  color: badge.isUnlocked ? Colors.white70 : Colors.white38,
                                   fontSize: 10,
                                 ),
                                 textAlign: TextAlign.center,

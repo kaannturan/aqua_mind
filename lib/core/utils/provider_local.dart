@@ -6,6 +6,21 @@ class LocaleProvider extends ChangeNotifier {
 
   Locale get locale => _locale;
 
+  List<Locale> supportedLocales = const [
+    Locale('en'),
+    Locale('tr'),
+    Locale('es'),
+    Locale('de'),
+    Locale('fr'),
+    Locale('it'),
+    Locale('pt'),
+    Locale('ru'),
+    Locale('zh'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('ar'),
+  ];
+
   LocaleProvider() {
     _loadLocale();
   }
