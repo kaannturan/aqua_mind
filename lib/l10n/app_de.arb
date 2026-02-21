@@ -13,9 +13,23 @@
   "resetApp": "App zurücksetzen",
   "drinkRecommendation": "Es wird empfohlen, täglich durchschnittlich 2500 ml Wasser zu trinken.",
   "dailyTarget": "Ihr tägliches Ziel : ",
-  "todayProgress": "Dein heutiger Fortschritt"
-
-
+  "todayProgress": "Dein heutiger Fortschritt",
+  "feedbackTitle": "Ihr Feedback ist uns wichtig.",
+  "feedbackContent": "Muhammet Kaan Turan\n\nSie können Ihre Meinungen, Vorschläge und Beschwerden über die App an diese E-Mail-Adresse senden. Jedes Feedback ist für uns sehr wertvoll.\nkaannturan@gmail.com",
+  "drunkWater": "Getrunkenes Wasser:",
+  "dailyGoalLabel": "Tagesziel:",
+  "remaining": "Verbleibend:",
+  "completedPercent": "%{percent} abgeschlossen",
+  "weeklyWaterTracking": "Wöchentliche Wasserverfolgung",
+  "enableReminders": "Erinnerungen aktivieren",
+  "dailyReminderDescription": "Tägliche Trink-Erinnerungen erhalten",
+  "reminderTimes": "Erinnerungszeiten",
+  "noReminderAdded": "Sie haben noch keine Erinnerung hinzugefügt",
+  "addReminderHint": "Tippen Sie oben auf +,\num eine neue Erinnerung hinzuzufügen",
+  "repeatsDaily": "Wird täglich wiederholt",
+  "languageSelection": "Sprachauswahl",
+  "infoTitle": "Information",
+  "reminderInfoDescription": "Erinnerungen senden Ihnen täglich zu den festgelegten Zeiten Benachrichtigungen. Regelmäßige Wasseraufnahme ist sehr wichtig für Ihre Gesundheit! 💧"
 
 
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element, unused_local_variable
 
 import 'package:aqua_mind/core/service/notification_service.dart';
+import 'package:aqua_mind/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,7 +65,8 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
     );
 
     if (picked != null) {
-      final timeString = '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
+      final timeString =
+          '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
 
       if (!_reminderTimes.contains(timeString)) {
         setState(() {
@@ -102,6 +104,7 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -113,7 +116,7 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white70),
         title: Text(
-          'Hatırlatıcı Ayarları',
+          loc.enableReminders,
           style: TextStyle(
             color: Colors.white70,
             fontSize: width * 0.05,
@@ -156,17 +159,17 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                     horizontal: 20,
                     vertical: 10,
                   ),
-                  title: const Text(
-                    'Hatırlatıcıları Aktif Et',
+                  title: Text(
+                    loc.enableReminders,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
-                  subtitle: const Text(
-                    'Günlük su içme hatırlatıcıları al',
-                    style: TextStyle(color: Colors.white70),
+                  subtitle: Text(
+                    loc.dailyReminderDescription,
+                    style: const TextStyle(color: Colors.white70),
                   ),
                   value: _remindersEnabled,
                   activeColor: Colors.blue.shade300,
@@ -185,8 +188,8 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Hatırlatıcı Zamanları',
+                  Text(
+                    loc.reminderTimes,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -209,7 +212,9 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                                   ],
                                 )
                               : null,
-                          color: _remindersEnabled ? null : Colors.grey.withOpacity(0.3),
+                          color: _remindersEnabled
+                              ? null
+                              : Colors.grey.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: const Icon(
@@ -247,7 +252,7 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Henüz hatırlatıcı eklemediniz',
+                        loc.noReminderAdded,
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.7),
                           fontSize: 16,
@@ -256,7 +261,7 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Yukarıdaki + butonuna tıklayarak\nyeni hatırlatıcı ekleyin',
+                        loc.addReminderHint,
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.5),
                           fontSize: 14,
@@ -315,9 +320,9 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                             color: Colors.white,
                           ),
                         ),
-                        subtitle: const Text(
-                          'Her gün tekrarlanacak',
-                          style: TextStyle(
+                        subtitle: Text(
+                          loc.repeatsDaily,
+                          style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 13,
                           ),
@@ -367,7 +372,7 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Bilgi',
+                            loc.dailyReminderDescription,
                             style: TextStyle(
                               color: Colors.blue.shade100,
                               fontSize: 16,
@@ -375,9 +380,9 @@ class _ReminderSettingsPageState extends State<ReminderSettingsPage> {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            'Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧',
-                            style: TextStyle(
+                          Text(
+                            loc.reminderInfoDescription,
+                            style: const TextStyle(
                               color: Colors.white70,
                               fontSize: 14,
                               height: 1.5,

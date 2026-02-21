@@ -65,7 +65,7 @@ class _LoadingPageState extends State<LoadingPage>
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.black,
+              Colors.black87,
               Color(0xff062549),
               Color(0xff062549),
             ],

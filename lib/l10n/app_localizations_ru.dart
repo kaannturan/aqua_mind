@@ -51,4 +51,54 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get todayProgress => 'Твой прогресс за сегодня';
+
+  @override
+  String get feedbackTitle => 'Ваше мнение важно для нас.';
+
+  @override
+  String get feedbackContent => 'Muhammet Kaan Turan\n\nВы можете отправить свои отзывы, предложения и жалобы по поводу приложения на этот адрес электронной почты. Любая обратная связь очень важна для нас.\nkaannturan@gmail.com';
+
+  @override
+  String get drunkWater => 'Выпито воды:';
+
+  @override
+  String get dailyGoalLabel => 'Дневная цель:';
+
+  @override
+  String get remaining => 'Осталось:';
+
+  @override
+  String completedPercent(Object percent) {
+    return '%$percent завершено';
+  }
+
+  @override
+  String get weeklyWaterTracking => 'Еженедельный учет воды';
+
+  @override
+  String get enableReminders => 'Включить напоминания';
+
+  @override
+  String get dailyReminderDescription => 'Получать ежедневные напоминания о воде';
+
+  @override
+  String get reminderTimes => 'Время напоминаний';
+
+  @override
+  String get noReminderAdded => 'Вы еще не добавили напоминания';
+
+  @override
+  String get addReminderHint => 'Нажмите кнопку + выше,\nчтобы добавить новое напоминание';
+
+  @override
+  String get repeatsDaily => 'Повторяется ежедневно';
+
+  @override
+  String get languageSelection => 'Выбор языка';
+
+  @override
+  String get infoTitle => 'Информация';
+
+  @override
+  String get reminderInfoDescription => 'Напоминания будут отправлять вам уведомления каждый день в установленное время. Регулярное потребление воды очень важно для вашего здоровья! 💧';
 }

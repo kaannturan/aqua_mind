@@ -13,7 +13,23 @@
   "resetApp": "Сбросить приложение",
   "drinkRecommendation": "Рекомендуется пить в среднем 2500 мл воды в день.",
   "dailyTarget": "Ваша дневная цель : ",
-  "todayProgress": "Твой прогресс за сегодня"
+  "todayProgress": "Твой прогресс за сегодня",
+  "feedbackTitle": "Ваше мнение важно для нас.",
+  "feedbackContent": "Muhammet Kaan Turan\n\nВы можете отправить свои отзывы, предложения и жалобы по поводу приложения на этот адрес электронной почты. Любая обратная связь очень важна для нас.\nkaannturan@gmail.com",
+  "drunkWater": "Выпито воды:",
+  "dailyGoalLabel": "Дневная цель:",
+  "remaining": "Осталось:",
+  "completedPercent": "%{percent} завершено",
+  "weeklyWaterTracking": "Еженедельный учет воды",
+  "enableReminders": "Включить напоминания",
+  "dailyReminderDescription": "Получать ежедневные напоминания о воде",
+  "reminderTimes": "Время напоминаний",
+  "noReminderAdded": "Вы еще не добавили напоминания",
+  "addReminderHint": "Нажмите кнопку + выше,\nчтобы добавить новое напоминание",
+  "repeatsDaily": "Повторяется ежедневно",
+  "languageSelection": "Выбор языка",
+  "infoTitle": "Информация",
+  "reminderInfoDescription": "Напоминания будут отправлять вам уведомления каждый день в установленное время. Регулярное потребление воды очень важно для вашего здоровья! 💧"
 
 
 

@@ -13,8 +13,23 @@
   "resetApp": "重置应用",
   "drinkRecommendation": "建议每天平均饮用 2500 毫升水",
   "dailyTarget": "您的每日目标 : ",
-  "todayProgress": "你今天的进度"
-
+  "todayProgress": "你今天的进度",
+  "feedbackTitle": "您的反馈对我们非常重要。",
+  "feedbackContent": "Muhammet Kaan Turan\n\n您可以将关于应用的意见、建议和投诉发送到此电子邮件地址。所有反馈对我们都非常重要。\nkaannturan@gmail.com",
+  "drunkWater": "已饮用水量：",
+  "dailyGoalLabel": "每日目标：",
+  "remaining": "剩余：",
+  "completedPercent": "已完成 %{percent}%",
+  "weeklyWaterTracking": "每周饮水跟踪",
+  "enableReminders": "启用提醒",
+  "dailyReminderDescription": "接收每日饮水提醒",
+  "reminderTimes": "提醒时间",
+  "noReminderAdded": "您还没有添加提醒",
+  "addReminderHint": "点击上方的 + 按钮\n添加新的提醒",
+  "repeatsDaily": "每天重复",
+  "languageSelection": "语言选择",
+  "infoTitle": "信息",
+  "reminderInfoDescription": "提醒将在您设定的时间每天向您发送通知。规律饮水对您的健康非常重要！💧"
 
 
 

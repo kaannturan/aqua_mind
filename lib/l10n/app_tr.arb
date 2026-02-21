@@ -23,8 +23,24 @@
   "resetApp": "Uygulamayı Sıfırla",
   "drinkRecommendation": "Günde ortalama 2500 ml su içmeniz önerilir.",
   "dailyTarget": "Günlük hedefiniz : ",
-  "todayProgress": "Bugünkü ilerlemen"
-
+  "todayProgress": "Bugünkü ilerlemen",
+  "feedbackTitle": "Görüşleriniz bizim için değerli.",
+  "feedbackContent": "Muhammet Kaan Turan\n\nUygulama ile ilgili görüş, öneri ve şikayetlerinizi bu mail adresine iletebilirsiniz. Tüm geri bildirimler bizim için çok değerli.\nkaannturan@gmail.com",
+  "drunkWater": "İçilen Su:",
+  "dailyGoalLabel": "Günlük Hedef:",
+  "remaining": "Kalan:",
+  "completedPercent": "%{percent} tamamlandı",
+  "weeklyWaterTracking": "Haftalık Su Takibi",
+  "enableReminders": "Hatırlatıcıları Aktif Et",
+  "dailyReminderDescription": "Günlük su içme hatırlatıcıları al",
+  "reminderTimes": "Hatırlatıcı Zamanları",
+  "noReminderAdded": "Henüz hatırlatıcı eklemediniz",
+  "addReminderHint": "Yukarıdaki + butonuna tıklayarak\nyeni hatırlatıcı ekleyin",
+  "repeatsDaily": "Her gün tekrarlanacak",
+  "languageSelection": "Dil Seçimi",
+  "infoTitle": "Bilgi",
+  "reminderInfoDescription": "Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧"
+  
 
 
 }

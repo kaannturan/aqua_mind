@@ -51,4 +51,54 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get todayProgress => 'Bugünkü ilerlemen';
+
+  @override
+  String get feedbackTitle => 'Görüşleriniz bizim için değerli.';
+
+  @override
+  String get feedbackContent => 'Muhammet Kaan Turan\n\nUygulama ile ilgili görüş, öneri ve şikayetlerinizi bu mail adresine iletebilirsiniz. Tüm geri bildirimler bizim için çok değerli.\nkaannturan@gmail.com';
+
+  @override
+  String get drunkWater => 'İçilen Su:';
+
+  @override
+  String get dailyGoalLabel => 'Günlük Hedef:';
+
+  @override
+  String get remaining => 'Kalan:';
+
+  @override
+  String completedPercent(Object percent) {
+    return '%$percent tamamlandı';
+  }
+
+  @override
+  String get weeklyWaterTracking => 'Haftalık Su Takibi';
+
+  @override
+  String get enableReminders => 'Hatırlatıcıları Aktif Et';
+
+  @override
+  String get dailyReminderDescription => 'Günlük su içme hatırlatıcıları al';
+
+  @override
+  String get reminderTimes => 'Hatırlatıcı Zamanları';
+
+  @override
+  String get noReminderAdded => 'Henüz hatırlatıcı eklemediniz';
+
+  @override
+  String get addReminderHint => 'Yukarıdaki + butonuna tıklayarak\nyeni hatırlatıcı ekleyin';
+
+  @override
+  String get repeatsDaily => 'Her gün tekrarlanacak';
+
+  @override
+  String get languageSelection => 'Dil Seçimi';
+
+  @override
+  String get infoTitle => 'Bilgi';
+
+  @override
+  String get reminderInfoDescription => 'Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧';
 }

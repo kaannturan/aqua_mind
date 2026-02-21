@@ -198,6 +198,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your progress today'**
   String get todayProgress;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback is valuable to us.'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Muhammet Kaan Turan\n\nYou can send your opinions, suggestions and complaints about the application to this email address. All feedback is very important to us.\nkaannturan@gmail.com'**
+  String get feedbackContent;
+
+  /// No description provided for @drunkWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Consumed:'**
+  String get drunkWater;
+
+  /// No description provided for @dailyGoalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Goal:'**
+  String get dailyGoalLabel;
+
+  /// No description provided for @remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining:'**
+  String get remaining;
+
+  /// No description provided for @completedPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'%{percent} completed'**
+  String completedPercent(Object percent);
+
+  /// No description provided for @weeklyWaterTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Water Tracking'**
+  String get weeklyWaterTracking;
+
+  /// No description provided for @enableReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Reminders'**
+  String get enableReminders;
+
+  /// No description provided for @dailyReminderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive daily water drinking reminders'**
+  String get dailyReminderDescription;
+
+  /// No description provided for @reminderTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder Times'**
+  String get reminderTimes;
+
+  /// No description provided for @noReminderAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t added any reminders yet'**
+  String get noReminderAdded;
+
+  /// No description provided for @addReminderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the + button above\nto add a new reminder'**
+  String get addReminderHint;
+
+  /// No description provided for @repeatsDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats daily'**
+  String get repeatsDaily;
+
+  /// No description provided for @languageSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Language Selection'**
+  String get languageSelection;
+
+  /// No description provided for @infoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get infoTitle;
+
+  /// No description provided for @reminderInfoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders will send you notifications every day at the times you set. Regular water intake is very important for your health! 💧'**
+  String get reminderInfoDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

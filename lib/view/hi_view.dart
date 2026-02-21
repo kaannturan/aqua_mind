@@ -93,7 +93,7 @@ class HiPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [
-                            Colors.black,
+                            Colors.black87,
                             Color(0xff062549),
                           ],
                           begin: Alignment.topLeft,

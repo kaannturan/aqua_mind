@@ -51,4 +51,54 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get todayProgress => '今日の進捗';
+
+  @override
+  String get feedbackTitle => 'ご意見は私たちにとって大切です。';
+
+  @override
+  String get feedbackContent => 'Muhammet Kaan Turan\n\nアプリに関するご意見・ご提案・ご不満は、このメールアドレスまでお送りください。すべてのフィードバックは私たちにとって非常に重要です。\nkaannturan@gmail.com';
+
+  @override
+  String get drunkWater => 'Water Consumed:';
+
+  @override
+  String get dailyGoalLabel => 'Daily Goal:';
+
+  @override
+  String get remaining => 'Remaining:';
+
+  @override
+  String completedPercent(Object percent) {
+    return '%$percent completed';
+  }
+
+  @override
+  String get weeklyWaterTracking => 'Weekly Water Tracking';
+
+  @override
+  String get enableReminders => 'リマインダーを有効にする';
+
+  @override
+  String get dailyReminderDescription => '毎日の水分補給リマインダーを受け取る';
+
+  @override
+  String get reminderTimes => 'リマインダー時間';
+
+  @override
+  String get noReminderAdded => 'まだリマインダーが追加されていません';
+
+  @override
+  String get addReminderHint => '上の + ボタンをタップして\n新しいリマインダーを追加';
+
+  @override
+  String get repeatsDaily => '毎日繰り返し';
+
+  @override
+  String get languageSelection => '言語選択';
+
+  @override
+  String get infoTitle => '情報';
+
+  @override
+  String get reminderInfoDescription => 'リマインダーは設定した時間に毎日通知を送信します。定期的な水分補給は健康にとても重要です！💧';
 }

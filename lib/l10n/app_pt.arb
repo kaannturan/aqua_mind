@@ -13,7 +13,23 @@
   "resetApp": "Redefinir aplicativo",
   "drinkRecommendation": "Recomenda-se beber em média 2500 ml de água por dia.",
   "dailyTarget": "Sua meta diária : ",
-  "todayProgress": "Seu progresso de hoje"
+  "todayProgress": "Seu progresso de hoje",
+  "feedbackTitle": "O seu feedback é importante para nós.",
+  "feedbackContent": "Muhammet Kaan Turan\n\nVocê pode enviar suas opiniões, sugestões e reclamações sobre o aplicativo para este endereço de e-mail. Todo feedback é muito importante para nós.\nkaannturan@gmail.com",
+  "drunkWater": "Água consumida:",
+  "dailyGoalLabel": "Meta diária:",
+  "remaining": "Restante:",
+  "completedPercent": "%{percent} concluído",
+  "weeklyWaterTracking": "Acompanhamento semanal de água",
+  "enableReminders": "Ativar lembretes",
+  "dailyReminderDescription": "Receba lembretes diários para beber água",
+  "reminderTimes": "Horários dos lembretes",
+  "noReminderAdded": "Você ainda não adicionou lembretes",
+  "addReminderHint": "Toque no botão + acima\npara adicionar um novo lembrete",
+  "repeatsDaily": "Repete diariamente",
+  "languageSelection": "Seleção de idioma",
+  "infoTitle": "Informação",
+  "reminderInfoDescription": "Os lembretes enviarão notificações todos os dias nos horários definidos. A ingestão regular de água é muito importante para sua saúde! 💧"
 
 
 

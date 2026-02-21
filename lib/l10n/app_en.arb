@@ -23,7 +23,23 @@
   "resetApp": "Reset App",
   "drinkRecommendation": "It is recommended to drink an average of 2500 ml of water per day.",
   "dailyTarget": "Your daily target : ",
-  "todayProgress": "Your progress today"
+  "todayProgress": "Your progress today",
+  "feedbackTitle": "Your feedback is valuable to us.",
+  "feedbackContent": "Muhammet Kaan Turan\n\nYou can send your opinions, suggestions and complaints about the application to this email address. All feedback is very important to us.\nkaannturan@gmail.com",
+  "drunkWater": "Water Consumed:",
+  "dailyGoalLabel": "Daily Goal:",
+  "remaining": "Remaining:",
+  "completedPercent": "%{percent} completed",
+  "weeklyWaterTracking": "Weekly Water Tracking",
+  "enableReminders": "Enable Reminders",
+  "dailyReminderDescription": "Receive daily water drinking reminders",
+  "reminderTimes": "Reminder Times",
+  "noReminderAdded": "You haven't added any reminders yet",
+  "addReminderHint": "Tap the + button above\nto add a new reminder",
+  "repeatsDaily": "Repeats daily",
+  "languageSelection": "Language Selection",
+  "infoTitle": "Information",
+  "reminderInfoDescription": "Reminders will send you notifications every day at the times you set. Regular water intake is very important for your health! 💧"
 
 
 }

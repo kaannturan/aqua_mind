@@ -23,7 +23,19 @@
   "resetApp": "إعادة ضبط التطبيق",
 
   "drinkRecommendation": "يُنصح بشرب متوسط 2500 مل من الماء يوميًا :)",
-  "dailyTarget": "هدفك اليومي : ",
-  "todayProgress": "تقدمك اليوم : "
-}
+  "dailyTarget": "هدفك اليومي:",
+  "todayProgress": "تقدمك اليوم:",
+  "feedbackTitle": "ملاحظاتكم مهمة بالنسبة لنا.",
 
+  "enableReminders": "تفعيل التذكيرات",
+  "dailyReminderDescription": "استلام تذكيرات يومية لشرب الماء",
+  "reminderTimes": "أوقات التذكير",
+  "noReminderAdded": "لم تقم بإضافة أي تذكير بعد",
+  "addReminderHint": "اضغط على زر + أعلاه\nلإضافة تذكير جديد",
+  "repeatsDaily": "يتكرر يومياً",
+
+  "infoTitle": "معلومة",
+  "reminderInfoDescription": "سترسل التذكيرات إشعارات يوميًا في الأوقات التي حددتها. شرب الماء بانتظام مهم جدًا لصحتك! 💧",
+
+  "feedbackContent": "Muhammet Kaan Turan\n\nيمكنكم إرسال آرائكم واقتراحاتكم وشكاواكم المتعلقة بالتطبيق إلى عنوان البريد الإلكتروني هذا. جميع الملاحظات ذات أهمية كبيرة بالنسبة لنا.\nkaannturan@gmail.com"
+}

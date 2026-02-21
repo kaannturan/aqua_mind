@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:aqua_mind/core/utils/provider_local.dart';
+import 'package:aqua_mind/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,14 +10,15 @@ class LanguageSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     final localeProvider = Provider.of<LocaleProvider>(context);
     final currentLocale = localeProvider.locale.languageCode;
 
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          'Dil Seçimi',
+        title: Text(
+          loc.languageSelection,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -51,7 +53,7 @@ class LanguageSettingsPage extends StatelessWidget {
             _buildLanguageTile(
               context: context,
               title: 'English',
-              subtitle: 'İngilizce',
+              subtitle: 'English',
               flag: '🇺🇸',
               languageCode: 'en',
               isSelected: currentLocale == 'en',
@@ -62,31 +64,7 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'Fransızca',
-              subtitle: 'French',
-              flag: '🇫🇷',
-              languageCode: 'fr',
-              isSelected: currentLocale == 'fr',
-              onTap: () {
-                localeProvider.setLocale(const Locale('fr'));
-              },
-            ),
-            SizedBox(height: 12),
-            _buildLanguageTile(
-              context: context,
-              title: 'Almanca',
-              subtitle: 'German',
-              flag: '🇩🇪',
-              languageCode: 'de',
-              isSelected: currentLocale == 'de',
-              onTap: () {
-                localeProvider.setLocale(const Locale('de'));
-              },
-            ),
-            SizedBox(height: 12),
-            _buildLanguageTile(
-              context: context,
-              title: 'İspanyolca',
+              title: 'Español',
               subtitle: 'Spanish',
               flag: '🇪🇸',
               languageCode: 'es',
@@ -98,7 +76,31 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'İtalyanca',
+              title: 'Français',
+              subtitle: 'French',
+              flag: '🇫🇷',
+              languageCode: 'fr',
+              isSelected: currentLocale == 'fr',
+              onTap: () {
+                localeProvider.setLocale(const Locale('fr'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Deutsch',
+              subtitle: 'German',
+              flag: '🇩🇪',
+              languageCode: 'de',
+              isSelected: currentLocale == 'de',
+              onTap: () {
+                localeProvider.setLocale(const Locale('de'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'Italiano',
               subtitle: 'Italian',
               flag: '🇮🇹',
               languageCode: 'it',
@@ -110,7 +112,7 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'Portekizce',
+              title: 'Português',
               subtitle: 'Portuguese',
               flag: '🇵🇹',
               languageCode: 'pt',
@@ -122,7 +124,7 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'Çince',
+              title: '中文',
               subtitle: 'Chinese',
               flag: '🇨🇳',
               languageCode: 'zh',
@@ -134,7 +136,7 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'Japonca',
+              title: '日本語',
               subtitle: 'Japanese',
               flag: '🇯🇵',
               languageCode: 'ja',
@@ -146,7 +148,7 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'Rusça',
+              title: 'Русский',
               subtitle: 'Russian',
               flag: '🇷🇺',
               languageCode: 'ru',
@@ -158,7 +160,7 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'Arapça',
+              title: 'العربية',
               subtitle: 'Arabic',
               flag: '🇸🇦',
               languageCode: 'ar',
@@ -170,7 +172,7 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'Korece',
+              title: '한국어',
               subtitle: 'Korean',
               flag: '🇰🇷',
               languageCode: 'ko',

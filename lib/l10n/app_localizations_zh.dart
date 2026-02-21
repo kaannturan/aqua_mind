@@ -51,4 +51,54 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get todayProgress => '你今天的进度';
+
+  @override
+  String get feedbackTitle => '您的反馈对我们非常重要。';
+
+  @override
+  String get feedbackContent => 'Muhammet Kaan Turan\n\n您可以将关于应用的意见、建议和投诉发送到此电子邮件地址。所有反馈对我们都非常重要。\nkaannturan@gmail.com';
+
+  @override
+  String get drunkWater => '已饮用水量：';
+
+  @override
+  String get dailyGoalLabel => '每日目标：';
+
+  @override
+  String get remaining => '剩余：';
+
+  @override
+  String completedPercent(Object percent) {
+    return '已完成 %$percent%';
+  }
+
+  @override
+  String get weeklyWaterTracking => '每周饮水跟踪';
+
+  @override
+  String get enableReminders => '启用提醒';
+
+  @override
+  String get dailyReminderDescription => '接收每日饮水提醒';
+
+  @override
+  String get reminderTimes => '提醒时间';
+
+  @override
+  String get noReminderAdded => '您还没有添加提醒';
+
+  @override
+  String get addReminderHint => '点击上方的 + 按钮\n添加新的提醒';
+
+  @override
+  String get repeatsDaily => '每天重复';
+
+  @override
+  String get languageSelection => '语言选择';
+
+  @override
+  String get infoTitle => '信息';
+
+  @override
+  String get reminderInfoDescription => '提醒将在您设定的时间每天向您发送通知。规律饮水对您的健康非常重要！💧';
 }

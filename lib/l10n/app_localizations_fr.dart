@@ -51,4 +51,54 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get todayProgress => 'Votre progrès du jour';
+
+  @override
+  String get feedbackTitle => 'Votre avis est précieux pour nous.';
+
+  @override
+  String get feedbackContent => 'Muhammet Kaan Turan\n\nVous pouvez envoyer vos avis, suggestions et réclamations concernant l\'application à cette adresse e-mail. Tous les retours sont très importants pour nous.\nkaannturan@gmail.com';
+
+  @override
+  String get drunkWater => 'Eau consommée :';
+
+  @override
+  String get dailyGoalLabel => 'Objectif quotidien :';
+
+  @override
+  String get remaining => 'Restant :';
+
+  @override
+  String completedPercent(Object percent) {
+    return '%$percent terminé';
+  }
+
+  @override
+  String get weeklyWaterTracking => 'Suivi hebdomadaire de l\'eau';
+
+  @override
+  String get enableReminders => 'Enable Reminders';
+
+  @override
+  String get dailyReminderDescription => 'Receive daily water drinking reminders';
+
+  @override
+  String get reminderTimes => 'Reminder Times';
+
+  @override
+  String get noReminderAdded => 'You haven\'t added any reminders yet';
+
+  @override
+  String get addReminderHint => 'Tap the + button above\nto add a new reminder';
+
+  @override
+  String get repeatsDaily => 'Repeats daily';
+
+  @override
+  String get languageSelection => 'Choix de la langue';
+
+  @override
+  String get infoTitle => 'Information';
+
+  @override
+  String get reminderInfoDescription => 'Les rappels vous enverront des notifications chaque jour aux heures que vous avez définies. Une consommation régulière d’eau est très importante pour votre santé ! 💧';
 }
