@@ -31,7 +31,30 @@
   "infoTitle": "정보",
   "reminderInfoDescription": "알림은 설정한 시간에 매일 알림을 보냅니다. 규칙적인 수분 섭취는 건강에 매우 중요합니다! 💧",
   "newBadgeTitle": "🎉 새로운 배지!",
-  "goButton": "이동"
+  "goButton": "이동",
+  "badge_first_drop_name": "첫 물방울",
+  "badge_first_drop_desc": "처음으로 앱을 사용했습니다",
+  "badge_blue_spark_name": "블루 스파크",
+  "badge_blue_spark_desc": "처음으로 일일 목표를 달성했습니다",
+  "badge_flow_starter_name": "플로우 스타터",
+  "badge_flow_starter_desc": "5일 연속 목표 달성",
+  "badge_blue_energy_name": "블루 에너지",
+  "badge_blue_energy_desc": "일주일 동안 꾸준히 물을 마셨습니다",
+  "badge_water_hunter_name": "워터 헌터",
+  "badge_water_hunter_desc": "15일 동안 데이터를 기록했습니다",
+  "badge_hydro_master_name": "하이드로 마스터",
+  "badge_hydro_master_desc": "1개월 동안 데이터를 기록했습니다",
+  "badge_ocean_bender_name": "오션 킹",
+  "badge_ocean_bender_desc": "3개월 동안 데이터를 기록했습니다",
+  "badge_aqua_legend_name": "아쿠아 레전드",
+  "badge_aqua_legend_desc": "6개월 동안 데이터를 기록했습니다",
+  "weekDayMon": "월",
+  "weekDayTue": "화",
+  "weekDayWed": "수",
+  "weekDayThu": "목",
+  "weekDayFri": "금",
+  "weekDaySat": "토",
+  "weekDaySun": "일"
 
 
 

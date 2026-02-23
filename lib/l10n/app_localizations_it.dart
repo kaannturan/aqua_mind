@@ -107,4 +107,73 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get goButton => 'Vai';
+
+  @override
+  String get badge_first_drop_name => 'Prima Goccia';
+
+  @override
+  String get badge_first_drop_desc => 'Hai usato l\'app per la prima volta';
+
+  @override
+  String get badge_blue_spark_name => 'Scintilla Blu';
+
+  @override
+  String get badge_blue_spark_desc => 'Hai completato il tuo obiettivo giornaliero per la prima volta';
+
+  @override
+  String get badge_flow_starter_name => 'Avvio del Flusso';
+
+  @override
+  String get badge_flow_starter_desc => 'Obiettivo completato per 5 giorni consecutivi';
+
+  @override
+  String get badge_blue_energy_name => 'Energia Blu';
+
+  @override
+  String get badge_blue_energy_desc => 'Hai bevuto regolarmente acqua per una settimana';
+
+  @override
+  String get badge_water_hunter_name => 'Cacciatore d’Acqua';
+
+  @override
+  String get badge_water_hunter_desc => 'Hai registrato dati per 15 giorni';
+
+  @override
+  String get badge_hydro_master_name => 'Maestro Hydro';
+
+  @override
+  String get badge_hydro_master_desc => 'Hai registrato dati per 1 mese';
+
+  @override
+  String get badge_ocean_bender_name => 'Re degli Oceani';
+
+  @override
+  String get badge_ocean_bender_desc => 'Hai registrato dati per 3 mesi';
+
+  @override
+  String get badge_aqua_legend_name => 'Leggenda Aqua';
+
+  @override
+  String get badge_aqua_legend_desc => 'Hai registrato dati per 6 mesi';
+
+  @override
+  String get weekDayMon => 'Lun';
+
+  @override
+  String get weekDayTue => 'Mar';
+
+  @override
+  String get weekDayWed => 'Mer';
+
+  @override
+  String get weekDayThu => 'Gio';
+
+  @override
+  String get weekDayFri => 'Ven';
+
+  @override
+  String get weekDaySat => 'Sab';
+
+  @override
+  String get weekDaySun => 'Dom';
 }

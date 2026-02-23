@@ -31,7 +31,30 @@
   "infoTitle": "Informação",
   "reminderInfoDescription": "Os lembretes enviarão notificações todos os dias nos horários definidos. A ingestão regular de água é muito importante para sua saúde! 💧",
   "newBadgeTitle": "🎉 Novo emblema!",
-  "goButton": "Ir"
+  "goButton": "Ir",
+  "badge_first_drop_name": "Primeira Gota",
+  "badge_first_drop_desc": "Você usou o app pela primeira vez",
+  "badge_blue_spark_name": "Faísca Azul",
+  "badge_blue_spark_desc": "Você completou sua meta diária pela primeira vez",
+  "badge_flow_starter_name": "Início do Fluxo",
+  "badge_flow_starter_desc": "Meta concluída por 5 dias seguidos",
+  "badge_blue_energy_name": "Energia Azul",
+  "badge_blue_energy_desc": "Você bebeu água regularmente por uma semana",
+  "badge_water_hunter_name": "Caçador de Água",
+  "badge_water_hunter_desc": "Registrou dados por 15 dias",
+  "badge_hydro_master_name": "Mestre Hydro",
+  "badge_hydro_master_desc": "Registrou dados por 1 mês",
+  "badge_ocean_bender_name": "Rei dos Oceanos",
+  "badge_ocean_bender_desc": "Registrou dados por 3 meses",
+  "badge_aqua_legend_name": "Lenda Aqua",
+  "badge_aqua_legend_desc": "Registrou dados por 6 meses",
+  "weekDayMon": "Seg",
+  "weekDayTue": "Ter",
+  "weekDayWed": "Qua",
+  "weekDayThu": "Qui",
+  "weekDayFri": "Sex",
+  "weekDaySat": "Sáb",
+  "weekDaySun": "Dom"
 
 
 

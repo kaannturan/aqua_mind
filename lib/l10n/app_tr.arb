@@ -41,7 +41,30 @@
   "infoTitle": "Bilgi",
   "reminderInfoDescription": "Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧",
   "newBadgeTitle": "🎉 Yeni Rozet!",
-  "goButton": "Git"
+  "goButton": "Git",
+  "badge_first_drop_name": "İlk Damla",
+  "badge_first_drop_desc": "Uygulamayı ilk kez kullandın",
+  "badge_blue_spark_name": "Mavi Kıvılcım",
+  "badge_blue_spark_desc": "Günlük hedefini ilk kez tamamladın",
+  "badge_flow_starter_name": "Akış Başlatıcı",
+  "badge_flow_starter_desc": "5 gün üst üste hedefini tamamladın",
+  "badge_blue_energy_name": "Mavi Enerji",
+  "badge_blue_energy_desc": "İlk hafta düzenli su içtin",
+  "badge_water_hunter_name": "Su Avcısı",
+  "badge_water_hunter_desc": "15 gün veri girdin",
+  "badge_hydro_master_name": "Hydro Ustası",
+  "badge_hydro_master_desc": "1 ay boyunca veri girdin",
+  "badge_ocean_bender_name": "Okyanuslar Kralı",
+  "badge_ocean_bender_desc": "3 ay boyunca veri girdin",
+  "badge_aqua_legend_name": "Aqua Efsanesi",
+  "badge_aqua_legend_desc": "6 ay boyunca veri girdin",
+  "weekDayMon": "Pzt",
+  "weekDayTue": "Sal",
+  "weekDayWed": "Çar",
+  "weekDayThu": "Per",
+  "weekDayFri": "Cum",
+  "weekDaySat": "Cmt",
+  "weekDaySun": "Paz"
 
 
 }

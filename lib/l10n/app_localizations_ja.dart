@@ -107,4 +107,73 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get goButton => '移動';
+
+  @override
+  String get badge_first_drop_name => '最初の一滴';
+
+  @override
+  String get badge_first_drop_desc => '初めてアプリを使用しました';
+
+  @override
+  String get badge_blue_spark_name => 'ブルースパーク';
+
+  @override
+  String get badge_blue_spark_desc => '初めて1日の目標を達成しました';
+
+  @override
+  String get badge_flow_starter_name => 'フロースターター';
+
+  @override
+  String get badge_flow_starter_desc => '5日連続で目標達成';
+
+  @override
+  String get badge_blue_energy_name => 'ブルーエネルギー';
+
+  @override
+  String get badge_blue_energy_desc => '1週間、定期的に水を飲みました';
+
+  @override
+  String get badge_water_hunter_name => 'ウォーターハンター';
+
+  @override
+  String get badge_water_hunter_desc => '15日間データを記録しました';
+
+  @override
+  String get badge_hydro_master_name => 'ハイドロマスター';
+
+  @override
+  String get badge_hydro_master_desc => '1か月間データを記録しました';
+
+  @override
+  String get badge_ocean_bender_name => 'オーシャンキング';
+
+  @override
+  String get badge_ocean_bender_desc => '3か月間データを記録しました';
+
+  @override
+  String get badge_aqua_legend_name => 'アクアレジェンド';
+
+  @override
+  String get badge_aqua_legend_desc => '6か月間データを記録しました';
+
+  @override
+  String get weekDayMon => '月';
+
+  @override
+  String get weekDayTue => '火';
+
+  @override
+  String get weekDayWed => '水';
+
+  @override
+  String get weekDayThu => '木';
+
+  @override
+  String get weekDayFri => '金';
+
+  @override
+  String get weekDaySat => '土';
+
+  @override
+  String get weekDaySun => '日';
 }

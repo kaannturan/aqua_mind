@@ -31,7 +31,30 @@
   "infoTitle": "Information",
   "reminderInfoDescription": "Erinnerungen senden Ihnen täglich zu den festgelegten Zeiten Benachrichtigungen. Regelmäßige Wasseraufnahme ist sehr wichtig für Ihre Gesundheit! 💧",
   "newBadgeTitle": "🎉 Neues Abzeichen!",
-  "goButton": "Los"
+  "goButton": "Los",
+  "badge_first_drop_name": "Erster Tropfen",
+  "badge_first_drop_desc": "Du hast die App zum ersten Mal benutzt",
+  "badge_blue_spark_name": "Blauer Funke",
+  "badge_blue_spark_desc": "Du hast dein Tagesziel zum ersten Mal erreicht",
+  "badge_flow_starter_name": "Flow Starter",
+  "badge_flow_starter_desc": "5 Tage in Folge Ziel erreicht",
+  "badge_blue_energy_name": "Blaue Energie",
+  "badge_blue_energy_desc": "Eine Woche lang regelmäßig Wasser getrunken",
+  "badge_water_hunter_name": "Wasserjäger",
+  "badge_water_hunter_desc": "15 Tage Daten eingetragen",
+  "badge_hydro_master_name": "Hydro-Meister",
+  "badge_hydro_master_desc": "1 Monat lang Daten eingetragen",
+  "badge_ocean_bender_name": "Ozeankönig",
+  "badge_ocean_bender_desc": "3 Monate lang Daten eingetragen",
+  "badge_aqua_legend_name": "Aqua-Legende",
+  "badge_aqua_legend_desc": "6 Monate lang Daten eingetragen",
+  "weekDayMon": "Mo",
+  "weekDayTue": "Di",
+  "weekDayWed": "Mi",
+  "weekDayThu": "Do",
+  "weekDayFri": "Fr",
+  "weekDaySat": "Sa",
+  "weekDaySun": "So"
 
 
 }

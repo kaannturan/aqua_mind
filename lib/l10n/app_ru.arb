@@ -31,7 +31,30 @@
   "infoTitle": "Информация",
   "reminderInfoDescription": "Напоминания будут отправлять вам уведомления каждый день в установленное время. Регулярное потребление воды очень важно для вашего здоровья! 💧",
   "newBadgeTitle": "🎉 Новый значок!",
-  "goButton": "Перейти"
+  "goButton": "Перейти",
+  "badge_first_drop_name": "Первая Капля",
+  "badge_first_drop_desc": "Вы впервые использовали приложение",
+  "badge_blue_spark_name": "Синяя Искра",
+  "badge_blue_spark_desc": "Вы впервые достигли дневной цели",
+  "badge_flow_starter_name": "Начало Потока",
+  "badge_flow_starter_desc": "Цель выполнена 5 дней подряд",
+  "badge_blue_energy_name": "Синяя Энергия",
+  "badge_blue_energy_desc": "Вы регулярно пили воду в течение недели",
+  "badge_water_hunter_name": "Охотник за Водой",
+  "badge_water_hunter_desc": "Вводили данные 15 дней",
+  "badge_hydro_master_name": "Гидро-Мастер",
+  "badge_hydro_master_desc": "Вводили данные 1 месяц",
+  "badge_ocean_bender_name": "Король Океанов",
+  "badge_ocean_bender_desc": "Вводили данные 3 месяца",
+  "badge_aqua_legend_name": "Легенда Aqua",
+  "badge_aqua_legend_desc": "Вводили данные 6 месяцев",
+  "weekDayMon": "Пн",
+  "weekDayTue": "Вт",
+  "weekDayWed": "Ср",
+  "weekDayThu": "Чт",
+  "weekDayFri": "Пт",
+  "weekDaySat": "Сб",
+  "weekDaySun": "Вс"
 
 
 

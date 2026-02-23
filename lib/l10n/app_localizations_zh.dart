@@ -107,4 +107,73 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get goButton => '前往';
+
+  @override
+  String get badge_first_drop_name => '第一滴';
+
+  @override
+  String get badge_first_drop_desc => '你第一次使用了该应用';
+
+  @override
+  String get badge_blue_spark_name => '蓝色火花';
+
+  @override
+  String get badge_blue_spark_desc => '你第一次完成每日目标';
+
+  @override
+  String get badge_flow_starter_name => '流动开启者';
+
+  @override
+  String get badge_flow_starter_desc => '连续5天完成目标';
+
+  @override
+  String get badge_blue_energy_name => '蓝色能量';
+
+  @override
+  String get badge_blue_energy_desc => '连续一周规律喝水';
+
+  @override
+  String get badge_water_hunter_name => '饮水猎人';
+
+  @override
+  String get badge_water_hunter_desc => '记录数据15天';
+
+  @override
+  String get badge_hydro_master_name => '水之大师';
+
+  @override
+  String get badge_hydro_master_desc => '记录数据1个月';
+
+  @override
+  String get badge_ocean_bender_name => '海洋之王';
+
+  @override
+  String get badge_ocean_bender_desc => '记录数据3个月';
+
+  @override
+  String get badge_aqua_legend_name => '水之传奇';
+
+  @override
+  String get badge_aqua_legend_desc => '记录数据6个月';
+
+  @override
+  String get weekDayMon => '周一';
+
+  @override
+  String get weekDayTue => '周二';
+
+  @override
+  String get weekDayWed => '周三';
+
+  @override
+  String get weekDayThu => '周四';
+
+  @override
+  String get weekDayFri => '周五';
+
+  @override
+  String get weekDaySat => '周六';
+
+  @override
+  String get weekDaySun => '周日';
 }

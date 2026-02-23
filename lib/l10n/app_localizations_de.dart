@@ -107,4 +107,73 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get goButton => 'Los';
+
+  @override
+  String get badge_first_drop_name => 'Erster Tropfen';
+
+  @override
+  String get badge_first_drop_desc => 'Du hast die App zum ersten Mal benutzt';
+
+  @override
+  String get badge_blue_spark_name => 'Blauer Funke';
+
+  @override
+  String get badge_blue_spark_desc => 'Du hast dein Tagesziel zum ersten Mal erreicht';
+
+  @override
+  String get badge_flow_starter_name => 'Flow Starter';
+
+  @override
+  String get badge_flow_starter_desc => '5 Tage in Folge Ziel erreicht';
+
+  @override
+  String get badge_blue_energy_name => 'Blaue Energie';
+
+  @override
+  String get badge_blue_energy_desc => 'Eine Woche lang regelmäßig Wasser getrunken';
+
+  @override
+  String get badge_water_hunter_name => 'Wasserjäger';
+
+  @override
+  String get badge_water_hunter_desc => '15 Tage Daten eingetragen';
+
+  @override
+  String get badge_hydro_master_name => 'Hydro-Meister';
+
+  @override
+  String get badge_hydro_master_desc => '1 Monat lang Daten eingetragen';
+
+  @override
+  String get badge_ocean_bender_name => 'Ozeankönig';
+
+  @override
+  String get badge_ocean_bender_desc => '3 Monate lang Daten eingetragen';
+
+  @override
+  String get badge_aqua_legend_name => 'Aqua-Legende';
+
+  @override
+  String get badge_aqua_legend_desc => '6 Monate lang Daten eingetragen';
+
+  @override
+  String get weekDayMon => 'Mo';
+
+  @override
+  String get weekDayTue => 'Di';
+
+  @override
+  String get weekDayWed => 'Mi';
+
+  @override
+  String get weekDayThu => 'Do';
+
+  @override
+  String get weekDayFri => 'Fr';
+
+  @override
+  String get weekDaySat => 'Sa';
+
+  @override
+  String get weekDaySun => 'So';
 }

@@ -31,7 +31,30 @@
   "infoTitle": "Informazione",
   "reminderInfoDescription": "I promemoria ti invieranno notifiche ogni giorno agli orari impostati. Bere acqua regolarmente è molto importante per la tua salute! 💧",
   "newBadgeTitle": "🎉 Nuovo badge!",
-  "goButton": "Vai"
+  "goButton": "Vai",
+  "badge_first_drop_name": "Prima Goccia",
+  "badge_first_drop_desc": "Hai usato l'app per la prima volta",
+  "badge_blue_spark_name": "Scintilla Blu",
+  "badge_blue_spark_desc": "Hai completato il tuo obiettivo giornaliero per la prima volta",
+  "badge_flow_starter_name": "Avvio del Flusso",
+  "badge_flow_starter_desc": "Obiettivo completato per 5 giorni consecutivi",
+  "badge_blue_energy_name": "Energia Blu",
+  "badge_blue_energy_desc": "Hai bevuto regolarmente acqua per una settimana",
+  "badge_water_hunter_name": "Cacciatore d’Acqua",
+  "badge_water_hunter_desc": "Hai registrato dati per 15 giorni",
+  "badge_hydro_master_name": "Maestro Hydro",
+  "badge_hydro_master_desc": "Hai registrato dati per 1 mese",
+  "badge_ocean_bender_name": "Re degli Oceani",
+  "badge_ocean_bender_desc": "Hai registrato dati per 3 mesi",
+  "badge_aqua_legend_name": "Leggenda Aqua",
+  "badge_aqua_legend_desc": "Hai registrato dati per 6 mesi",
+  "weekDayMon": "Lun",
+  "weekDayTue": "Mar",
+  "weekDayWed": "Mer",
+  "weekDayThu": "Gio",
+  "weekDayFri": "Ven",
+  "weekDaySat": "Sab",
+  "weekDaySun": "Dom"
 
 
 

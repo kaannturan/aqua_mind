@@ -31,7 +31,30 @@
   "infoTitle": "信息",
   "reminderInfoDescription": "提醒将在您设定的时间每天向您发送通知。规律饮水对您的健康非常重要！💧",
   "newBadgeTitle": "🎉 新徽章！",
-  "goButton": "前往"
+  "goButton": "前往",
+  "badge_first_drop_name": "第一滴",
+  "badge_first_drop_desc": "你第一次使用了该应用",
+  "badge_blue_spark_name": "蓝色火花",
+  "badge_blue_spark_desc": "你第一次完成每日目标",
+  "badge_flow_starter_name": "流动开启者",
+  "badge_flow_starter_desc": "连续5天完成目标",
+  "badge_blue_energy_name": "蓝色能量",
+  "badge_blue_energy_desc": "连续一周规律喝水",
+  "badge_water_hunter_name": "饮水猎人",
+  "badge_water_hunter_desc": "记录数据15天",
+  "badge_hydro_master_name": "水之大师",
+  "badge_hydro_master_desc": "记录数据1个月",
+  "badge_ocean_bender_name": "海洋之王",
+  "badge_ocean_bender_desc": "记录数据3个月",
+  "badge_aqua_legend_name": "水之传奇",
+  "badge_aqua_legend_desc": "记录数据6个月",
+  "weekDayMon": "周一",
+  "weekDayTue": "周二",
+  "weekDayWed": "周三",
+  "weekDayThu": "周四",
+  "weekDayFri": "周五",
+  "weekDaySat": "周六",
+  "weekDaySun": "周日"
 
 
 

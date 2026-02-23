@@ -107,4 +107,73 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get goButton => 'اذهب';
+
+  @override
+  String get badge_first_drop_name => 'القطرة الأولى';
+
+  @override
+  String get badge_first_drop_desc => 'لقد استخدمت التطبيق لأول مرة';
+
+  @override
+  String get badge_blue_spark_name => 'الشرارة الزرقاء';
+
+  @override
+  String get badge_blue_spark_desc => 'أكملت هدفك اليومي لأول مرة';
+
+  @override
+  String get badge_flow_starter_name => 'بداية التدفق';
+
+  @override
+  String get badge_flow_starter_desc => 'أكملت الهدف لمدة 5 أيام متتالية';
+
+  @override
+  String get badge_blue_energy_name => 'الطاقة الزرقاء';
+
+  @override
+  String get badge_blue_energy_desc => 'شربت الماء بانتظام لمدة أسبوع';
+
+  @override
+  String get badge_water_hunter_name => 'صياد الماء';
+
+  @override
+  String get badge_water_hunter_desc => 'أدخلت البيانات لمدة 15 يومًا';
+
+  @override
+  String get badge_hydro_master_name => 'سيد الهيدرو';
+
+  @override
+  String get badge_hydro_master_desc => 'أدخلت البيانات لمدة شهر واحد';
+
+  @override
+  String get badge_ocean_bender_name => 'ملك المحيطات';
+
+  @override
+  String get badge_ocean_bender_desc => 'أدخلت البيانات لمدة 3 أشهر';
+
+  @override
+  String get badge_aqua_legend_name => 'أسطورة أكوا';
+
+  @override
+  String get badge_aqua_legend_desc => 'أدخلت البيانات لمدة 6 أشهر';
+
+  @override
+  String get weekDayMon => 'Mon';
+
+  @override
+  String get weekDayTue => 'Tue';
+
+  @override
+  String get weekDayWed => 'Wed';
+
+  @override
+  String get weekDayThu => 'Thu';
+
+  @override
+  String get weekDayFri => 'Fri';
+
+  @override
+  String get weekDaySat => 'Sat';
+
+  @override
+  String get weekDaySun => 'Sun';
 }

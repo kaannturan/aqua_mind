@@ -40,5 +40,29 @@
   "feedbackContent": "Muhammet Kaan Turan\n\nيمكنكم إرسال آرائكم واقتراحاتكم وشكاواكم المتعلقة بالتطبيق إلى عنوان البريد الإلكتروني هذا. جميع الملاحظات ذات أهمية كبيرة بالنسبة لنا.\nkaannturan@gmail.com",
 
   "newBadgeTitle": "🎉 شارة جديدة!",
-  "goButton": "اذهب"
+  "goButton": "اذهب",
+
+  "badge_first_drop_name": "القطرة الأولى",
+  "badge_first_drop_desc": "لقد استخدمت التطبيق لأول مرة",
+
+  "badge_blue_spark_name": "الشرارة الزرقاء",
+  "badge_blue_spark_desc": "أكملت هدفك اليومي لأول مرة",
+
+  "badge_flow_starter_name": "بداية التدفق",
+  "badge_flow_starter_desc": "أكملت الهدف لمدة 5 أيام متتالية",
+
+  "badge_blue_energy_name": "الطاقة الزرقاء",
+  "badge_blue_energy_desc": "شربت الماء بانتظام لمدة أسبوع",
+
+  "badge_water_hunter_name": "صياد الماء",
+  "badge_water_hunter_desc": "أدخلت البيانات لمدة 15 يومًا",
+
+  "badge_hydro_master_name": "سيد الهيدرو",
+  "badge_hydro_master_desc": "أدخلت البيانات لمدة شهر واحد",
+
+  "badge_ocean_bender_name": "ملك المحيطات",
+  "badge_ocean_bender_desc": "أدخلت البيانات لمدة 3 أشهر",
+
+  "badge_aqua_legend_name": "أسطورة أكوا",
+  "badge_aqua_legend_desc": "أدخلت البيانات لمدة 6 أشهر"
 }

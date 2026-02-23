@@ -35,9 +35,7 @@ class LevelSystem {
       return;
     }
 
-    if (lastDate == todayString) {
-      return;
-    }
+    if (lastDate == todayString) return;
 
     final lastDateTime = DateTime.parse(lastDate);
     final todayDateTime = DateTime.parse(todayString);
@@ -71,7 +69,6 @@ class LevelSystem {
   static Future<void> addDataDate(String date) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> allDates = prefs.getStringList('allDataDates') ?? [];
-
     if (!allDates.contains(date)) {
       allDates.add(date);
       await prefs.setStringList('allDataDates', allDates);
@@ -81,64 +78,66 @@ class LevelSystem {
 
 // Rozet Sistemi
 class BadgeSystem {
-  static List<Badgee> getAllBadges() {
+  // Context alarak lokalizasyon destekli rozet listesi
+  static List<Badgee> getAllBadges(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return [
       Badgee(
         id: 'first_drop',
-        name: 'İlk Damla',
-        description: 'Uygulamayı ilk kez kullandın',
+        name: loc.badge_first_drop_name,
+        description: loc.badge_first_drop_desc,
         iconData: FontAwesomeIcons.droplet,
       ),
       Badgee(
         id: 'blue_spark',
-        name: 'Mavi Kıvılcım',
-        description: 'Günlük hedefini ilk kez tamamladın',
+        name: loc.badge_blue_spark_name,
+        description: loc.badge_blue_spark_desc,
         iconData: FontAwesomeIcons.boltLightning,
       ),
       Badgee(
         id: 'flow_starter',
-        name: 'Akış Başlatıcı',
-        description: '5 gün üst üste hedefini tamamladın',
+        name: loc.badge_flow_starter_name,
+        description: loc.badge_flow_starter_desc,
         iconData: FontAwesomeIcons.fire,
       ),
       Badgee(
         id: 'blue_energy',
-        name: 'Mavi Enerji',
-        description: 'İlk hafta düzenli su içtin',
+        name: loc.badge_blue_energy_name,
+        description: loc.badge_blue_energy_desc,
         iconData: FontAwesomeIcons.star,
       ),
       Badgee(
         id: 'water_hunter',
-        name: 'Su Avcısı',
-        description: '15 gün veri girdin',
+        name: loc.badge_water_hunter_name,
+        description: loc.badge_water_hunter_desc,
         iconData: FontAwesomeIcons.bullseye,
       ),
       Badgee(
         id: 'hydro_master',
-        name: 'Hydro Ustası',
-        description: '1 ay boyunca veri girdin',
+        name: loc.badge_hydro_master_name,
+        description: loc.badge_hydro_master_desc,
         iconData: FontAwesomeIcons.medal,
       ),
       Badgee(
         id: 'ocean_bender',
-        name: 'Okyanuslar Kralı',
-        description: '3 ay boyunca veri girdin',
+        name: loc.badge_ocean_bender_name,
+        description: loc.badge_ocean_bender_desc,
         iconData: FontAwesomeIcons.crown,
       ),
       Badgee(
         id: 'aqua_legend',
-        name: 'Aqua Efsanesi',
-        description: '6 ay boyunca veri girdin',
+        name: loc.badge_aqua_legend_name,
+        description: loc.badge_aqua_legend_desc,
         iconData: FontAwesomeIcons.trophy,
       ),
     ];
   }
 
-  static Future<List<Badgee>> getUnlockedBadges() async {
+  static Future<List<Badgee>> getUnlockedBadges(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     final unlockedIds = prefs.getStringList('unlockedBadges') ?? [];
 
-    return getAllBadges().map((badge) {
+    return getAllBadges(context).map((badge) {
       return badge.copyWith(isUnlocked: unlockedIds.contains(badge.id));
     }).toList();
   }
@@ -163,52 +162,36 @@ class BadgeSystem {
     final totalDays = await LevelSystem.getTotalDaysWithData();
 
     if (totalDays >= 1) {
-      bool isNew = await unlockBadge('first_drop');
-      if (isNew) newBadges.add('first_drop');
+      if (await unlockBadge('first_drop')) newBadges.add('first_drop');
     }
-
     if (currentWater >= targetWater) {
-      bool isNew = await unlockBadge('blue_spark');
-      if (isNew) newBadges.add('blue_spark');
+      if (await unlockBadge('blue_spark')) newBadges.add('blue_spark');
     }
-
     if (consecutiveDays >= 5) {
-      bool isNew = await unlockBadge('flow_starter');
-      if (isNew) newBadges.add('flow_starter');
+      if (await unlockBadge('flow_starter')) newBadges.add('flow_starter');
     }
-
     if (totalDays >= 7) {
-      bool isNew = await unlockBadge('blue_energy');
-      if (isNew) newBadges.add('blue_energy');
+      if (await unlockBadge('blue_energy')) newBadges.add('blue_energy');
     }
-
     if (totalDays >= 15) {
-      bool isNew = await unlockBadge('water_hunter');
-      if (isNew) newBadges.add('water_hunter');
+      if (await unlockBadge('water_hunter')) newBadges.add('water_hunter');
     }
-
     if (totalDays >= 30) {
-      bool isNew = await unlockBadge('hydro_master');
-      if (isNew) newBadges.add('hydro_master');
+      if (await unlockBadge('hydro_master')) newBadges.add('hydro_master');
     }
-
     if (totalDays >= 90) {
-      bool isNew = await unlockBadge('ocean_bender');
-      if (isNew) newBadges.add('ocean_bender');
+      if (await unlockBadge('ocean_bender')) newBadges.add('ocean_bender');
     }
-
     if (totalDays >= 180) {
-      bool isNew = await unlockBadge('aqua_legend');
-      if (isNew) newBadges.add('aqua_legend');
+      if (await unlockBadge('aqua_legend')) newBadges.add('aqua_legend');
     }
 
     return newBadges;
   }
 
-  // IconData
   static void showNewBadgeNotification(BuildContext context, String badgeId) {
-    final badge = getAllBadges().firstWhere((b) => b.id == badgeId);
     final loc = AppLocalizations.of(context)!;
+    final badge = getAllBadges(context).firstWhere((b) => b.id == badgeId);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -217,13 +200,8 @@ class BadgeSystem {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         content: Row(
           children: [
-            // Icon widget kullanımı
-            Icon(
-              badge.iconData,
-              color: Colors.white,
-              size: 24,
-            ),
-            SizedBox(width: 12),
+            Icon(badge.iconData, color: Colors.white, size: 24),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,20 +209,21 @@ class BadgeSystem {
                 children: [
                   Text(
                     loc.newBadgeTitle,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  Text(badge.name, style: TextStyle(fontSize: 14)),
+                  Text(badge.name, style: const TextStyle(fontSize: 14)),
                 ],
               ),
             ),
           ],
         ),
-        duration: Duration(seconds: 5),
+        duration: const Duration(seconds: 5),
         action: SnackBarAction(
           label: loc.goButton,
           textColor: Colors.white,
           onPressed: () async {
-            final badges = await getUnlockedBadges();
+            final badges = await getUnlockedBadges(context);
             showBadgesDialog(context, badges);
           },
         ),
@@ -252,17 +231,18 @@ class BadgeSystem {
     );
   }
 
-  // Dialog'da icon gösterimi
   static void showBadgesDialog(BuildContext context, List<Badgee> badges) {
+    final loc = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return Dialog(
           backgroundColor: Colors.transparent,
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(dialogContext).size.height * 0.7,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [Colors.black, Color(0xff062549)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -278,24 +258,25 @@ class BadgeSystem {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Rozetlerim',
-                        style: TextStyle(
+                        "Rozetlerim",
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.close, color: Colors.white),
-                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.close, color: Colors.white),
+                        onPressed: () => Navigator.pop(dialogContext),
                       ),
                     ],
                   ),
                 ),
                 Expanded(
                   child: GridView.builder(
-                    padding: EdgeInsets.all(16),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    padding: const EdgeInsets.all(16),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
@@ -320,7 +301,6 @@ class BadgeSystem {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // Icon widget kullanımı
                             Icon(
                               badge.iconData,
                               size: 40,
@@ -328,7 +308,7 @@ class BadgeSystem {
                                   ? Colors.blue.shade300
                                   : Colors.white.withOpacity(0.3),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               badge.name,
                               style: TextStyle(
@@ -340,9 +320,10 @@ class BadgeSystem {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 4),
+                            const SizedBox(height: 4),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
                                 badge.description,
                                 style: TextStyle(
@@ -357,7 +338,7 @@ class BadgeSystem {
                               ),
                             ),
                             if (!badge.isUnlocked)
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(top: 4),
                                 child: Icon(
                                   FontAwesomeIcons.lock,

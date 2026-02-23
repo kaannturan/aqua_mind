@@ -306,6 +306,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go'**
   String get goButton;
+
+  /// No description provided for @badge_first_drop_name.
+  ///
+  /// In en, this message translates to:
+  /// **'First Drop'**
+  String get badge_first_drop_name;
+
+  /// No description provided for @badge_first_drop_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'You used the app for the first time'**
+  String get badge_first_drop_desc;
+
+  /// No description provided for @badge_blue_spark_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue Spark'**
+  String get badge_blue_spark_name;
+
+  /// No description provided for @badge_blue_spark_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'You completed your daily goal for the first time'**
+  String get badge_blue_spark_desc;
+
+  /// No description provided for @badge_flow_starter_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Flow Starter'**
+  String get badge_flow_starter_name;
+
+  /// No description provided for @badge_flow_starter_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed your goal 5 days in a row'**
+  String get badge_flow_starter_desc;
+
+  /// No description provided for @badge_blue_energy_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue Energy'**
+  String get badge_blue_energy_name;
+
+  /// No description provided for @badge_blue_energy_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Drank water regularly for a week'**
+  String get badge_blue_energy_desc;
+
+  /// No description provided for @badge_water_hunter_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Hunter'**
+  String get badge_water_hunter_name;
+
+  /// No description provided for @badge_water_hunter_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged data for 15 days'**
+  String get badge_water_hunter_desc;
+
+  /// No description provided for @badge_hydro_master_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Hydro Master'**
+  String get badge_hydro_master_name;
+
+  /// No description provided for @badge_hydro_master_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged data for 1 month'**
+  String get badge_hydro_master_desc;
+
+  /// No description provided for @badge_ocean_bender_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Ocean King'**
+  String get badge_ocean_bender_name;
+
+  /// No description provided for @badge_ocean_bender_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged data for 3 months'**
+  String get badge_ocean_bender_desc;
+
+  /// No description provided for @badge_aqua_legend_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Aqua Legend'**
+  String get badge_aqua_legend_name;
+
+  /// No description provided for @badge_aqua_legend_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged data for 6 months'**
+  String get badge_aqua_legend_desc;
+
+  /// No description provided for @weekDayMon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get weekDayMon;
+
+  /// No description provided for @weekDayTue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get weekDayTue;
+
+  /// No description provided for @weekDayWed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get weekDayWed;
+
+  /// No description provided for @weekDayThu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get weekDayThu;
+
+  /// No description provided for @weekDayFri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get weekDayFri;
+
+  /// No description provided for @weekDaySat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get weekDaySat;
+
+  /// No description provided for @weekDaySun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get weekDaySun;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

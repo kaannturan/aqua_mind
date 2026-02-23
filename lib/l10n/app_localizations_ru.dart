@@ -107,4 +107,73 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get goButton => 'Перейти';
+
+  @override
+  String get badge_first_drop_name => 'Первая Капля';
+
+  @override
+  String get badge_first_drop_desc => 'Вы впервые использовали приложение';
+
+  @override
+  String get badge_blue_spark_name => 'Синяя Искра';
+
+  @override
+  String get badge_blue_spark_desc => 'Вы впервые достигли дневной цели';
+
+  @override
+  String get badge_flow_starter_name => 'Начало Потока';
+
+  @override
+  String get badge_flow_starter_desc => 'Цель выполнена 5 дней подряд';
+
+  @override
+  String get badge_blue_energy_name => 'Синяя Энергия';
+
+  @override
+  String get badge_blue_energy_desc => 'Вы регулярно пили воду в течение недели';
+
+  @override
+  String get badge_water_hunter_name => 'Охотник за Водой';
+
+  @override
+  String get badge_water_hunter_desc => 'Вводили данные 15 дней';
+
+  @override
+  String get badge_hydro_master_name => 'Гидро-Мастер';
+
+  @override
+  String get badge_hydro_master_desc => 'Вводили данные 1 месяц';
+
+  @override
+  String get badge_ocean_bender_name => 'Король Океанов';
+
+  @override
+  String get badge_ocean_bender_desc => 'Вводили данные 3 месяца';
+
+  @override
+  String get badge_aqua_legend_name => 'Легенда Aqua';
+
+  @override
+  String get badge_aqua_legend_desc => 'Вводили данные 6 месяцев';
+
+  @override
+  String get weekDayMon => 'Пн';
+
+  @override
+  String get weekDayTue => 'Вт';
+
+  @override
+  String get weekDayWed => 'Ср';
+
+  @override
+  String get weekDayThu => 'Чт';
+
+  @override
+  String get weekDayFri => 'Пт';
+
+  @override
+  String get weekDaySat => 'Сб';
+
+  @override
+  String get weekDaySun => 'Вс';
 }

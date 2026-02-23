@@ -41,7 +41,30 @@
   "infoTitle": "Information",
   "reminderInfoDescription": "Reminders will send you notifications every day at the times you set. Regular water intake is very important for your health! 💧",
   "newBadgeTitle": "🎉 New Badge!",
-  "goButton": "Go"
+  "goButton": "Go",
+  "badge_first_drop_name": "First Drop",
+  "badge_first_drop_desc": "You used the app for the first time",
+  "badge_blue_spark_name": "Blue Spark",
+  "badge_blue_spark_desc": "You completed your daily goal for the first time",
+  "badge_flow_starter_name": "Flow Starter",
+  "badge_flow_starter_desc": "Completed your goal 5 days in a row",
+  "badge_blue_energy_name": "Blue Energy",
+  "badge_blue_energy_desc": "Drank water regularly for a week",
+  "badge_water_hunter_name": "Water Hunter",
+  "badge_water_hunter_desc": "Logged data for 15 days",
+  "badge_hydro_master_name": "Hydro Master",
+  "badge_hydro_master_desc": "Logged data for 1 month",
+  "badge_ocean_bender_name": "Ocean King",
+  "badge_ocean_bender_desc": "Logged data for 3 months",
+  "badge_aqua_legend_name": "Aqua Legend",
+  "badge_aqua_legend_desc": "Logged data for 6 months",
+  "weekDayMon": "Mon",
+  "weekDayTue": "Tue",
+  "weekDayWed": "Wed",
+  "weekDayThu": "Thu",
+  "weekDayFri": "Fri",
+  "weekDaySat": "Sat",
+  "weekDaySun": "Sun"
 
 
 }

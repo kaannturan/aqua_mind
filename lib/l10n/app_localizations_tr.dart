@@ -107,4 +107,73 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get goButton => 'Git';
+
+  @override
+  String get badge_first_drop_name => 'İlk Damla';
+
+  @override
+  String get badge_first_drop_desc => 'Uygulamayı ilk kez kullandın';
+
+  @override
+  String get badge_blue_spark_name => 'Mavi Kıvılcım';
+
+  @override
+  String get badge_blue_spark_desc => 'Günlük hedefini ilk kez tamamladın';
+
+  @override
+  String get badge_flow_starter_name => 'Akış Başlatıcı';
+
+  @override
+  String get badge_flow_starter_desc => '5 gün üst üste hedefini tamamladın';
+
+  @override
+  String get badge_blue_energy_name => 'Mavi Enerji';
+
+  @override
+  String get badge_blue_energy_desc => 'İlk hafta düzenli su içtin';
+
+  @override
+  String get badge_water_hunter_name => 'Su Avcısı';
+
+  @override
+  String get badge_water_hunter_desc => '15 gün veri girdin';
+
+  @override
+  String get badge_hydro_master_name => 'Hydro Ustası';
+
+  @override
+  String get badge_hydro_master_desc => '1 ay boyunca veri girdin';
+
+  @override
+  String get badge_ocean_bender_name => 'Okyanuslar Kralı';
+
+  @override
+  String get badge_ocean_bender_desc => '3 ay boyunca veri girdin';
+
+  @override
+  String get badge_aqua_legend_name => 'Aqua Efsanesi';
+
+  @override
+  String get badge_aqua_legend_desc => '6 ay boyunca veri girdin';
+
+  @override
+  String get weekDayMon => 'Pzt';
+
+  @override
+  String get weekDayTue => 'Sal';
+
+  @override
+  String get weekDayWed => 'Çar';
+
+  @override
+  String get weekDayThu => 'Per';
+
+  @override
+  String get weekDayFri => 'Cum';
+
+  @override
+  String get weekDaySat => 'Cmt';
+
+  @override
+  String get weekDaySun => 'Paz';
 }

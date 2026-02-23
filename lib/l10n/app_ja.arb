@@ -26,7 +26,30 @@
   "infoTitle": "情報",
   "reminderInfoDescription": "リマインダーは設定した時間に毎日通知を送信します。定期的な水分補給は健康にとても重要です！💧",
   "newBadgeTitle": "🎉 新しいバッジ！",
-  "goButton": "移動"
+  "goButton": "移動",
+  "badge_first_drop_name": "最初の一滴",
+  "badge_first_drop_desc": "初めてアプリを使用しました",
+  "badge_blue_spark_name": "ブルースパーク",
+  "badge_blue_spark_desc": "初めて1日の目標を達成しました",
+  "badge_flow_starter_name": "フロースターター",
+  "badge_flow_starter_desc": "5日連続で目標達成",
+  "badge_blue_energy_name": "ブルーエネルギー",
+  "badge_blue_energy_desc": "1週間、定期的に水を飲みました",
+  "badge_water_hunter_name": "ウォーターハンター",
+  "badge_water_hunter_desc": "15日間データを記録しました",
+  "badge_hydro_master_name": "ハイドロマスター",
+  "badge_hydro_master_desc": "1か月間データを記録しました",
+  "badge_ocean_bender_name": "オーシャンキング",
+  "badge_ocean_bender_desc": "3か月間データを記録しました",
+  "badge_aqua_legend_name": "アクアレジェンド",
+  "badge_aqua_legend_desc": "6か月間データを記録しました",
+  "weekDayMon": "月",
+  "weekDayTue": "火",
+  "weekDayWed": "水",
+  "weekDayThu": "木",
+  "weekDayFri": "金",
+  "weekDaySat": "土",
+  "weekDaySun": "日"
 
 
 
