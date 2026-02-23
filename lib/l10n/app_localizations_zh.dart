@@ -101,4 +101,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => '提醒将在您设定的时间每天向您发送通知。规律饮水对您的健康非常重要！💧';
+
+  @override
+  String get newBadgeTitle => '🎉 新徽章！';
+
+  @override
+  String get goButton => '前往';
 }

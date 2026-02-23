@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, unnecessary_this, use_build_context_synchronously
 
+import 'package:aqua_mind/l10n/app_localizations.dart';
 import 'package:aqua_mind/models/badgee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -86,49 +87,49 @@ class BadgeSystem {
         id: 'first_drop',
         name: 'İlk Damla',
         description: 'Uygulamayı ilk kez kullandın',
-        iconData: FontAwesomeIcons.droplet, // ✅ YENİ
+        iconData: FontAwesomeIcons.droplet,
       ),
       Badgee(
         id: 'blue_spark',
         name: 'Mavi Kıvılcım',
         description: 'Günlük hedefini ilk kez tamamladın',
-        iconData: FontAwesomeIcons.boltLightning, // ✅ YENİ
+        iconData: FontAwesomeIcons.boltLightning,
       ),
       Badgee(
         id: 'flow_starter',
         name: 'Akış Başlatıcı',
         description: '5 gün üst üste hedefini tamamladın',
-        iconData: FontAwesomeIcons.fire, // ✅ YENİ
+        iconData: FontAwesomeIcons.fire,
       ),
       Badgee(
         id: 'blue_energy',
         name: 'Mavi Enerji',
         description: 'İlk hafta düzenli su içtin',
-        iconData: FontAwesomeIcons.star, // ✅ YENİ
+        iconData: FontAwesomeIcons.star,
       ),
       Badgee(
         id: 'water_hunter',
         name: 'Su Avcısı',
         description: '15 gün veri girdin',
-        iconData: FontAwesomeIcons.bullseye, // ✅ YENİ
+        iconData: FontAwesomeIcons.bullseye,
       ),
       Badgee(
         id: 'hydro_master',
         name: 'Hydro Ustası',
         description: '1 ay boyunca veri girdin',
-        iconData: FontAwesomeIcons.medal, // ✅ YENİ
+        iconData: FontAwesomeIcons.medal,
       ),
       Badgee(
         id: 'ocean_bender',
         name: 'Okyanuslar Kralı',
         description: '3 ay boyunca veri girdin',
-        iconData: FontAwesomeIcons.crown, // ✅ YENİ
+        iconData: FontAwesomeIcons.crown,
       ),
       Badgee(
         id: 'aqua_legend',
         name: 'Aqua Efsanesi',
         description: '6 ay boyunca veri girdin',
-        iconData: FontAwesomeIcons.trophy, // ✅ YENİ
+        iconData: FontAwesomeIcons.trophy,
       ),
     ];
   }
@@ -154,7 +155,8 @@ class BadgeSystem {
     return false;
   }
 
-  static Future<List<String>> checkAndUnlockBadges(int currentWater, int targetWater) async {
+  static Future<List<String>> checkAndUnlockBadges(
+      int currentWater, int targetWater) async {
     List<String> newBadges = [];
 
     final consecutiveDays = await LevelSystem.getConsecutiveDays();
@@ -203,18 +205,19 @@ class BadgeSystem {
     return newBadges;
   }
 
-  // ✅ GÜNCELLEME: Icon yerine IconData kullanımı
+  // IconData
   static void showNewBadgeNotification(BuildContext context, String badgeId) {
     final badge = getAllBadges().firstWhere((b) => b.id == badgeId);
+    final loc = AppLocalizations.of(context)!;
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.blue.shade700,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         content: Row(
           children: [
-            // ✅ DEĞİŞTİ: Icon widget kullanımı
+            // Icon widget kullanımı
             Icon(
               badge.iconData,
               color: Colors.white,
@@ -227,7 +230,7 @@ class BadgeSystem {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '🎉 Yeni Rozet!',
+                    loc.newBadgeTitle,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text(badge.name, style: TextStyle(fontSize: 14)),
@@ -236,9 +239,9 @@ class BadgeSystem {
             ),
           ],
         ),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 5),
         action: SnackBarAction(
-          label: 'Gör',
+          label: loc.goButton,
           textColor: Colors.white,
           onPressed: () async {
             final badges = await getUnlockedBadges();
@@ -249,7 +252,7 @@ class BadgeSystem {
     );
   }
 
-  // ✅ GÜNCELLEME: Dialog'da icon gösterimi
+  // Dialog'da icon gösterimi
   static void showBadgesDialog(BuildContext context, List<Badgee> badges) {
     showDialog(
       context: context,
@@ -303,27 +306,35 @@ class BadgeSystem {
                       final badge = badges[index];
                       return Container(
                         decoration: BoxDecoration(
-                          color: badge.isUnlocked ? Colors.blue.withOpacity(0.2) : Colors.white.withOpacity(0.1),
+                          color: badge.isUnlocked
+                              ? Colors.blue.withOpacity(0.2)
+                              : Colors.white.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: badge.isUnlocked ? Colors.blue.shade300 : Colors.white24,
+                            color: badge.isUnlocked
+                                ? Colors.blue.shade300
+                                : Colors.white24,
                             width: 2,
                           ),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // ✅ DEĞİŞTİ: Icon widget kullanımı
+                            // Icon widget kullanımı
                             Icon(
                               badge.iconData,
                               size: 40,
-                              color: badge.isUnlocked ? Colors.blue.shade300 : Colors.white.withOpacity(0.3),
+                              color: badge.isUnlocked
+                                  ? Colors.blue.shade300
+                                  : Colors.white.withOpacity(0.3),
                             ),
                             SizedBox(height: 8),
                             Text(
                               badge.name,
                               style: TextStyle(
-                                color: badge.isUnlocked ? Colors.white : Colors.white54,
+                                color: badge.isUnlocked
+                                    ? Colors.white
+                                    : Colors.white54,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -335,7 +346,9 @@ class BadgeSystem {
                               child: Text(
                                 badge.description,
                                 style: TextStyle(
-                                  color: badge.isUnlocked ? Colors.white70 : Colors.white38,
+                                  color: badge.isUnlocked
+                                      ? Colors.white70
+                                      : Colors.white38,
                                   fontSize: 10,
                                 ),
                                 textAlign: TextAlign.center,

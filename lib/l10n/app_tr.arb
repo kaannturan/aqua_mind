@@ -39,8 +39,9 @@
   "repeatsDaily": "Her gün tekrarlanacak",
   "languageSelection": "Dil Seçimi",
   "infoTitle": "Bilgi",
-  "reminderInfoDescription": "Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧"
-  
+  "reminderInfoDescription": "Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧",
+  "newBadgeTitle": "🎉 Yeni Rozet!",
+  "goButton": "Git"
 
 
 }

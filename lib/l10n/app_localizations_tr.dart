@@ -101,4 +101,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => 'Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧';
+
+  @override
+  String get newBadgeTitle => '🎉 Yeni Rozet!';
+
+  @override
+  String get goButton => 'Git';
 }

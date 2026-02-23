@@ -101,4 +101,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => 'Les rappels vous enverront des notifications chaque jour aux heures que vous avez définies. Une consommation régulière d’eau est très importante pour votre santé ! 💧';
+
+  @override
+  String get newBadgeTitle => '🎉 Nouveau badge !';
+
+  @override
+  String get goButton => 'Aller';
 }

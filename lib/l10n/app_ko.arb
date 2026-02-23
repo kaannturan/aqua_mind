@@ -29,7 +29,9 @@
   "repeatsDaily": "매일 반복",
   "languageSelection": "언어 선택",
   "infoTitle": "정보",
-  "reminderInfoDescription": "알림은 설정한 시간에 매일 알림을 보냅니다. 규칙적인 수분 섭취는 건강에 매우 중요합니다! 💧"
+  "reminderInfoDescription": "알림은 설정한 시간에 매일 알림을 보냅니다. 규칙적인 수분 섭취는 건강에 매우 중요합니다! 💧",
+  "newBadgeTitle": "🎉 새로운 배지!",
+  "goButton": "이동"
 
 
 

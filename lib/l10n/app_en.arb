@@ -39,7 +39,9 @@
   "repeatsDaily": "Repeats daily",
   "languageSelection": "Language Selection",
   "infoTitle": "Information",
-  "reminderInfoDescription": "Reminders will send you notifications every day at the times you set. Regular water intake is very important for your health! 💧"
+  "reminderInfoDescription": "Reminders will send you notifications every day at the times you set. Regular water intake is very important for your health! 💧",
+  "newBadgeTitle": "🎉 New Badge!",
+  "goButton": "Go"
 
 
 }

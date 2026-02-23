@@ -101,4 +101,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => 'リマインダーは設定した時間に毎日通知を送信します。定期的な水分補給は健康にとても重要です！💧';
+
+  @override
+  String get newBadgeTitle => '🎉 新しいバッジ！';
+
+  @override
+  String get goButton => '移動';
 }

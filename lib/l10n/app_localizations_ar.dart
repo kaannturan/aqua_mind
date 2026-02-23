@@ -44,7 +44,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get resetApp => 'إعادة ضبط التطبيق';
 
   @override
-  String get drinkRecommendation => 'يُنصح بشرب متوسط 2500 مل من الماء يوميًا :)';
+  String get drinkRecommendation => 'يُنصح بشرب متوسط 2500 مل من الماء يوميًا 🙂';
 
   @override
   String get dailyTarget => 'هدفك اليومي:';
@@ -101,4 +101,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => 'سترسل التذكيرات إشعارات يوميًا في الأوقات التي حددتها. شرب الماء بانتظام مهم جدًا لصحتك! 💧';
+
+  @override
+  String get newBadgeTitle => '🎉 شارة جديدة!';
+
+  @override
+  String get goButton => 'اذهب';
 }

@@ -101,4 +101,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => 'I promemoria ti invieranno notifiche ogni giorno agli orari impostati. Bere acqua regolarmente è molto importante per la tua salute! 💧';
+
+  @override
+  String get newBadgeTitle => '🎉 Nuovo badge!';
+
+  @override
+  String get goButton => 'Vai';
 }

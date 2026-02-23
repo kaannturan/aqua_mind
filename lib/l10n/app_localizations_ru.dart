@@ -101,4 +101,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => 'Напоминания будут отправлять вам уведомления каждый день в установленное время. Регулярное потребление воды очень важно для вашего здоровья! 💧';
+
+  @override
+  String get newBadgeTitle => '🎉 Новый значок!';
+
+  @override
+  String get goButton => 'Перейти';
 }

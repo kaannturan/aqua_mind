@@ -101,4 +101,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => '알림은 설정한 시간에 매일 알림을 보냅니다. 규칙적인 수분 섭취는 건강에 매우 중요합니다! 💧';
+
+  @override
+  String get newBadgeTitle => '🎉 새로운 배지!';
+
+  @override
+  String get goButton => '이동';
 }

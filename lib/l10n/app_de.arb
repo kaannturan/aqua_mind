@@ -29,7 +29,9 @@
   "repeatsDaily": "Wird täglich wiederholt",
   "languageSelection": "Sprachauswahl",
   "infoTitle": "Information",
-  "reminderInfoDescription": "Erinnerungen senden Ihnen täglich zu den festgelegten Zeiten Benachrichtigungen. Regelmäßige Wasseraufnahme ist sehr wichtig für Ihre Gesundheit! 💧"
+  "reminderInfoDescription": "Erinnerungen senden Ihnen täglich zu den festgelegten Zeiten Benachrichtigungen. Regelmäßige Wasseraufnahme ist sehr wichtig für Ihre Gesundheit! 💧",
+  "newBadgeTitle": "🎉 Neues Abzeichen!",
+  "goButton": "Los"
 
 
 }

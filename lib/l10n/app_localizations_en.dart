@@ -101,4 +101,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminderInfoDescription => 'Reminders will send you notifications every day at the times you set. Regular water intake is very important for your health! 💧';
+
+  @override
+  String get newBadgeTitle => '🎉 New Badge!';
+
+  @override
+  String get goButton => 'Go';
 }

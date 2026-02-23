@@ -93,8 +93,8 @@ class HiPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [
-                            Colors.black87,
-                            Color(0xff062549),
+                            Colors.transparent,
+                            Colors.transparent,
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -137,7 +137,7 @@ class HiPage extends StatelessWidget {
                             child: Text(
                               "Continue",
                               style: TextStyle(
-                                fontSize: width * 0.043,
+                                fontSize: width * 0.041,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),

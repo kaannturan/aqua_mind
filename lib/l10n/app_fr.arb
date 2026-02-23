@@ -23,7 +23,9 @@
   "weeklyWaterTracking": "Suivi hebdomadaire de l'eau",
   "languageSelection": "Choix de la langue",
   "infoTitle": "Information",
-  "reminderInfoDescription": "Les rappels vous enverront des notifications chaque jour aux heures que vous avez définies. Une consommation régulière d’eau est très importante pour votre santé ! 💧"
+  "reminderInfoDescription": "Les rappels vous enverront des notifications chaque jour aux heures que vous avez définies. Une consommation régulière d’eau est très importante pour votre santé ! 💧",
+  "newBadgeTitle": "🎉 Nouveau badge !",
+  "goButton": "Aller"
 
 
 

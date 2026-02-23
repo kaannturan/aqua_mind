@@ -294,6 +294,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders will send you notifications every day at the times you set. Regular water intake is very important for your health! 💧'**
   String get reminderInfoDescription;
+
+  /// No description provided for @newBadgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'🎉 New Badge!'**
+  String get newBadgeTitle;
+
+  /// No description provided for @goButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Go'**
+  String get goButton;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

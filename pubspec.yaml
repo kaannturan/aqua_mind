@@ -23,8 +23,6 @@ dependencies:
   flutter_local_notifications: ^17.0.0
   timezone: ^0.9.2
   permission_handler: ^11.0.1
-
-
   flutter_localizations:
     sdk: flutter
   intl: any
@@ -32,9 +30,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^5.0.0
-
+  flutter_launcher_icons: ^0.11.0   # <- ikon paketi eklendi
 
 flutter:
   uses-material-design: true
@@ -44,6 +41,13 @@ flutter:
 
   generate: true
 
-# l10n yapılandırması en üst seviyede, flutter bölümünün dışında
+# flutter_intl yapılandırması
 flutter_intl:
   enabled: true
+
+# flutter_launcher_icons yapılandırması
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/glasswithlem.png"   # <- ikon dosyanın yolu
+  remove_alpha_ios: true
