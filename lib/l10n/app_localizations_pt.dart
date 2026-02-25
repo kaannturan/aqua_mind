@@ -176,4 +176,22 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get weekDaySun => 'Dom';
+
+  @override
+  String get add_reminder => 'Adicionar lembrete';
+
+  @override
+  String get swipe_to_select_time => 'Deslize para selecionar o horário';
+
+  @override
+  String get hour => 'HORA';
+
+  @override
+  String get minute => 'MINUTO';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get add => 'Adicionar';
 }

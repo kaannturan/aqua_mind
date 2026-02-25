@@ -160,18 +160,6 @@ class LanguageSettingsPage extends StatelessWidget {
             SizedBox(height: 12),
             _buildLanguageTile(
               context: context,
-              title: 'العربية',
-              subtitle: 'Arabic',
-              flag: '🇸🇦',
-              languageCode: 'ar',
-              isSelected: currentLocale == 'ar',
-              onTap: () {
-                localeProvider.setLocale(const Locale('ar'));
-              },
-            ),
-            SizedBox(height: 12),
-            _buildLanguageTile(
-              context: context,
               title: '한국어',
               subtitle: 'Korean',
               flag: '🇰🇷',
@@ -179,6 +167,18 @@ class LanguageSettingsPage extends StatelessWidget {
               isSelected: currentLocale == 'ko',
               onTap: () {
                 localeProvider.setLocale(const Locale('ko'));
+              },
+            ),
+            SizedBox(height: 12),
+            _buildLanguageTile(
+              context: context,
+              title: 'العربية',
+              subtitle: 'Arabic',
+              flag: '🇸🇦',
+              languageCode: 'ar',
+              isSelected: currentLocale == 'ar',
+              onTap: () {
+                localeProvider.setLocale(const Locale('ar'));
               },
             ),
           ],

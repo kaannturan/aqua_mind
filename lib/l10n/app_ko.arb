@@ -54,7 +54,13 @@
   "weekDayThu": "목",
   "weekDayFri": "금",
   "weekDaySat": "토",
-  "weekDaySun": "일"
+  "weekDaySun": "일",
+  "add_reminder": "알림 추가",
+  "swipe_to_select_time": "스와이프하여 시간 선택",
+  "hour": "시간",
+  "minute": "분",
+  "cancel": "취소",
+  "add": "추가"
 
 
 

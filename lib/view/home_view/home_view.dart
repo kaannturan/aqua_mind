@@ -37,9 +37,7 @@ DateTime safeParse(String dateStr) {
   return DateTime.now();
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Drawer menü öğesi
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _DrawerItem extends StatelessWidget {
   final IconData icon;
@@ -103,10 +101,6 @@ class _DrawerItem extends StatelessWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  // Drawer banner
-  BannerAd? _bannerAd;
-  bool _bannerAdLoaded = false;
-
   // Body alt banner
   BannerAd? _bottomBannerAd;
   bool _bottomBannerAdLoaded = false;
@@ -142,22 +136,6 @@ class _HomePageState extends State<HomePage>
     );
 
     _loadTodayWater();
-
-    // Drawer banner
-    _bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-      size: AdSize.banner,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (ad) {
-          setState(() => _bannerAdLoaded = true);
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-          setState(() => _bannerAdLoaded = false);
-        },
-      ),
-    )..load();
 
     // Body alt banner
     _bottomBannerAd = BannerAd(
@@ -228,7 +206,6 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     _scrollController.dispose();
     _progressController.dispose();
-    _bannerAd?.dispose();
     _bottomBannerAd?.dispose();
     _interstitialAd?.dispose();
     super.dispose();
@@ -507,18 +484,179 @@ class _HomePageState extends State<HomePage>
                 _DrawerItem(
                   icon: Icons.mail_rounded,
                   label: loc.feedback,
-                  onTap: () => showDialog(
+                  onTap: () => showGeneralDialog(
                     context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text(loc.feedbackTitle),
-                      content: Text(loc.feedbackContent),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text("Close"),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    barrierColor: Colors.black.withOpacity(0.6),
+                    transitionDuration: const Duration(milliseconds: 350),
+                    transitionBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      final curved = CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutBack,
+                      );
+                      return ScaleTransition(
+                        scale: Tween<double>(begin: 0.85, end: 1.0)
+                            .animate(curved),
+                        child: FadeTransition(
+                          opacity: animation,
+                          child: child,
                         ),
-                      ],
-                    ),
+                      );
+                    },
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                      return Center(
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 28),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF0D1F35), Color(0xFF062549)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              border: Border.all(
+                                color: Colors.blue.shade300.withOpacity(0.25),
+                                width: 1.2,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.blue.shade900.withOpacity(0.5),
+                                  blurRadius: 32,
+                                  spreadRadius: 4,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(24),
+                              child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(28),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      // Icon badge
+                                      Container(
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.blue.shade400,
+                                              Colors.blue.shade700,
+                                            ],
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.blue.shade500
+                                                  .withOpacity(0.02),
+                                              blurRadius: 18,
+                                              spreadRadius: 2,
+                                            ),
+                                          ],
+                                        ),
+                                        child: const Icon(
+                                          Icons.mail_rounded,
+                                          color: Colors.white,
+                                          size: 28,
+                                        ),
+                                      ),
+
+                                      const SizedBox(height: 18),
+
+                                      // Title
+
+                                      Text(
+                                        loc.feedbackTitle,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          letterSpacing: -0.3,
+                                        ),
+                                      ),
+
+                                      const SizedBox(height: 10),
+
+                                      // Divider
+                                      Container(
+                                        height: 1,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.transparent,
+                                              Colors.blue.shade300
+                                                  .withOpacity(0.4),
+                                              Colors.transparent,
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+
+                                      const SizedBox(height: 14),
+
+                                      // Content
+                                      Text(
+                                        loc.feedbackContent,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white.withOpacity(0.7),
+                                          fontSize: 14,
+                                          height: 1.55,
+                                        ),
+                                      ),
+
+                                      const SizedBox(height: 26),
+
+                                      // Close button
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          style: TextButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 14),
+                                            backgroundColor: Colors
+                                                .blue.shade700
+                                                .withOpacity(0.35),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                              side: BorderSide(
+                                                color: Colors.blue.shade400
+                                                    .withOpacity(0.4),
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            "Close",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 _DrawerItem(
@@ -562,38 +700,17 @@ class _HomePageState extends State<HomePage>
                     );
                   },
                 ),
-
-                // Drawer banner — sadece yüklenince göster
-                if (_bannerAd != null && _bannerAdLoaded)
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.04),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.blue.shade300.withOpacity(0.12),
-                        width: 1,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    height: _bannerAd!.size.height.toDouble(),
-                    child: AdWidget(ad: _bannerAd!),
-                  ),
-
-                const SizedBox(height: 30),
-                Center(
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0, top: 10),
                   child: Text(
                     '2026©AquaMind',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.25),
+                      color: Colors.white.withOpacity(0.50),
                       fontSize: 11,
-                      letterSpacing: 0.5,
+                      letterSpacing: 0.0,
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
               ],
             ),
           ),

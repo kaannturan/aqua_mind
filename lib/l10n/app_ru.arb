@@ -54,7 +54,13 @@
   "weekDayThu": "Чт",
   "weekDayFri": "Пт",
   "weekDaySat": "Сб",
-  "weekDaySun": "Вс"
+  "weekDaySun": "Вс",
+  "add_reminder": "Добавить напоминание",
+  "swipe_to_select_time": "Проведите, чтобы выбрать время",
+  "hour": "ЧАС",
+  "minute": "МИНУТА",
+  "cancel": "Отмена",
+  "add": "Добавить"
 
 
 

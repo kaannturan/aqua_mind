@@ -47,10 +47,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get drinkRecommendation => 'يُنصح بشرب متوسط 2500 مل من الماء يوميًا 🙂';
 
   @override
-  String get dailyTarget => 'هدفك اليومي:';
+  String get dailyTarget => 'هدفك اليومي :';
 
   @override
-  String get todayProgress => 'تقدمك اليوم:';
+  String get todayProgress => 'تقدمك اليوم :';
 
   @override
   String get feedbackTitle => 'ملاحظاتكم مهمة بالنسبة لنا.';
@@ -59,21 +59,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get feedbackContent => 'Muhammet Kaan Turan\n\nيمكنكم إرسال آرائكم واقتراحاتكم وشكاواكم المتعلقة بالتطبيق إلى عنوان البريد الإلكتروني هذا. جميع الملاحظات ذات أهمية كبيرة بالنسبة لنا.\nkaannturan@gmail.com';
 
   @override
-  String get drunkWater => 'Water Consumed:';
+  String get drunkWater => 'الماء المُشرب :';
 
   @override
-  String get dailyGoalLabel => 'Daily Goal:';
+  String get dailyGoalLabel => 'الهدف اليومي :';
 
   @override
-  String get remaining => 'Remaining:';
+  String get remaining => 'المتبقي :';
 
   @override
   String completedPercent(Object percent) {
-    return '%$percent completed';
+    return '%$percent مكتمل';
   }
 
   @override
-  String get weeklyWaterTracking => 'Weekly Water Tracking';
+  String get weeklyWaterTracking => 'متابعة الماء الأسبوعية';
 
   @override
   String get enableReminders => 'تفعيل التذكيرات';
@@ -91,10 +91,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addReminderHint => 'اضغط على زر + أعلاه\nلإضافة تذكير جديد';
 
   @override
-  String get repeatsDaily => 'يتكرر يومياً';
+  String get repeatsDaily => 'يتكرر يوميًا';
 
   @override
-  String get languageSelection => 'Language Selection';
+  String get languageSelection => 'اختيار اللغة';
 
   @override
   String get infoTitle => 'معلومة';
@@ -157,23 +157,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get badge_aqua_legend_desc => 'أدخلت البيانات لمدة 6 أشهر';
 
   @override
-  String get weekDayMon => 'Mon';
+  String get weekDayMon => 'الإثنين';
 
   @override
-  String get weekDayTue => 'Tue';
+  String get weekDayTue => 'الثلاثاء';
 
   @override
-  String get weekDayWed => 'Wed';
+  String get weekDayWed => 'الأربعاء';
 
   @override
-  String get weekDayThu => 'Thu';
+  String get weekDayThu => 'الخميس';
 
   @override
-  String get weekDayFri => 'Fri';
+  String get weekDayFri => 'الجمعة';
 
   @override
-  String get weekDaySat => 'Sat';
+  String get weekDaySat => 'السبت';
 
   @override
-  String get weekDaySun => 'Sun';
+  String get weekDaySun => 'الأحد';
+
+  @override
+  String get add_reminder => 'إضافة تذكير';
+
+  @override
+  String get swipe_to_select_time => 'اسحب لاختيار الوقت';
+
+  @override
+  String get hour => 'ساعة';
+
+  @override
+  String get minute => 'دقيقة';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get add => 'إضافة';
 }

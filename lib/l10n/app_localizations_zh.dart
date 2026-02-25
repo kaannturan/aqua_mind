@@ -176,4 +176,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get weekDaySun => '周日';
+
+  @override
+  String get add_reminder => '添加提醒';
+
+  @override
+  String get swipe_to_select_time => '滑动选择时间';
+
+  @override
+  String get hour => '小时';
+
+  @override
+  String get minute => '分钟';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get add => '添加';
 }

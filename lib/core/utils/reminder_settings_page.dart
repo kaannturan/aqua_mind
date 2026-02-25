@@ -79,6 +79,7 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return FadeTransition(
       opacity: _entryFade,
       child: ScaleTransition(
@@ -145,8 +146,8 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Hatırlatıcı Ekle',
+                          Text(
+                            loc.add_reminder,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -155,7 +156,7 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
                             ),
                           ),
                           Text(
-                            'Kaydırarak saat seçin',
+                            loc.swipe_to_select_time,
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.blue.shade200.withOpacity(0.65),
@@ -207,7 +208,7 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
                       Expanded(
                         child: Center(
                           child: Text(
-                            'SAAT',
+                            loc.hour,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -221,7 +222,7 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
                       Expanded(
                         child: Center(
                           child: Text(
-                            'DAKİKA',
+                            loc.minute,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -392,7 +393,7 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
                             ),
                           ),
                           child: Text(
-                            'İptal',
+                            loc.cancel,
                             style: TextStyle(
                               color: Colors.blue.shade200,
                               fontSize: 15,
@@ -433,12 +434,12 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Icon(Icons.add_rounded,
                                     color: Colors.white, size: 18),
                                 SizedBox(width: 6),
                                 Text(
-                                  'Ekle',
+                                  loc.add,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,
@@ -462,16 +463,12 @@ class _DrumTimePickerDialogState extends State<_DrumTimePickerDialog>
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DRUM COLUMN  — sonsuz scroll, sağlıklı seçim
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _DrumColumn extends StatelessWidget {
   final FixedExtentScrollController controller;
   final int itemCount;
   final int selectedValue;
   final double itemExtent;
-  final ValueChanged<int> onChanged; // ham index döner, caller % alır
+  final ValueChanged<int> onChanged;
 
   const _DrumColumn({
     required this.controller,
@@ -486,7 +483,8 @@ class _DrumColumn extends StatelessWidget {
     return ListWheelScrollView.useDelegate(
       controller: controller,
       itemExtent: itemExtent,
-      // Sonsuz scroll için çok büyük bir liste
+
+      // Sonsuz scroll
       overAndUnderCenterOpacity: 1.0,
       diameterRatio: 1.8,
       squeeze: 1.25,

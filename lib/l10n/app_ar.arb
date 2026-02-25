@@ -13,31 +13,37 @@
 
   "addWater": "إضافة ماء",
   "weeklyTracking": "متابعة أسبوعية",
+  "weeklyWaterTracking": "متابعة الماء الأسبوعية",
 
   "home": "الرئيسية",
   "reminder": "تذكير",
   "settings": "الإعدادات",
   "languageSettings": "اللغة",
+  "languageSelection": "اختيار اللغة",
   "about": "حول",
   "feedback": "ملاحظات",
   "resetApp": "إعادة ضبط التطبيق",
 
   "drinkRecommendation": "يُنصح بشرب متوسط 2500 مل من الماء يوميًا 🙂",
-  "dailyTarget": "هدفك اليومي:",
-  "todayProgress": "تقدمك اليوم:",
+  "dailyTarget": "هدفك اليومي :",
+  "dailyGoalLabel": "الهدف اليومي :",
+  "todayProgress": "تقدمك اليوم :",
+  "drunkWater": "الماء المُشرب :",
+  "remaining": "المتبقي :",
+  "completedPercent": "%{percent} مكتمل",
+
   "feedbackTitle": "ملاحظاتكم مهمة بالنسبة لنا.",
+  "feedbackContent": "Muhammet Kaan Turan\n\nيمكنكم إرسال آرائكم واقتراحاتكم وشكاواكم المتعلقة بالتطبيق إلى عنوان البريد الإلكتروني هذا. جميع الملاحظات ذات أهمية كبيرة بالنسبة لنا.\nkaannturan@gmail.com",
 
   "enableReminders": "تفعيل التذكيرات",
   "dailyReminderDescription": "استلام تذكيرات يومية لشرب الماء",
   "reminderTimes": "أوقات التذكير",
   "noReminderAdded": "لم تقم بإضافة أي تذكير بعد",
   "addReminderHint": "اضغط على زر + أعلاه\nلإضافة تذكير جديد",
-  "repeatsDaily": "يتكرر يومياً",
+  "repeatsDaily": "يتكرر يوميًا",
 
   "infoTitle": "معلومة",
   "reminderInfoDescription": "سترسل التذكيرات إشعارات يوميًا في الأوقات التي حددتها. شرب الماء بانتظام مهم جدًا لصحتك! 💧",
-
-  "feedbackContent": "Muhammet Kaan Turan\n\nيمكنكم إرسال آرائكم واقتراحاتكم وشكاواكم المتعلقة بالتطبيق إلى عنوان البريد الإلكتروني هذا. جميع الملاحظات ذات أهمية كبيرة بالنسبة لنا.\nkaannturan@gmail.com",
 
   "newBadgeTitle": "🎉 شارة جديدة!",
   "goButton": "اذهب",
@@ -64,5 +70,20 @@
   "badge_ocean_bender_desc": "أدخلت البيانات لمدة 3 أشهر",
 
   "badge_aqua_legend_name": "أسطورة أكوا",
-  "badge_aqua_legend_desc": "أدخلت البيانات لمدة 6 أشهر"
+  "badge_aqua_legend_desc": "أدخلت البيانات لمدة 6 أشهر",
+
+  "weekDayMon": "الإثنين",
+  "weekDayTue": "الثلاثاء",
+  "weekDayWed": "الأربعاء",
+  "weekDayThu": "الخميس",
+  "weekDayFri": "الجمعة",
+  "weekDaySat": "السبت",
+  "weekDaySun": "الأحد",
+
+  "add_reminder": "إضافة تذكير",
+  "swipe_to_select_time": "اسحب لاختيار الوقت",
+  "hour": "ساعة",
+  "minute": "دقيقة",
+  "cancel": "إلغاء",
+  "add": "إضافة"
 }

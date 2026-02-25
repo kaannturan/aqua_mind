@@ -1,12 +1,392 @@
 // ignore_for_file: deprecated_member_use, unnecessary_this, use_build_context_synchronously
 
+import 'dart:ui';
 import 'package:aqua_mind/l10n/app_localizations.dart';
 import 'package:aqua_mind/models/badgee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Badge Unlock Overlay Widget
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _BadgeUnlockOverlay extends StatefulWidget {
+  final Badgee badge;
+  final String newBadgeTitle;
+  final VoidCallback onDismiss;
+  final VoidCallback onViewAll;
+
+  const _BadgeUnlockOverlay({
+    required this.badge,
+    required this.newBadgeTitle,
+    required this.onDismiss,
+    required this.onViewAll,
+  });
+
+  @override
+  State<_BadgeUnlockOverlay> createState() => _BadgeUnlockOverlayState();
+}
+
+class _BadgeUnlockOverlayState extends State<_BadgeUnlockOverlay>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _slideAnim;
+  late Animation<double> _fadeAnim;
+  late Animation<double> _scaleAnim;
+  late Animation<double> _shimmerAnim;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1800),
+    );
+
+    _slideAnim = Tween<Offset>(
+      begin: const Offset(0, 2.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutBack,
+    ));
+
+    _fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.4, curve: Curves.easeIn),
+      ),
+    );
+
+    _scaleAnim = Tween<double>(begin: 0.88, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    );
+
+    _shimmerAnim = Tween<double>(begin: -1.0, end: 2.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.4, 1.0, curve: Curves.easeInOut),
+      ),
+    );
+
+    _controller.forward();
+
+    Future.delayed(const Duration(milliseconds: 8000), () {
+      if (mounted) _dismiss();
+    });
+  }
+
+  Future<void> _dismiss() async {
+    if (!mounted) return;
+    await _controller.reverse(from: 1.0);
+    widget.onDismiss();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return SlideTransition(
+          position: _slideAnim,
+          child: FadeTransition(
+            opacity: _fadeAnim,
+            child: ScaleTransition(
+              scale: _scaleAnim,
+              child: GestureDetector(
+                onTap: _dismiss,
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF0A1F38), Color(0xFF062549)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    border: Border.all(
+                      color: Colors.blue.shade300.withOpacity(0.15),
+                      width: 1.2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.blue.shade900.withOpacity(0.30),
+                        blurRadius: 28,
+                        spreadRadius: 2,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(22),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                      child: Stack(
+                        children: [
+                          // Shimmer şeridi
+                          Positioned.fill(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(22),
+                              child: ShaderMask(
+                                shaderCallback: (bounds) {
+                                  return LinearGradient(
+                                    begin: Alignment(
+                                        _shimmerAnim.value - 0.4, -0.5),
+                                    end: Alignment(_shimmerAnim.value + 0.4, 1),
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.white.withOpacity(0.06),
+                                      Colors.transparent,
+                                    ],
+                                  ).createShader(bounds);
+                                },
+                                child: Container(color: Colors.white),
+                              ),
+                            ),
+                          ),
+
+                          // İçerik
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 16),
+                            child: Row(
+                              children: [
+                                // Sol: Rozet ikon kutusu
+                                Container(
+                                  width: 58,
+                                  height: 58,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.amber.shade400,
+                                        Colors.orange.shade600,
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.amber.withOpacity(0.10),
+                                        blurRadius: 16,
+                                        spreadRadius: 2,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Icon(
+                                    widget.badge.iconData,
+                                    color: Colors.white,
+                                    size: 26,
+                                  ),
+                                ),
+
+                                const SizedBox(width: 14),
+
+                                // Orta: Metin
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      // Üst satır: rozet kazanıldı etiketi
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 3),
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.amber.shade600,
+                                                  Colors.orange.shade500,
+                                                ],
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Icon(
+                                                  FontAwesomeIcons.vaadin,
+                                                  color: Colors.white,
+                                                  size: 10,
+                                                ),
+                                                const SizedBox(width: 5),
+                                                Text(
+                                                  widget.newBadgeTitle,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w700,
+                                                    letterSpacing: 0.4,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      const SizedBox(height: 6),
+
+                                      // Rozet adı
+                                      Text(
+                                        widget.badge.name,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          letterSpacing: -0.2,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+
+                                      const SizedBox(height: 3),
+
+                                      // Açıklama
+                                      Text(
+                                        widget.badge.description,
+                                        style: TextStyle(
+                                          color: Colors.white.withOpacity(0.60),
+                                          fontSize: 12,
+                                          height: 1.3,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(width: 10),
+
+                                // Sağ: Görüntüle butonu
+                                GestureDetector(
+                                  onTap: widget.onViewAll,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Colors.blue.shade700.withOpacity(0.4),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Colors.blue.shade400
+                                            .withOpacity(0.45),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: Colors.white70,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Alt: Progress bar (4.5s timer)
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(22),
+                                bottomRight: Radius.circular(22),
+                              ),
+                              child: AnimatedBuilder(
+                                animation: _controller,
+                                builder: (context, _) {
+                                  return LinearProgressIndicator(
+                                    value: 1.0 - _controller.value,
+                                    minHeight: 3,
+                                    backgroundColor:
+                                        Colors.white.withOpacity(0.06),
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.amber.shade400,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Overlay Manager
+// ─────────────────────────────────────────────────────────────────────────────
+
+OverlayEntry? _currentBadgeOverlay;
+
+void _showBadgeOverlay({
+  required BuildContext context,
+  required Badgee badge,
+  required String newBadgeTitle,
+  required VoidCallback onViewAll,
+}) {
+  _currentBadgeOverlay?.remove();
+  _currentBadgeOverlay = null;
+
+  late OverlayEntry entry;
+
+  entry = OverlayEntry(
+    builder: (ctx) => Positioned(
+      bottom: 28,
+      left: 0,
+      right: 0,
+      child: Material(
+        color: Colors.transparent,
+        child: _BadgeUnlockOverlay(
+          badge: badge,
+          newBadgeTitle: newBadgeTitle,
+          onDismiss: () {
+            entry.remove();
+            _currentBadgeOverlay = null;
+          },
+          onViewAll: () {
+            entry.remove();
+            _currentBadgeOverlay = null;
+            onViewAll();
+          },
+        ),
+      ),
+    ),
+  );
+
+  _currentBadgeOverlay = entry;
+  Overlay.of(context).insert(entry);
+}
+
 // Seviye Sistemi
+
 class LevelSystem {
   static Future<int> getCurrentLevel() async {
     final prefs = await SharedPreferences.getInstance();
@@ -77,8 +457,8 @@ class LevelSystem {
 }
 
 // Rozet Sistemi
+
 class BadgeSystem {
-  // Context alarak lokalizasyon destekli rozet listesi
   static List<Badgee> getAllBadges(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return [
@@ -193,44 +573,18 @@ class BadgeSystem {
     final loc = AppLocalizations.of(context)!;
     final badge = getAllBadges(context).firstWhere((b) => b.id == badgeId);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.blue.shade700,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        content: Row(
-          children: [
-            Icon(badge.iconData, color: Colors.white, size: 24),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    loc.newBadgeTitle,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Text(badge.name, style: const TextStyle(fontSize: 14)),
-                ],
-              ),
-            ),
-          ],
-        ),
-        duration: const Duration(seconds: 6),
-        action: SnackBarAction(
-          label: loc.goButton,
-          textColor: Colors.white,
-          onPressed: () async {
-            final badges = await getUnlockedBadges(context);
-            showBadgesDialog(context, badges);
-          },
-        ),
-      ),
+    _showBadgeOverlay(
+      context: context,
+      badge: badge,
+      newBadgeTitle: loc.newBadgeTitle,
+      onViewAll: () async {
+        final badges = await getUnlockedBadges(context);
+        showBadgesDialog(context, badges);
+      },
     );
   }
 
+  // Rozetler Dialog
   static void showBadgesDialog(BuildContext context, List<Badgee> badges) {
     final loc = AppLocalizations.of(context)!;
 

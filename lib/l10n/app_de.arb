@@ -54,7 +54,13 @@
   "weekDayThu": "Do",
   "weekDayFri": "Fr",
   "weekDaySat": "Sa",
-  "weekDaySun": "So"
+  "weekDaySun": "So",
+  "add_reminder": "Erinnerung hinzufügen",
+  "swipe_to_select_time": "Zum Auswählen der Zeit wischen",
+  "hour": "STUNDE",
+  "minute": "MINUTE",
+  "cancel": "Abbrechen",
+  "add": "Hinzufügen"
 
 
 }

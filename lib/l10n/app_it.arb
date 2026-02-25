@@ -54,7 +54,13 @@
   "weekDayThu": "Gio",
   "weekDayFri": "Ven",
   "weekDaySat": "Sab",
-  "weekDaySun": "Dom"
+  "weekDaySun": "Dom",
+  "add_reminder": "Aggiungi promemoria",
+  "swipe_to_select_time": "Scorri per selezionare l'orario",
+  "hour": "ORA",
+  "minute": "MINUTO",
+  "cancel": "Annulla",
+  "add": "Aggiungi"
 
 
 

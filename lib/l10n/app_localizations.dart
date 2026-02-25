@@ -444,6 +444,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sun'**
   String get weekDaySun;
+
+  /// No description provided for @add_reminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Reminder'**
+  String get add_reminder;
+
+  /// No description provided for @swipe_to_select_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe to select time'**
+  String get swipe_to_select_time;
+
+  /// No description provided for @hour.
+  ///
+  /// In en, this message translates to:
+  /// **'HOUR'**
+  String get hour;
+
+  /// No description provided for @minute.
+  ///
+  /// In en, this message translates to:
+  /// **'MINUTE'**
+  String get minute;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

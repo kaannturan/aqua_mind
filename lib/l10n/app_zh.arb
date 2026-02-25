@@ -54,7 +54,13 @@
   "weekDayThu": "周四",
   "weekDayFri": "周五",
   "weekDaySat": "周六",
-  "weekDaySun": "周日"
+  "weekDaySun": "周日",
+  "add_reminder": "添加提醒",
+  "swipe_to_select_time": "滑动选择时间",
+  "hour": "小时",
+  "minute": "分钟",
+  "cancel": "取消",
+  "add": "添加"
 
 
 

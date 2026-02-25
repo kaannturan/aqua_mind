@@ -176,4 +176,22 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get weekDaySun => '일';
+
+  @override
+  String get add_reminder => '알림 추가';
+
+  @override
+  String get swipe_to_select_time => '스와이프하여 시간 선택';
+
+  @override
+  String get hour => '시간';
+
+  @override
+  String get minute => '분';
+
+  @override
+  String get cancel => '취소';
+
+  @override
+  String get add => '추가';
 }

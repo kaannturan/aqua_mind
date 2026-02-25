@@ -176,4 +176,22 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get weekDaySun => 'Вс';
+
+  @override
+  String get add_reminder => 'Добавить напоминание';
+
+  @override
+  String get swipe_to_select_time => 'Проведите, чтобы выбрать время';
+
+  @override
+  String get hour => 'ЧАС';
+
+  @override
+  String get minute => 'МИНУТА';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get add => 'Добавить';
 }

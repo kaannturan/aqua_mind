@@ -44,8 +44,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get resetApp => 'Uygulamayı Sıfırla';
 
   @override
-  String get drinkRecommendation =>
-      'Günde ortalama 2500 ml su içmeniz önerilir.';
+  String get drinkRecommendation => 'Günde ortalama 2500 ml su içmeniz önerilir.';
 
   @override
   String get dailyTarget => 'Günlük hedefiniz : ';
@@ -57,8 +56,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get feedbackTitle => 'Görüşleriniz bizim için değerli.';
 
   @override
-  String get feedbackContent =>
-      'Muhammet Kaan Turan\n\nUygulama ile ilgili görüş, öneri ve şikayetlerinizi bu mail adresine iletebilirsiniz. Tüm geri bildirimler bizim için çok değerli.\nkaannturan@gmail.com';
+  String get feedbackContent => 'Muhammet Kaan Turan\n\nUygulama ile ilgili görüş, öneri ve şikayetlerinizi bu mail adresine iletebilirsiniz. Tüm geri bildirimler bizim için çok değerli.\nkaannturan@gmail.com';
 
   @override
   String get drunkWater => 'İçilen Su:';
@@ -90,8 +88,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noReminderAdded => 'Henüz hatırlatıcı eklemediniz';
 
   @override
-  String get addReminderHint =>
-      'Yukarıdaki + butonuna tıklayarak\nyeni hatırlatıcı ekleyin';
+  String get addReminderHint => 'Yukarıdaki + butonuna tıklayarak\nyeni hatırlatıcı ekleyin';
 
   @override
   String get repeatsDaily => 'Her gün tekrarlanacak';
@@ -103,8 +100,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get infoTitle => 'Bilgi';
 
   @override
-  String get reminderInfoDescription =>
-      'Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧';
+  String get reminderInfoDescription => 'Hatırlatıcılar her gün belirlediğiniz saatlerde size bildirim gönderecektir. Düzenli su tüketimi sağlığınız için çok önemlidir! 💧';
 
   @override
   String get newBadgeTitle => '🎉 Yeni Rozet!';
@@ -180,4 +176,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get weekDaySun => 'Paz';
+
+  @override
+  String get add_reminder => 'Hatırlatıcı Ekle';
+
+  @override
+  String get swipe_to_select_time => 'Kaydırarak saat seçin';
+
+  @override
+  String get hour => 'SAAT';
+
+  @override
+  String get minute => 'DAKİKA';
+
+  @override
+  String get cancel => 'İptal';
+
+  @override
+  String get add => 'Ekle';
 }

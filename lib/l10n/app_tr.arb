@@ -64,7 +64,13 @@
   "weekDayThu": "Per",
   "weekDayFri": "Cum",
   "weekDaySat": "Cmt",
-  "weekDaySun": "Paz"
+  "weekDaySun": "Paz",
+  "add_reminder": "Hatırlatıcı Ekle",
+  "swipe_to_select_time": "Kaydırarak saat seçin",
+  "hour": "SAAT",
+  "minute": "DAKİKA",
+  "cancel": "İptal",
+  "add": "Ekle"
 
 
 }

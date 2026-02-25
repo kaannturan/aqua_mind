@@ -44,13 +44,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get resetApp => 'Réinitialiser l\'application';
 
   @override
-  String get drinkRecommendation => 'Il est recommandé de boire en moyenne 2500 ml d\'eau par jour.';
+  String get drinkRecommendation => 'Il est recommandé de boire en moyenne 2500 ml d\'eau par jour 🙂';
 
   @override
-  String get dailyTarget => 'Votre objectif quotidien : ';
+  String get dailyTarget => 'Votre objectif quotidien :';
 
   @override
-  String get todayProgress => 'Votre progrès du jour';
+  String get todayProgress => 'Votre progression aujourd\'hui :';
 
   @override
   String get feedbackTitle => 'Votre avis est précieux pour nous.';
@@ -76,22 +76,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get weeklyWaterTracking => 'Suivi hebdomadaire de l\'eau';
 
   @override
-  String get enableReminders => 'Enable Reminders';
+  String get enableReminders => 'Activer les rappels';
 
   @override
-  String get dailyReminderDescription => 'Receive daily water drinking reminders';
+  String get dailyReminderDescription => 'Recevoir des rappels quotidiens pour boire de l\'eau';
 
   @override
-  String get reminderTimes => 'Reminder Times';
+  String get reminderTimes => 'Heures de rappel';
 
   @override
-  String get noReminderAdded => 'You haven\'t added any reminders yet';
+  String get noReminderAdded => 'Vous n\'avez pas encore ajouté de rappel';
 
   @override
-  String get addReminderHint => 'Tap the + button above\nto add a new reminder';
+  String get addReminderHint => 'Appuyez sur le bouton + ci-dessus\npour ajouter un nouveau rappel';
 
   @override
-  String get repeatsDaily => 'Repeats daily';
+  String get repeatsDaily => 'Répété quotidiennement';
 
   @override
   String get languageSelection => 'Choix de la langue';
@@ -176,4 +176,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get weekDaySun => 'Dim';
+
+  @override
+  String get add_reminder => 'Ajouter un rappel';
+
+  @override
+  String get swipe_to_select_time => 'Faites glisser pour choisir l\'heure';
+
+  @override
+  String get hour => 'Heure';
+
+  @override
+  String get minute => 'Minute';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get add => 'Ajouter';
 }

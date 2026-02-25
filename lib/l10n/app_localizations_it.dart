@@ -176,4 +176,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get weekDaySun => 'Dom';
+
+  @override
+  String get add_reminder => 'Aggiungi promemoria';
+
+  @override
+  String get swipe_to_select_time => 'Scorri per selezionare l\'orario';
+
+  @override
+  String get hour => 'ORA';
+
+  @override
+  String get minute => 'MINUTO';
+
+  @override
+  String get cancel => 'Annulla';
+
+  @override
+  String get add => 'Aggiungi';
 }

@@ -1,56 +1,89 @@
 {
   "@@locale": "fr",
+
   "appTitle": "AquaMind",
+
   "home_dailyGoal": "Objectif quotidien : {ml} ml",
+  "@home_dailyGoal": {
+    "description": "Daily goal with ml variable",
+    "placeholders": {
+      "ml": {}
+    }
+  },
+
   "addWater": "Ajouter de l'eau",
   "weeklyTracking": "Suivi hebdomadaire",
+  "weeklyWaterTracking": "Suivi hebdomadaire de l'eau",
+
   "home": "Accueil",
   "reminder": "Rappel",
   "settings": "Paramètres",
   "languageSettings": "Langue",
+  "languageSelection": "Choix de la langue",
   "about": "À propos",
   "feedback": "Retour",
   "resetApp": "Réinitialiser l'application",
-  "drinkRecommendation": "Il est recommandé de boire en moyenne 2500 ml d'eau par jour.",
-  "dailyTarget": "Votre objectif quotidien : ",
-  "todayProgress": "Votre progrès du jour",
-  "feedbackTitle": "Votre avis est précieux pour nous.",
-  "feedbackContent": "Muhammet Kaan Turan\n\nVous pouvez envoyer vos avis, suggestions et réclamations concernant l'application à cette adresse e-mail. Tous les retours sont très importants pour nous.\nkaannturan@gmail.com",
-  "drunkWater": "Eau consommée :",
+
+  "drinkRecommendation": "Il est recommandé de boire en moyenne 2500 ml d'eau par jour 🙂",
+  "dailyTarget": "Votre objectif quotidien :",
   "dailyGoalLabel": "Objectif quotidien :",
+  "todayProgress": "Votre progression aujourd'hui :",
+  "drunkWater": "Eau consommée :",
   "remaining": "Restant :",
   "completedPercent": "%{percent} terminé",
-  "weeklyWaterTracking": "Suivi hebdomadaire de l'eau",
-  "languageSelection": "Choix de la langue",
+
+  "feedbackTitle": "Votre avis est précieux pour nous.",
+  "feedbackContent": "Muhammet Kaan Turan\n\nVous pouvez envoyer vos avis, suggestions et réclamations concernant l'application à cette adresse e-mail. Tous les retours sont très importants pour nous.\nkaannturan@gmail.com",
+
+  "enableReminders": "Activer les rappels",
+  "dailyReminderDescription": "Recevoir des rappels quotidiens pour boire de l'eau",
+  "reminderTimes": "Heures de rappel",
+  "noReminderAdded": "Vous n'avez pas encore ajouté de rappel",
+  "addReminderHint": "Appuyez sur le bouton + ci-dessus\npour ajouter un nouveau rappel",
+  "repeatsDaily": "Répété quotidiennement",
+
   "infoTitle": "Information",
   "reminderInfoDescription": "Les rappels vous enverront des notifications chaque jour aux heures que vous avez définies. Une consommation régulière d’eau est très importante pour votre santé ! 💧",
+
   "newBadgeTitle": "🎉 Nouveau badge !",
   "goButton": "Aller",
+
   "badge_first_drop_name": "Première Goutte",
   "badge_first_drop_desc": "Vous avez utilisé l'application pour la première fois",
+
   "badge_blue_spark_name": "Étincelle Bleue",
   "badge_blue_spark_desc": "Vous avez atteint votre objectif quotidien pour la première fois",
+
   "badge_flow_starter_name": "Début de Flux",
   "badge_flow_starter_desc": "Objectif atteint 5 jours consécutifs",
+
   "badge_blue_energy_name": "Énergie Bleue",
   "badge_blue_energy_desc": "Vous avez bu régulièrement de l'eau pendant une semaine",
+
   "badge_water_hunter_name": "Chasseur d’Eau",
   "badge_water_hunter_desc": "Données enregistrées pendant 15 jours",
+
   "badge_hydro_master_name": "Maître Hydro",
   "badge_hydro_master_desc": "Données enregistrées pendant 1 mois",
+
   "badge_ocean_bender_name": "Roi des Océans",
   "badge_ocean_bender_desc": "Données enregistrées pendant 3 mois",
+
   "badge_aqua_legend_name": "Légende Aqua",
   "badge_aqua_legend_desc": "Données enregistrées pendant 6 mois",
+
   "weekDayMon": "Lun",
   "weekDayTue": "Mar",
   "weekDayWed": "Mer",
   "weekDayThu": "Jeu",
   "weekDayFri": "Ven",
   "weekDaySat": "Sam",
-  "weekDaySun": "Dim"
+  "weekDaySun": "Dim",
 
-
-
-
+  "add_reminder": "Ajouter un rappel",
+  "swipe_to_select_time": "Faites glisser pour choisir l'heure",
+  "hour": "Heure",
+  "minute": "Minute",
+  "cancel": "Annuler",
+  "add": "Ajouter"
 }

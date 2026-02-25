@@ -44,36 +44,36 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resetApp => 'アプリをリセット';
 
   @override
-  String get drinkRecommendation => '1日に平均2500mlの水を飲むことが推奨されています';
+  String get drinkRecommendation => '1日に平均2500mlの水を飲むことが推奨されています 🙂';
 
   @override
-  String get dailyTarget => '1日の目標 : ';
+  String get dailyTarget => '1日の目標 :';
 
   @override
-  String get todayProgress => '今日の進捗';
+  String get todayProgress => '今日の進捗 :';
 
   @override
   String get feedbackTitle => 'ご意見は私たちにとって大切です。';
 
   @override
-  String get feedbackContent => 'Muhammet Kaan Turan\n\nアプリに関するご意見・ご提案・ご不満は、このメールアドレスまでお送りください。すべてのフィードバックは私たちにとって非常に重要です。\nkaannturan@gmail.com';
+  String get feedbackContent => 'Muhammet Kaan Turan\n\nアプリに関するご意見・ご提案・ご不満は、このメールアドレスまでお送りください。すべてのフィードバックは非常に重要です。\nkaannturan@gmail.com';
 
   @override
-  String get drunkWater => 'Water Consumed:';
+  String get drunkWater => '飲んだ水 :';
 
   @override
-  String get dailyGoalLabel => 'Daily Goal:';
+  String get dailyGoalLabel => '1日の目標 :';
 
   @override
-  String get remaining => 'Remaining:';
+  String get remaining => '残り :';
 
   @override
   String completedPercent(Object percent) {
-    return '%$percent completed';
+    return '%$percent 完了';
   }
 
   @override
-  String get weeklyWaterTracking => 'Weekly Water Tracking';
+  String get weeklyWaterTracking => '週間の水分追跡';
 
   @override
   String get enableReminders => 'リマインダーを有効にする';
@@ -176,4 +176,22 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get weekDaySun => '日';
+
+  @override
+  String get add_reminder => 'リマインダーを追加';
+
+  @override
+  String get swipe_to_select_time => 'スワイプして時間を選択';
+
+  @override
+  String get hour => '時間';
+
+  @override
+  String get minute => '分';
+
+  @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get add => '追加';
 }

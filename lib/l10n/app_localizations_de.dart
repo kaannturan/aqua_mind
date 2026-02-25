@@ -176,4 +176,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get weekDaySun => 'So';
+
+  @override
+  String get add_reminder => 'Erinnerung hinzufügen';
+
+  @override
+  String get swipe_to_select_time => 'Zum Auswählen der Zeit wischen';
+
+  @override
+  String get hour => 'STUNDE';
+
+  @override
+  String get minute => 'MINUTE';
+
+  @override
+  String get cancel => 'Abbrechen';
+
+  @override
+  String get add => 'Hinzufügen';
 }
