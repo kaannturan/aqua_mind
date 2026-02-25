@@ -37,10 +37,80 @@ DateTime safeParse(String dateStr) {
   return DateTime.now();
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Drawer menü öğesi
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _DrawerItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final bool isFaIcon;
+  final Color? iconColor;
+
+  const _DrawerItem({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.isFaIcon = false,
+    this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final color = iconColor ?? Colors.white70;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          splashColor: Colors.blue.withOpacity(0.12),
+          highlightColor: Colors.blue.withOpacity(0.07),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 22,
+                  child: isFaIcon
+                      ? FaIcon(icon, color: color, size: 18)
+                      : Icon(icon, color: color, size: 22),
+                ),
+                const SizedBox(width: 14),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: iconColor != null ? color : Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HomePage State
+// ─────────────────────────────────────────────────────────────────────────────
+
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  // Drawer banner
   BannerAd? _bannerAd;
+  bool _bannerAdLoaded = false;
+
+  // Body alt banner
   BannerAd? _bottomBannerAd;
+  bool _bottomBannerAdLoaded = false;
+
   InterstitialAd? _interstitialAd;
 
   double? waterLevel;
@@ -73,23 +143,35 @@ class _HomePageState extends State<HomePage>
 
     _loadTodayWater();
 
+    // Drawer banner
     _bannerAd = BannerAd(
       adUnitId: 'ca-app-pub-3940256099942544/6300978111',
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
-        onAdLoaded: (ad) => setState(() {}),
-        onAdFailedToLoad: (ad, error) => ad.dispose(),
+        onAdLoaded: (ad) {
+          setState(() => _bannerAdLoaded = true);
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() => _bannerAdLoaded = false);
+        },
       ),
     )..load();
 
+    // Body alt banner
     _bottomBannerAd = BannerAd(
       adUnitId: 'ca-app-pub-3940256099942544/6300978111',
       size: AdSize.largeBanner,
       request: const AdRequest(),
       listener: BannerAdListener(
-        onAdLoaded: (ad) => setState(() {}),
-        onAdFailedToLoad: (ad, error) => ad.dispose(),
+        onAdLoaded: (ad) {
+          setState(() => _bottomBannerAdLoaded = true);
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() => _bottomBannerAdLoaded = false);
+        },
       ),
     )..load();
 
@@ -134,7 +216,6 @@ class _HomePageState extends State<HomePage>
   Future<void> _loadLevelAndBadges() async {
     final consecutive = await LevelSystem.getConsecutiveDays();
     final unlockedBadges = await BadgeSystem.getUnlockedBadges(context);
-
     if (mounted) {
       setState(() {
         consecutiveDays = consecutive;
@@ -196,14 +277,12 @@ class _HomePageState extends State<HomePage>
   Future<void> _saveWeeklyWater() async {
     final prefs = await SharedPreferences.getInstance();
     final todayString = getTodayString();
-
     List<String> savedList = prefs.getStringList("weeklyWater") ?? [];
     Map<String, double> weekly = {};
     for (var entry in savedList) {
       final parts = entry.split(":");
       weekly[parts[0]] = double.parse(parts[1]);
     }
-
     weekly[todayString] = currentWater.toDouble();
     var sortedKeys = weekly.keys.toList()..sort((a, b) => b.compareTo(a));
     List<String> newList = [];
@@ -227,48 +306,37 @@ class _HomePageState extends State<HomePage>
 
   void addWater(int amount) async {
     if (currentWater >= targetWater) return;
-
     final scrollPosition =
         _scrollController.hasClients ? _scrollController.offset : 0.0;
     final oldProgress = currentWater / targetWater;
-
     setState(() {
       currentWater = (currentWater + amount).clamp(0, targetWater);
       waterLevel = (1.0 - (currentWater / targetWater * 0.85)).clamp(0.15, 1.0);
     });
-
-    _progressAnimation = Tween<double>(
-      begin: oldProgress,
-      end: currentWater / targetWater,
-    ).animate(
-        CurvedAnimation(parent: _progressController, curve: Curves.easeInOut));
+    _progressAnimation =
+        Tween<double>(begin: oldProgress, end: currentWater / targetWater)
+            .animate(CurvedAnimation(
+                parent: _progressController, curve: Curves.easeInOut));
     _progressController.forward(from: 0.0);
-
     await _saveWater();
     await _saveWeeklyWater();
-
     final todayString = getTodayString();
     await LevelSystem.addDataDate(todayString);
     await LevelSystem.updateConsecutiveDays();
-
     final newBadges =
         await BadgeSystem.checkAndUnlockBadges(currentWater, targetWater);
     await _loadLevelAndBadges();
-
     if (newBadges.isNotEmpty && mounted) {
       for (var badgeId in newBadges) {
         BadgeSystem.showNewBadgeNotification(context, badgeId);
       }
     }
-
     final newWeeklyData = await _loadWeeklyWater();
     if (mounted) setState(() => weeklyData = newWeeklyData);
-
     if (_scrollController.hasClients) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_scrollController.hasClients) {
+        if (_scrollController.hasClients)
           _scrollController.jumpTo(scrollPosition);
-        }
       });
     }
   }
@@ -277,30 +345,23 @@ class _HomePageState extends State<HomePage>
     final scrollPosition =
         _scrollController.hasClients ? _scrollController.offset : 0.0;
     final oldProgress = currentWater / targetWater;
-
     setState(() {
       currentWater = (currentWater - amount).clamp(0, targetWater);
       waterLevel = (1.0 - (currentWater / targetWater * 0.85)).clamp(0.15, 1.0);
     });
-
-    _progressAnimation = Tween<double>(
-      begin: oldProgress,
-      end: currentWater / targetWater,
-    ).animate(
-        CurvedAnimation(parent: _progressController, curve: Curves.easeInOut));
+    _progressAnimation =
+        Tween<double>(begin: oldProgress, end: currentWater / targetWater)
+            .animate(CurvedAnimation(
+                parent: _progressController, curve: Curves.easeInOut));
     _progressController.forward(from: 0.0);
-
     await _saveWater();
     await _saveWeeklyWater();
-
     final newWeeklyData = await _loadWeeklyWater();
     if (mounted) setState(() => weeklyData = newWeeklyData);
-
     if (_scrollController.hasClients) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_scrollController.hasClients) {
+        if (_scrollController.hasClients)
           _scrollController.jumpTo(scrollPosition);
-        }
       });
     }
   }
@@ -323,8 +384,7 @@ class _HomePageState extends State<HomePage>
             ),
           ),
           child: const Center(
-            child: CircularProgressIndicator(color: Colors.blueAccent),
-          ),
+              child: CircularProgressIndicator(color: Colors.blueAccent)),
         ),
       );
     }
@@ -357,56 +417,96 @@ class _HomePageState extends State<HomePage>
               fontWeight: FontWeight.bold),
         ),
       ),
+
+      // ── DRAWER ──────────────────────────────────────────────────────────
       drawer: SizedBox(
-        width: 250,
+        width: 260,
         child: Drawer(
-          backgroundColor: const Color(0xFF062549),
+          backgroundColor: Colors.transparent,
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.black, Color(0xff062549), Color(0xff062549)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                colors: [Color(0xFF050E1A), Color(0xFF062549)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
             ),
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                SizedBox(
-                  height: height * 0.17,
-                  child: const DrawerHeader(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.black, Color(0xff062549)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                // Header
+                Container(
+                  height: height * 0.20,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.black, Color(0xFF0A2040)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    child: Text('AquaMind',
-                        style: TextStyle(color: Colors.white, fontSize: 23)),
+                    border: Border(
+                      bottom: BorderSide(color: Color(0x33429CE8), width: 1),
+                    ),
+                  ),
+                  padding: const EdgeInsets.fromLTRB(20, 48, 20, 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.blue.shade400,
+                              Colors.blue.shade700
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(14),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blue.shade500.withOpacity(0.4),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(Icons.water_drop_rounded,
+                            color: Colors.white, size: 22),
+                      ),
+                      const SizedBox(width: 12),
+                      const Text(
+                        'AquaMind',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                ListTile(
-                  textColor: Colors.white,
-                  leading: const Icon(Icons.home, color: Colors.white),
-                  title: Text(loc.home),
+
+                const SizedBox(height: 12),
+
+                _DrawerItem(
+                  icon: Icons.home_rounded,
+                  label: loc.home,
                   onTap: () => Navigator.pop(context),
                 ),
-                ListTile(
-                  textColor: Colors.white,
-                  leading: const Icon(FontAwesomeIcons.solidBell,
-                      color: Colors.white),
-                  title: Text(loc.reminder),
+                _DrawerItem(
+                  icon: FontAwesomeIcons.solidBell,
+                  label: loc.reminder,
+                  isFaIcon: true,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const ReminderSettingsPage()),
                   ),
                 ),
-                ListTile(
-                  textColor: Colors.white,
-                  leading: const Icon(Icons.mail, color: Colors.white),
-                  title: Text(loc.feedback),
+                _DrawerItem(
+                  icon: Icons.mail_rounded,
+                  label: loc.feedback,
                   onTap: () => showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -421,20 +521,27 @@ class _HomePageState extends State<HomePage>
                     ),
                   ),
                 ),
-                ListTile(
-                  leading: const Icon(Icons.language, color: Colors.white),
-                  title: Text(loc.languageSettings,
-                      style: const TextStyle(color: Colors.white)),
+                _DrawerItem(
+                  icon: Icons.language_rounded,
+                  label: loc.languageSettings,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => LanguageSettingsPage()),
                   ),
                 ),
-                ListTile(
-                  textColor: Colors.white,
-                  leading: const Icon(Icons.restart_alt, color: Colors.white),
-                  title: Text(loc.resetApp),
+
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Divider(
+                      color: Colors.blue.shade300.withOpacity(0.15), height: 1),
+                ),
+
+                _DrawerItem(
+                  icon: Icons.restart_alt_rounded,
+                  label: loc.resetApp,
+                  iconColor: Colors.red.shade300,
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
                     for (var key in [
@@ -450,34 +557,50 @@ class _HomePageState extends State<HomePage>
                       await prefs.remove(key);
                     }
                     Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HiPage()));
+                      context,
+                      MaterialPageRoute(builder: (context) => const HiPage()),
+                    );
                   },
                 ),
-                if (_bannerAd != null)
+
+                // Drawer banner — sadece yüklenince göster
+                if (_bannerAd != null && _bannerAdLoaded)
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.04),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.blue.shade300.withOpacity(0.12),
+                        width: 1,
+                      ),
+                    ),
                     alignment: Alignment.center,
-                    color: Colors.transparent,
-                    width: _bannerAd!.size.width.toDouble(),
+                    width: double.infinity,
                     height: _bannerAd!.size.height.toDouble(),
                     child: AdWidget(ad: _bannerAd!),
                   ),
-                const SizedBox(height: 10),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text("2026@AquaMind",
-                        style: TextStyle(color: Colors.white, fontSize: 10)),
-                  ],
+
+                const SizedBox(height: 30),
+                Center(
+                  child: Text(
+                    '2026©AquaMind',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.25),
+                      fontSize: 11,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 16),
               ],
             ),
           ),
         ),
       ),
+
+      // ── BODY ────────────────────────────────────────────────────────────
       body: Stack(
         children: [
           Container(
@@ -642,10 +765,8 @@ class _HomePageState extends State<HomePage>
                         const SizedBox(height: 8),
                         _infoRow(loc.dailyGoalLabel, "$targetWater ml"),
                         const SizedBox(height: 8),
-                        _infoRow(
-                          loc.remaining,
-                          "${(targetWater - currentWater).clamp(0, targetWater)} ml",
-                        ),
+                        _infoRow(loc.remaining,
+                            "${(targetWater - currentWater).clamp(0, targetWater)} ml"),
                         const SizedBox(height: 18),
                         AnimatedBuilder(
                           animation: _progressAnimation,
@@ -706,18 +827,18 @@ class _HomePageState extends State<HomePage>
                         ),
                         const SizedBox(height: 16),
                         WeeklyWaterContainer(
-                          weeklyData: weeklyData,
-                          targetWater: targetWater,
-                        ),
+                            weeklyData: weeklyData, targetWater: targetWater),
                       ],
                     ),
                   ),
-                  if (_bottomBannerAd != null)
+
+                  // Body alt banner — sadece yüklenince göster
+                  if (_bottomBannerAd != null && _bottomBannerAdLoaded)
                     Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 10),
                       alignment: Alignment.center,
-                      width: _bottomBannerAd!.size.width.toDouble(),
+                      width: double.infinity,
                       height: _bottomBannerAd!.size.height.toDouble(),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.1),
@@ -727,6 +848,7 @@ class _HomePageState extends State<HomePage>
                       ),
                       child: AdWidget(ad: _bottomBannerAd!),
                     ),
+
                   const SizedBox(height: 20),
                 ],
               ),
@@ -788,7 +910,9 @@ class _HomePageState extends State<HomePage>
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
 // WeeklyWaterContainer
+// ─────────────────────────────────────────────────────────────────────────────
 
 class WeeklyWaterContainer extends StatelessWidget {
   final Map<String, double> weeklyData;
@@ -806,7 +930,6 @@ class WeeklyWaterContainer extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final width = size.width;
 
-    // Sadece gösterim için - veri key'i değil
     final days = [
       loc.weekDayMon,
       loc.weekDayTue,
@@ -823,15 +946,13 @@ class WeeklyWaterContainer extends StatelessWidget {
         DateTime(weekStart.year, weekStart.month, weekStart.day);
     final thisWeekSunday = thisWeekMonday.add(const Duration(days: 6));
 
-    // Key olarak int (0=Pzt, 6=Paz) kullan — dilden bağımsız
     Map<int, double> dailyMap = {};
     for (var entry in weeklyData.entries) {
       final date = safeParse(entry.key);
       final dateOnly = DateTime(date.year, date.month, date.day);
       if (!dateOnly.isBefore(thisWeekMonday) &&
           !dateOnly.isAfter(thisWeekSunday)) {
-        final weekdayIndex = date.weekday - 1; // 0=Pzt, 6=Paz
-        dailyMap[weekdayIndex] = entry.value;
+        dailyMap[date.weekday - 1] = entry.value;
       }
     }
 
@@ -852,13 +973,11 @@ class WeeklyWaterContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  loc.weeklyWaterTracking,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
+                Text(loc.weeklyWaterTracking,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
                 Expanded(
                   child: Row(
@@ -869,7 +988,6 @@ class WeeklyWaterContainer extends StatelessWidget {
                       final barHeight =
                           (drank / targetWater * 100).clamp(0.0, 100.0);
                       final isCompleted = drank >= targetWater;
-
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -880,10 +998,9 @@ class WeeklyWaterContainer extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.green.withOpacity(0.1),
-                                    blurRadius: 8,
-                                    spreadRadius: 1,
-                                  ),
+                                      color: Colors.green.withOpacity(0.1),
+                                      blurRadius: 8,
+                                      spreadRadius: 1),
                                 ],
                               ),
                               child: const Icon(Icons.check,
@@ -910,10 +1027,9 @@ class WeeklyWaterContainer extends StatelessWidget {
                               boxShadow: isCompleted
                                   ? [
                                       BoxShadow(
-                                        color: Colors.blue.withOpacity(0.4),
-                                        blurRadius: 6,
-                                        spreadRadius: 1,
-                                      ),
+                                          color: Colors.blue.withOpacity(0.4),
+                                          blurRadius: 6,
+                                          spreadRadius: 1)
                                     ]
                                   : null,
                             ),
@@ -945,7 +1061,10 @@ class WeeklyWaterContainer extends StatelessWidget {
   }
 }
 
-// Painter & Clipper sınıfları
+// ─────────────────────────────────────────────────────────────────────────────
+// Painter & Clipper
+// ─────────────────────────────────────────────────────────────────────────────
+
 class WaterDropClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -973,7 +1092,6 @@ class WaterStack extends CustomPainter {
     path.cubicTo(size.width * -0.05, size.height * 0.78, size.width * 0.35,
         size.height * 0.60, size.width * 0.50, size.height * 0.05);
     path.close();
-
     final paint = Paint()
       ..color = Colors.blue.shade200
       ..style = PaintingStyle.stroke
@@ -1005,7 +1123,6 @@ class _WaterWaveFillState extends State<WaterWaveFill>
   void initState() {
     super.initState();
     _currentLevel = widget.waterLevel;
-
     _backController =
         AnimationController(vsync: this, duration: const Duration(seconds: 3))
           ..repeat();
@@ -1014,12 +1131,9 @@ class _WaterWaveFillState extends State<WaterWaveFill>
           ..repeat();
     _levelController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 800));
-
-    _levelAnimation = Tween<double>(
-      begin: _currentLevel,
-      end: widget.waterLevel,
-    ).animate(
-        CurvedAnimation(parent: _levelController, curve: Curves.easeInOut));
+    _levelAnimation =
+        Tween<double>(begin: _currentLevel, end: widget.waterLevel).animate(
+            CurvedAnimation(parent: _levelController, curve: Curves.easeInOut));
   }
 
   @override
@@ -1028,11 +1142,9 @@ class _WaterWaveFillState extends State<WaterWaveFill>
     if (oldWidget.waterLevel != widget.waterLevel) {
       double startLevel =
           _levelController.isAnimating ? _levelAnimation.value : _currentLevel;
-      _levelAnimation = Tween<double>(
-        begin: startLevel,
-        end: widget.waterLevel,
-      ).animate(
-          CurvedAnimation(parent: _levelController, curve: Curves.easeInOut));
+      _levelAnimation = Tween<double>(begin: startLevel, end: widget.waterLevel)
+          .animate(CurvedAnimation(
+              parent: _levelController, curve: Curves.easeInOut));
       _levelController.reset();
       _levelController.forward().then((_) => _currentLevel = widget.waterLevel);
     }
@@ -1052,11 +1164,8 @@ class _WaterWaveFillState extends State<WaterWaveFill>
       animation: Listenable.merge(
           [_backController, _frontController, _levelAnimation]),
       builder: (context, child) => CustomPaint(
-        painter: WavePainter(
-          _backController.value,
-          _frontController.value,
-          _levelAnimation.value,
-        ),
+        painter: WavePainter(_backController.value, _frontController.value,
+            _levelAnimation.value),
       ),
     );
   }
