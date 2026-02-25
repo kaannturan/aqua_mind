@@ -49,5 +49,5 @@ flutter_intl:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/glasswithlem.png"   # <- ikon dosyanın yolu
+  image_path: "assets/images/appicon.png"   # <- ikon dosyanın yolu
   remove_alpha_ios: true

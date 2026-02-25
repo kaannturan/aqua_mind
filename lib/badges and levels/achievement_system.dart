@@ -218,7 +218,7 @@ class BadgeSystem {
             ),
           ],
         ),
-        duration: const Duration(seconds: 5),
+        duration: const Duration(seconds: 6),
         action: SnackBarAction(
           label: loc.goButton,
           textColor: Colors.white,
